@@ -5,12 +5,8 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import android.content.Intent
-import android.os.Handler
-
 
 class MainActivity : AppCompatActivity() {
-    val TAG = "Main Activity"
 
     var name : String = ""
     var sr = 0
@@ -26,11 +22,6 @@ class MainActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.fragmentContainer)
         setupViewPager(viewPager)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-    }
-
-    private fun firstOpen() {
-        val initializeIntent = Intent(this, InitializeActivity::class.java)
-        startActivity(initializeIntent)
     }
 
     // Initializes new fragments and adapter

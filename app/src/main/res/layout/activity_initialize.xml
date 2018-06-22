@@ -49,9 +49,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="SR"
+            android:hint="Current SR"
             android:inputType="number"
             android:singleLine="true" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+
+        <TextView
+            android:id="@+id/main_hero_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Main Hero" />
+
+        <Spinner
+            android:id="@+id/hero_input"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:dropDownWidth="match_parent"
+            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:spinnerMode="dropdown"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
         <Space
             android:layout_width="match_parent"

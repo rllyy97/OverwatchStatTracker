@@ -1,6 +1,8 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
@@ -10,18 +12,31 @@ class MainActivity : AppCompatActivity() {
 
     var name : String = ""
     var sr = 0
+    var mainHero : String = ""
+
+    private lateinit var sharedPreferences : SharedPreferences
 
     private lateinit var fragmentAdapter: FragmentAdapter
     private lateinit var viewPager: ViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        updateLocals()
+
         setContentView(R.layout.activity_main)
 
         fragmentAdapter = FragmentAdapter(supportFragmentManager)
         viewPager = findViewById(R.id.fragmentContainer)
         setupViewPager(viewPager)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+    }
+
+    // Updates local variables from Shared Preferences
+    private fun updateLocals() {
+        name = sharedPreferences.getString("name","NULL")
+        sr = sharedPreferences.getInt("sr",0)
+        mainHero = sharedPreferences.getString("main","Orisa")
     }
 
     // Initializes new fragments and adapter
@@ -59,4 +74,5 @@ class MainActivity : AppCompatActivity() {
     fun setViewPager(fragmentInt: Int) {
         viewPager.currentItem = fragmentInt
     }
+
 }

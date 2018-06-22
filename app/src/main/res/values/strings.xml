@@ -4,4 +4,9 @@
     <string name="title_profile">Profile</string>
     <string name="title_new_match">New Match</string>
     <string name="title_tracker">Tracker</string>
+
+    <string name="null_string">null</string>
+    <string name="background_hero_image">Background Hero Image</string>
+    <string name="sr">SR</string>
+    <string name="edit_profile_info">Edit Profile Info</string>
 </resources>

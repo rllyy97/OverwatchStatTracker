@@ -9,4 +9,8 @@
     <string name="background_hero_image">Background Hero Image</string>
     <string name="sr">SR</string>
     <string name="edit_profile_info">Edit Profile Info</string>
+    <string name="welcome">Welcome</string>
+    <string name="username">Username</string>
+    <string name="current_sr">Current SR</string>
+    <string name="main_hero">Main Hero</string>
 </resources>

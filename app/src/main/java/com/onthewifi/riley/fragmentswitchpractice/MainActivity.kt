@@ -71,8 +71,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Function to set ViewPager fragment from other activities
-    fun setViewPager(fragmentInt: Int) {
-        viewPager.currentItem = fragmentInt
-    }
+//    fun setViewPager(fragmentInt: Int) {
+//        viewPager.currentItem = fragmentInt
+//    }
 
 }

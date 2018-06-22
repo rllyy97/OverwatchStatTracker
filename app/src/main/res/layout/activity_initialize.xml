@@ -26,7 +26,7 @@
             android:id="@+id/welcome_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Welcome"
+            android:text="@string/welcome"
             android:textAlignment="center"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Username"
+            android:hint="@string/username"
             android:inputType="textPersonName"
             android:singleLine="true" />
 
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Current SR"
+            android:hint="@string/current_sr"
             android:inputType="number"
             android:singleLine="true" />
 
@@ -61,7 +61,7 @@
             android:id="@+id/main_hero_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Main Hero" />
+            android:text="@string/main_hero" />
 
         <Spinner
             android:id="@+id/hero_input"

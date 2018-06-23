@@ -8,7 +8,7 @@ import java.time.Duration
 
 @Entity(tableName = "gameData")
 data class GameData(@PrimaryKey(autoGenerate = true) var id: Long?,
-                    @ColumnInfo(name = "day") var dayOfWeek: DayOfWeek?,
+                    @ColumnInfo(name = "day") var dayOfWeek: Int,
                     @ColumnInfo(name = "sr") var sr: Int,
                     @ColumnInfo(name = "map") var map: String,
                     @ColumnInfo(name = "hero1") var hero1: String,
@@ -24,6 +24,6 @@ data class GameData(@PrimaryKey(autoGenerate = true) var id: Long?,
                     @ColumnInfo(name = "length") var length: Int, // in minutes
                     @ColumnInfo(name = "groupSize") var groupSize: Int
                     ){
-    constructor():this(null,null,0,"","","",
+    constructor():this(null,0,0,"","","",
             "",0,0,0,0,0,0,0,1)
 }

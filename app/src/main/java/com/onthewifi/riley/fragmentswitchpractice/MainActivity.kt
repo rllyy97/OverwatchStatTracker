@@ -6,20 +6,20 @@ import android.preference.PreferenceManager
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-
-
     var name : String = ""
     var sr = 0
     var mainHero : String = ""
 
-
+    private var account: GoogleSignInAccount? = null
 
     private lateinit var sharedPreferences : SharedPreferences
 
@@ -28,8 +28,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Grab info from Initializer
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         updateLocals()
+        val bundle = this.intent.extras
+        if(bundle != null) {
+            account = bundle.getParcelable("account")
+            Toast.makeText(this, bundle.getParcelable<GoogleSignInAccount>("account").displayName, Toast.LENGTH_SHORT).show()
+        } else {
+
+        }
 
         setContentView(R.layout.activity_main)
 

@@ -35,5 +35,12 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity
+            android:name=".SignInActivity"
+            android:label="Sign In Activity"
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 </manifest>

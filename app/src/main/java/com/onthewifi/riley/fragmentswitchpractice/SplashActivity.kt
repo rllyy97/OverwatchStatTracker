@@ -16,8 +16,10 @@ class SplashActivity : AppCompatActivity() {
         if (!sharedPreferences.contains("name")) {
             startActivity(Intent(this, InitializeActivity::class.java))
         } else {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, SignInActivity::class.java))
         }
+
+        startActivity(Intent(this, InitializeActivity::class.java))
         finish()
     }
 }

@@ -6,10 +6,15 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
+import org.jetbrains.anko.progressDialog
 
 class SignInActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
@@ -19,6 +24,7 @@ class SignInActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLi
     // Google Authentication objects
     private lateinit var gso : GoogleSignInOptions
     private lateinit var gac : GoogleApiClient
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,18 +51,13 @@ class SignInActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLi
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == RC_SIGN_IN) {
-            var result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-            handleSignInResult(result)
-        }
-    }
-
-    private fun handleSignInResult(result: GoogleSignInResult) {
-        Log.d(TAG, "Sign in result: " + result.isSuccess)
-        if(result.isSuccess) {
-            val account = result.signInAccount
-            bundle.putParcelable("account",account)
-            //  Initialization Complete
-            closeActivity()
+            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+            if(result.isSuccess) {
+                val user = result.signInAccount
+                bundle.putParcelable("user",user)
+                //  Initialization Complete
+                closeActivity()
+            }
         }
     }
 

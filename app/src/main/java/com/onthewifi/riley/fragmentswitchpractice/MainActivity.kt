@@ -11,6 +11,9 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +22,8 @@ class MainActivity : AppCompatActivity() {
     var sr = 0
     var mainHero : String = ""
 
-    private var account: GoogleSignInAccount? = null
+    private var user: FirebaseUser? = null
+    private lateinit var auth : FirebaseAuth
 
     private lateinit var sharedPreferences : SharedPreferences
 
@@ -31,16 +35,14 @@ class MainActivity : AppCompatActivity() {
         // Grab info from Initializer
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         updateLocals()
+        auth = FirebaseAuth.getInstance()
         val bundle = this.intent.extras
         if(bundle != null) {
-            account = bundle.getParcelable("account")
-            Toast.makeText(this, bundle.getParcelable<GoogleSignInAccount>("account").displayName, Toast.LENGTH_SHORT).show()
-        } else {
-
+            user = firebaseAuthWithGoogle(bundle.getParcelable("user"))
+            Toast.makeText(this, bundle.getParcelable<GoogleSignInAccount>("user").displayName, Toast.LENGTH_SHORT).show()
         }
-
+        
         setContentView(R.layout.activity_main)
-
         fragmentAdapter = FragmentAdapter(supportFragmentManager)
         viewPager = findViewById(R.id.fragmentContainer)
         setupViewPager(viewPager)
@@ -89,5 +91,9 @@ class MainActivity : AppCompatActivity() {
 //    fun setViewPager(fragmentInt: Int) {
 //        viewPager.currentItem = fragmentInt
 //    }
-
+    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount): FirebaseUser? {
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        auth.signInWithCredential(credential)
+        return auth.currentUser
+    }
 }

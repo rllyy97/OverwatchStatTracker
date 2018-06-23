@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             user = firebaseAuthWithGoogle(bundle.getParcelable("user"))
             Toast.makeText(this, bundle.getParcelable<GoogleSignInAccount>("user").displayName, Toast.LENGTH_SHORT).show()
         }
-        
+
         setContentView(R.layout.activity_main)
         fragmentAdapter = FragmentAdapter(supportFragmentManager)
         viewPager = findViewById(R.id.fragmentContainer)

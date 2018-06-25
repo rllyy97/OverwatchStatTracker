@@ -1,6 +1,6 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
-enum class Hero(friendlyName: String, id: Int) {
+enum class Hero(private var friendlyName: String, private var id: Int) {
 
     Ana("Ana",0),
     Bastion("Bastion",1),
@@ -30,14 +30,11 @@ enum class Hero(friendlyName: String, id: Int) {
     Zarya("Zarya",25),
     Zenyatta("Zenyatta",26);
 
-    private var friendlyName : String? = friendlyName
-    private var id : Int? = id
-
     override fun toString(): String {
-        return this.friendlyName!!
+        return this.friendlyName
     }
 
     fun getID(): Int {
-        return this.id!!
+        return this.id
     }
 }

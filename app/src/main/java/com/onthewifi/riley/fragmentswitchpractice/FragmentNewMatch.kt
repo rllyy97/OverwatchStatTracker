@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
-import org.jetbrains.anko.find
 
 class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
     override fun sendInput(input: String) {

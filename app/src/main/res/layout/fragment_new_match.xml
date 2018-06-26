@@ -17,6 +17,8 @@
         android:gravity="center"
         android:hint="@string/dash"
         android:inputType="number"
+        android:nextFocusDown="@id/accuracy"
+        android:nextFocusForward="@id/accuracy"
         android:singleLine="true"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
@@ -39,6 +41,8 @@
         android:gravity="center"
         android:hint="@string/dash"
         android:inputType="number"
+        android:nextFocusDown="@id/sr"
+        android:nextFocusForward="@id/sr"
         android:singleLine="true"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
@@ -110,6 +114,8 @@
         android:gravity="center"
         android:hint="@string/dash"
         android:inputType="number"
+        android:nextFocusDown="@id/damage"
+        android:nextFocusForward="@id/damage"
         android:singleLine="true"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
@@ -132,6 +138,8 @@
         android:gravity="center"
         android:hint="@string/dash"
         android:inputType="number"
+        android:nextFocusDown="@id/length"
+        android:nextFocusForward="@id/length"
         android:singleLine="true"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
@@ -154,6 +162,8 @@
         android:gravity="center"
         android:hint="@string/dash"
         android:inputType="number"
+        android:nextFocusDown="@id/healing"
+        android:nextFocusForward="@id/healing"
         android:singleLine="true"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
@@ -176,6 +186,8 @@
         android:gravity="center"
         android:hint="@string/dash"
         android:inputType="number"
+        android:nextFocusDown="@id/deaths"
+        android:nextFocusForward="@id/deaths"
         android:singleLine="true"
         android:textAlignment="center"
         android:textAllCaps="false"
@@ -318,7 +330,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/hero4icon"
         app:layout_constraintTop_toTopOf="@+id/heroText"
-        app:srcCompat="@color/transparent" />
+        app:srcCompat="@color/transparent"
+        android:contentDescription="@string/hero_5" />
 
     <ImageButton
         android:id="@+id/hero4icon"
@@ -333,7 +346,8 @@
         app:layout_constraintStart_toEndOf="@+id/hero3icon"
         app:layout_constraintTop_toTopOf="@+id/hero5icon"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@color/transparent" />
+        app:srcCompat="@color/transparent"
+        android:contentDescription="@string/hero_4" />
 
     <ImageButton
         android:id="@+id/hero3icon"
@@ -348,7 +362,8 @@
         app:layout_constraintStart_toEndOf="@+id/hero2icon"
         app:layout_constraintTop_toTopOf="@+id/hero4icon"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@color/transparent" />
+        app:srcCompat="@color/transparent"
+        android:contentDescription="@string/hero_3" />
 
     <ImageButton
         android:id="@+id/hero2icon"
@@ -363,7 +378,8 @@
         app:layout_constraintStart_toEndOf="@+id/hero1icon"
         app:layout_constraintTop_toTopOf="@+id/hero3icon"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@color/transparent" />
+        app:srcCompat="@color/transparent"
+        android:contentDescription="@string/hero_2" />
 
     <ImageButton
         android:id="@+id/hero1icon"
@@ -377,6 +393,7 @@
         app:layout_constraintTop_toTopOf="@+id/hero2icon"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_add_black_24dp"
-        android:alpha=".7" />
+        android:alpha=".7"
+        android:contentDescription="@string/hero_1" />
 
 </android.support.constraint.ConstraintLayout>

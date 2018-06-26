@@ -61,5 +61,10 @@
     <string name="tankCategory">TANK</string>
     <string name="damageCategory">DAMAGE</string>
     <string name="supportCategory">SUPPORT</string>
+    <string name="hero_1">Hero 1</string>
+    <string name="hero_2">Hero 2</string>
+    <string name="hero_3">Hero 3</string>
+    <string name="hero_4">Hero 4</string>
+    <string name="hero_5">Hero 5</string>
 
 </resources>

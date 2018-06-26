@@ -91,6 +91,7 @@ class MainActivity : AppCompatActivity() {
 //    fun setViewPager(fragmentInt: Int) {
 //        viewPager.currentItem = fragmentInt
 //    }
+
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount): FirebaseUser? {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         auth.signInWithCredential(credential)

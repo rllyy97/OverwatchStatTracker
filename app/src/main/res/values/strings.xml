@@ -1,10 +1,12 @@
 <resources>
+    <!-- Main Strings -->
     <string name="app_name">OW Stat Tracker</string>
     <string name="author">Riley Evans</string>
     <string name="title_profile">Profile</string>
     <string name="title_new_match">New Match</string>
     <string name="title_tracker">Tracker</string>
 
+    <!-- -->
     <string name="null_string">null</string>
     <string name="no_internet_warning">Please connect to the internet.</string>
 
@@ -16,5 +18,48 @@
     <string name="current_sr">Current SR</string>
     <string name="main_hero">Main Hero</string>
 
-    <string name="web_client_id">582279173609-dumur7e50iianf1b739f4vt7bu3ggtte.apps.googleusercontent.com</string>
+    <!-- Profile Fragment Strings -->
+    <string name="profile_title">%s\'s Profile</string>
+
+    <!-- New Match Fragment Strings-->
+    <string name="eliminations">ELIMINATIONS</string>
+    <string name="deaths">DEATHS</string>
+    <string name="damage">DAMAGE</string>
+    <string name="healing">HEALING</string>
+    <string name="length">LENGTH (MIN)</string>
+    <string name="accuracy">ACCURACY (%)</string>
+    <string name="hero">Hero</string>
+    <string name="map">Map</string>
+    <string name="dash">-</string>
+    <string name="winston">Winston</string>
+    <string name="zarya">Zarya</string>
+    <string name="roadhog">Roadhog</string>
+    <string name="reinhardt">Reinhardt</string>
+    <string name="orisa">Orisa</string>
+    <string name="dva">DVa</string>
+    <string name="mcree">Mcree</string>
+    <string name="junkrat">Junkrat</string>
+    <string name="hanzo">Hanzo</string>
+    <string name="genji">Genji</string>
+    <string name="doomfist">Doomfist</string>
+    <string name="symmetra">Symmetra</string>
+    <string name="sombra">Sombra</string>
+    <string name="soldier_76">Soldier: 76</string>
+    <string name="reaper">Reaper</string>
+    <string name="pharah">Pharah</string>
+    <string name="widowmaker">Widowmaker</string>
+    <string name="tracer">Tracer</string>
+    <string name="ana">Ana</string>
+    <string name="brigette">Brigette</string>
+    <string name="lucio">Lúcio</string>
+    <string name="mercy">Mercy</string>
+    <string name="zenyatta">Zenyatta</string>
+    <string name="torbjorn">Torbjörn</string>
+    <string name="moira">Moira</string>
+    <string name="mei">Mei</string>
+    <string name="bastion">Bastion</string>
+    <string name="tankCategory">TANK</string>
+    <string name="damageCategory">DAMAGE</string>
+    <string name="supportCategory">SUPPORT</string>
+
 </resources>

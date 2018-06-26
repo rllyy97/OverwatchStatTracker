@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 class FragmentTracker: Fragment() {
-    val TAG = "Notifications"
+//    val TAG = "Tracker"
 
     private lateinit var title: TextView
 

@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tankText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/tankCategory"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tankText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/damageCategory"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DVa" />
+
+    <TextView
+        android:id="@+id/supportText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/supportCategory"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Torbjorn" />
+
+    <ImageButton
+        android:id="@+id/Winston"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Roadhog"
+        app:layout_constraintEnd_toStartOf="@+id/Zarya"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Roadhog"
+        app:layout_constraintTop_toTopOf="@+id/Roadhog"
+        app:srcCompat="@drawable/winston"
+        android:contentDescription="@string/winston" />
+
+    <ImageButton
+        android:id="@+id/Zarya"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Winston"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Winston"
+        app:layout_constraintTop_toTopOf="@+id/Winston"
+        app:srcCompat="@drawable/zarya"
+        android:contentDescription="@string/zarya" />
+
+    <ImageButton
+        android:id="@+id/Roadhog"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Reinhardt"
+        app:layout_constraintEnd_toStartOf="@+id/Winston"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Reinhardt"
+        app:layout_constraintTop_toTopOf="@+id/Reinhardt"
+        app:srcCompat="@drawable/roadhog"
+        android:contentDescription="@string/roadhog" />
+
+    <ImageButton
+        android:id="@+id/Reinhardt"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Orisa"
+        app:layout_constraintEnd_toStartOf="@+id/Roadhog"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Orisa"
+        app:layout_constraintTop_toTopOf="@+id/Orisa"
+        app:srcCompat="@drawable/reinhardt"
+        android:contentDescription="@string/reinhardt" />
+
+    <ImageButton
+        android:id="@+id/Orisa"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/DVa"
+        app:layout_constraintEnd_toStartOf="@+id/Reinhardt"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/DVa"
+        app:layout_constraintTop_toTopOf="@+id/DVa"
+        app:srcCompat="@drawable/orisa"
+        android:contentDescription="@string/orisa" />
+
+    <ImageButton
+        android:id="@+id/DVa"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@+id/Orisa"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tankText"
+        app:srcCompat="@drawable/dva"
+        android:contentDescription="@string/dva" />
+
+    <ImageButton
+        android:id="@+id/Mcree"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Junkrat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Junkrat"
+        app:layout_constraintTop_toTopOf="@+id/Junkrat"
+        app:srcCompat="@drawable/mcree"
+        android:contentDescription="@string/mcree" />
+
+    <ImageButton
+        android:id="@+id/Junkrat"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Hanzo"
+        app:layout_constraintEnd_toStartOf="@+id/Mcree"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Hanzo"
+        app:layout_constraintTop_toTopOf="@+id/Hanzo"
+        app:srcCompat="@drawable/junkrat"
+        android:contentDescription="@string/junkrat" />
+
+    <ImageButton
+        android:id="@+id/Hanzo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Genji"
+        app:layout_constraintEnd_toStartOf="@+id/Junkrat"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Genji"
+        app:layout_constraintTop_toTopOf="@+id/Genji"
+        app:srcCompat="@drawable/hanzo"
+        android:contentDescription="@string/hanzo" />
+
+    <ImageButton
+        android:id="@+id/Genji"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Doomfist"
+        app:layout_constraintEnd_toStartOf="@+id/Hanzo"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Doomfist"
+        app:layout_constraintTop_toTopOf="@+id/Doomfist"
+        app:srcCompat="@drawable/genji"
+        android:contentDescription="@string/genji" />
+
+    <ImageButton
+        android:id="@+id/Doomfist"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Bastion"
+        app:layout_constraintEnd_toStartOf="@+id/Genji"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Bastion"
+        app:layout_constraintTop_toTopOf="@+id/Bastion"
+        app:srcCompat="@drawable/doomfist"
+        android:contentDescription="@string/doomfist" />
+
+    <ImageButton
+        android:id="@+id/Symmetra"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Sombra"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Sombra"
+        app:layout_constraintTop_toTopOf="@+id/Sombra"
+        app:srcCompat="@drawable/symmetra"
+        android:contentDescription="@string/symmetra" />
+
+    <ImageButton
+        android:id="@+id/Sombra"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Soldier76"
+        app:layout_constraintEnd_toStartOf="@+id/Symmetra"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Soldier76"
+        app:layout_constraintTop_toTopOf="@+id/Soldier76"
+        app:srcCompat="@drawable/sombra"
+        android:contentDescription="@string/sombra" />
+
+    <ImageButton
+        android:id="@+id/Soldier76"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Reaper"
+        app:layout_constraintEnd_toStartOf="@+id/Sombra"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Reaper"
+        app:layout_constraintTop_toTopOf="@+id/Reaper"
+        app:srcCompat="@drawable/soldier76"
+        android:contentDescription="@string/soldier_76" />
+
+    <ImageButton
+        android:id="@+id/Reaper"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Pharah"
+        app:layout_constraintEnd_toStartOf="@+id/Soldier76"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Pharah"
+        app:layout_constraintTop_toTopOf="@+id/Pharah"
+        app:srcCompat="@drawable/reaper"
+        android:contentDescription="@string/reaper" />
+
+    <ImageButton
+        android:id="@+id/Pharah"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Mei"
+        app:layout_constraintEnd_toStartOf="@+id/Reaper"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Mei"
+        app:layout_constraintTop_toTopOf="@+id/Mei"
+        app:srcCompat="@drawable/pharah"
+        android:contentDescription="@string/pharah" />
+
+    <ImageButton
+        android:id="@+id/Widowmaker"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Tracer"
+        app:layout_constraintStart_toStartOf="@+id/Reaper"
+        app:layout_constraintTop_toTopOf="@+id/Tracer"
+        app:srcCompat="@drawable/widowmaker"
+        android:contentDescription="@string/widowmaker" />
+
+    <ImageButton
+        android:id="@+id/Tracer"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Torbjorn"
+        app:layout_constraintStart_toStartOf="@+id/Pharah"
+        app:layout_constraintTop_toTopOf="@+id/Torbjorn"
+        app:srcCompat="@drawable/tracer"
+        android:contentDescription="@string/tracer" />
+
+    <ImageButton
+        android:id="@+id/Ana"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Brigette"
+        app:layout_constraintEnd_toStartOf="@+id/Brigette"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Brigette"
+        app:srcCompat="@drawable/ana"
+        android:contentDescription="@string/ana" />
+
+    <ImageButton
+        android:id="@+id/Brigette"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Lucio"
+        app:layout_constraintEnd_toStartOf="@+id/Lucio"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Ana"
+        app:layout_constraintTop_toTopOf="@+id/Lucio"
+        app:srcCompat="@drawable/brigette"
+        android:contentDescription="@string/brigette" />
+
+    <ImageButton
+        android:id="@+id/Lucio"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Mercy"
+        app:layout_constraintEnd_toStartOf="@+id/Mercy"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Brigette"
+        app:layout_constraintTop_toTopOf="@+id/Mercy"
+        app:srcCompat="@drawable/lucio"
+        android:contentDescription="@string/lucio" />
+
+    <ImageButton
+        android:id="@+id/Mercy"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Moira"
+        app:layout_constraintEnd_toStartOf="@+id/Moira"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Lucio"
+        app:layout_constraintTop_toTopOf="@+id/Moira"
+        app:srcCompat="@drawable/mercy"
+        android:contentDescription="@string/mercy" />
+
+    <ImageButton
+        android:id="@+id/Moira"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:contentDescription="@string/moira"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/Zenyatta"
+        app:layout_constraintEnd_toStartOf="@+id/Zenyatta"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Mercy"
+        app:layout_constraintTop_toTopOf="@+id/Zenyatta"
+        app:srcCompat="@drawable/moira" />
+
+    <ImageButton
+        android:id="@+id/Zenyatta"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/transparent"
+        android:contentDescription="@string/torbjorn"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Moira"
+        app:layout_constraintTop_toBottomOf="@+id/supportText"
+        app:srcCompat="@drawable/zenyatta" />
+
+    <ImageButton
+        android:id="@+id/Torbjorn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="@+id/Mei"
+        app:layout_constraintTop_toBottomOf="@+id/Mei"
+        app:srcCompat="@drawable/torbjorn"
+        android:contentDescription="@string/torbjorn" />
+
+    <ImageButton
+        android:id="@+id/Mei"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@+id/Pharah"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Bastion"
+        app:srcCompat="@drawable/mei"
+        android:contentDescription="@string/mei" />
+
+    <ImageButton
+        android:id="@+id/Bastion"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/transparent"
+        android:padding="2dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toStartOf="@+id/Doomfist"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tankText2"
+        app:srcCompat="@drawable/bastion"
+        android:contentDescription="@string/bastion" />
+
+</android.support.constraint.ConstraintLayout>

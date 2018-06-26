@@ -2,7 +2,6 @@ package com.onthewifi.riley.fragmentswitchpractice
 
 import com.google.firebase.database.IgnoreExtraProperties
 import java.util.*
-import kotlin.collections.Map
 
 @IgnoreExtraProperties
 class Match(private var uid: String,
@@ -31,7 +30,7 @@ class Match(private var uid: String,
 
     private var time = Calendar.getInstance().time!!
 
-    fun toMap(): Map<String, Any> {
+    fun toMap(): HashMap<String, Any> {
         val result = HashMap<String, Any>()
         result["uid"] = uid
         result["time"] = time

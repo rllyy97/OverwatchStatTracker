@@ -1,33 +1,22 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import android.view.View
-import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.auth.api.signin.GoogleSignInResult
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
-import org.jetbrains.anko.progressDialog
-import android.content.Context.CONNECTIVITY_SERVICE
 import android.net.ConnectivityManager
+import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.Snackbar
-import com.firebase.ui.auth.ui.phone.CountryListSpinner
+import android.support.v7.app.AppCompatActivity
+import android.view.View
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
 
 
 class SignInActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
-    private val TAG = "8"
-    private val RC_SIGN_IN = 925
+    private val rcSignIn = 456
     private var bundle = Bundle()
     // Google Authentication objects
     private lateinit var gso : GoogleSignInOptions
@@ -60,13 +49,13 @@ class SignInActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLi
     // Firebase Google Authentication
     private fun signIn() {
         val signInIntent = Auth.GoogleSignInApi.getSignInIntent(gac)
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+        startActivityForResult(signInIntent, rcSignIn)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == rcSignIn) {
             val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
             if(result.isSuccess) {
                 val user = result.signInAccount
@@ -85,7 +74,7 @@ class SignInActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLi
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    fun closeActivity() {
+    private fun closeActivity() {
         val i = Intent()
         i.putExtras(bundle)
         i.setClass(this, MainActivity::class.java)

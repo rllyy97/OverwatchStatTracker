@@ -6,8 +6,11 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.ImageButton
+import android.widget.Spinner
 import android.widget.TextView
+import org.jetbrains.anko.find
 
 class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
     override fun sendInput(input: String) {
@@ -42,7 +45,6 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
         heroCounter--
     }
 
-
     // Adds character
     private var addCharacter = View.OnClickListener {
         val dialog = CharacterSelectorDialog() as DialogFragment
@@ -66,6 +68,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
     private lateinit var hero4icon: ImageButton
     private lateinit var hero5icon: ImageButton
     private lateinit var heroIconArray: Array<ImageButton>
+    private lateinit var mapSpinner: Spinner
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_new_match,container,false)
@@ -80,6 +83,10 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
         hero4icon.tag = 3
         hero5icon = view.findViewById(R.id.hero5icon)
         hero5icon.tag = 4
+
+        mapSpinner = view.findViewById(R.id.mapSpinner)
+        mapSpinner.adapter = ArrayAdapter<Map>(context, android.R.layout.simple_dropdown_item_1line, Map.values())
+
 
         heroIconArray = arrayOf(hero1icon, hero2icon, hero3icon, hero4icon, hero5icon)
         for (icon in heroIconArray) {

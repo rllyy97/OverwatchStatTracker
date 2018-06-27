@@ -26,36 +26,8 @@ class FragmentProfile: Fragment() {
         sr.text = (activity as MainActivity).sr.toString()
         heroImage = view.findViewById(R.id.heroImage)
         // Sets background image, there must be a better way
-        when ((activity as MainActivity).mainHero) {
-            "Ana" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ana, null))
-            "Bastion" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.bastion, null))
-            "Brigette" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.brigette, null))
-            "Doomfist" ->heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.doomfist, null))
-            "DVa" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.dva, null))
-            "Genji" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.genji, null))
-            "Hanzo" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.hanzo, null))
-            "Junkrat" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.junkrat, null))
-            "Lúcio" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.lucio, null))
-            "Mcree" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.mcree, null))
-            "Mei" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.mei, null))
-            "Mercy" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.mercy, null))
-            "Moira" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.moira, null))
-            "Orisa" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.orisa, null))
-            "Pharah" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.pharah, null))
-            "Reaper" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.reaper, null))
-            "Reinhardt" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.reinhardt, null))
-            "Roadhog" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.roadhog, null))
-            "Soldier76" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.soldier76, null))
-            "Sombra" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.sombra, null))
-            "Symmetra" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.symmetra, null))
-            "Torbjörn" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.torbjorn, null))
-            "Tracer" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.tracer, null))
-            "Widowmaker" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.widowmaker, null))
-            "Winston" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.winston, null))
-            "Zarya" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.zarya, null))
-            "Zenyatta" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.zenyatta, null))
-            "" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.color.transparent, null))
-        }
+        if ((activity as MainActivity).mainHero == null) heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, Hero.from((activity as MainActivity).mainHero)!!.getDrawable(), null))
+        else heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.color.transparent, null))
         return view
     }
 

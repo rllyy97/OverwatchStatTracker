@@ -135,5 +135,4 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
         accuracy.text.clear()
         sr.text.clear()
     }
-
 }

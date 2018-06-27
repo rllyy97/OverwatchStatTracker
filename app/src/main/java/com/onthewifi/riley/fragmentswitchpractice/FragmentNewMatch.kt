@@ -1,17 +1,20 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
+import android.media.Image
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageButton
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
+import kotlinx.android.synthetic.main.fragment_new_match.*
+import org.jetbrains.anko.find
 
 class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
+    private var TAG = "new_match"
+
     override fun sendInput(input: String) {
         heroStringArray[heroCounter] = input
         heroIconArray[heroCounter].setOnClickListener(deleteCharacter)
@@ -25,9 +28,77 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
 
     }
 
+    private var heroCounter = 0
+    private var hero1: String? = null
+    private var hero2: String? = null
+    private var hero3: String? = null
+    private var hero4: String? = null
+    private var hero5: String? = null
+    private var heroStringArray = arrayOf(hero1,hero2,hero3,hero4,hero5)
+
+    // View References
+    private lateinit var title: TextView
+    private lateinit var hero1icon: ImageButton
+    private lateinit var hero2icon: ImageButton
+    private lateinit var hero3icon: ImageButton
+    private lateinit var hero4icon: ImageButton
+    private lateinit var hero5icon: ImageButton
+    private lateinit var heroIconArray: Array<ImageButton>
+    private lateinit var mapSpinner: Spinner
+
+    private lateinit var eliminations: EditText
+    private lateinit var deaths: EditText
+    private lateinit var damage: EditText
+    private lateinit var heals: EditText
+    private lateinit var length: EditText
+    private lateinit var accuracy: EditText
+    private lateinit var sr: EditText
+
+    private lateinit var clearButton: FloatingActionButton
+    private lateinit var submitButton: FloatingActionButton
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_new_match,container,false)
+        title = view.findViewById(R.id.titleTextView)
+        hero1icon = view.findViewById(R.id.hero1icon)
+        hero1icon.tag = 0
+        hero2icon = view.findViewById(R.id.hero2icon)
+        hero2icon.tag = 1
+        hero3icon = view.findViewById(R.id.hero3icon)
+        hero3icon.tag = 2
+        hero4icon = view.findViewById(R.id.hero4icon)
+        hero4icon.tag = 3
+        hero5icon = view.findViewById(R.id.hero5icon)
+        hero5icon.tag = 4
+
+        mapSpinner = view.findViewById(R.id.mapSpinner)
+        mapSpinner.adapter = ArrayAdapter<Map>(context, android.R.layout.simple_dropdown_item_1line, Map.values())
+
+        eliminations = view.findViewById(R.id.eliminations)
+        deaths = view.findViewById(R.id.deaths)
+        damage = view.findViewById(R.id.damage)
+        heals = view.findViewById(R.id.healing)
+        length = view.findViewById(R.id.length)
+        accuracy = view.findViewById(R.id.accuracy)
+        sr = view.findViewById(R.id.sr)
+
+        clearButton = view.findViewById(R.id.clearButton)
+        clearButton.setOnClickListener(clearFields)
+
+        heroIconArray = arrayOf(hero1icon, hero2icon, hero3icon, hero4icon, hero5icon)
+        for (icon in heroIconArray) {
+            icon.setOnClickListener(addCharacter)
+        }
+        return view
+    }
+
     // Deletes character, cascades others down
     private var deleteCharacter = View.OnClickListener {
-        var marker = it.tag as Int
+        deleteCharacter(it as ImageButton)
+    }
+
+    private fun deleteCharacter(view: ImageButton) {
+        var marker = view.tag as Int
         while (marker+1 < heroCounter) {
             heroStringArray[marker] = heroStringArray[marker+1]
             heroIconArray[marker].setImageResource(Hero.from(heroStringArray[marker]!!)!!.getDrawable())
@@ -51,47 +122,18 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
         dialog.show(fragmentManager,"dialog")
     }
 
-    private var heroCounter = 0
-    private var hero1: String? = null
-    private var hero2: String? = null
-    private var hero3: String? = null
-    private var hero4: String? = null
-    private var hero5: String? = null
-    private var heroStringArray = arrayOf(hero1,hero2,hero3,hero4,hero5)
-
-    // View References
-    private lateinit var title: TextView
-    private lateinit var hero1icon: ImageButton
-    private lateinit var hero2icon: ImageButton
-    private lateinit var hero3icon: ImageButton
-    private lateinit var hero4icon: ImageButton
-    private lateinit var hero5icon: ImageButton
-    private lateinit var heroIconArray: Array<ImageButton>
-    private lateinit var mapSpinner: Spinner
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_new_match,container,false)
-        title = view.findViewById(R.id.titleTextView)
-        hero1icon = view.findViewById(R.id.hero1icon)
-        hero1icon.tag = 0
-        hero2icon = view.findViewById(R.id.hero2icon)
-        hero2icon.tag = 1
-        hero3icon = view.findViewById(R.id.hero3icon)
-        hero3icon.tag = 2
-        hero4icon = view.findViewById(R.id.hero4icon)
-        hero4icon.tag = 3
-        hero5icon = view.findViewById(R.id.hero5icon)
-        hero5icon.tag = 4
-
-        mapSpinner = view.findViewById(R.id.mapSpinner)
-        mapSpinner.adapter = ArrayAdapter<Map>(context, android.R.layout.simple_dropdown_item_1line, Map.values())
-
-
-        heroIconArray = arrayOf(hero1icon, hero2icon, hero3icon, hero4icon, hero5icon)
-        for (icon in heroIconArray) {
-            icon.setOnClickListener(addCharacter)
+    // Clears fragment by restarting it
+    private var clearFields = View.OnClickListener {
+        while (heroCounter != 0) {
+            deleteCharacter(hero1icon)
         }
-        return view
+        eliminations.text.clear()
+        deaths.text.clear()
+        damage.text.clear()
+        heals.text.clear()
+        length.text.clear()
+        accuracy.text.clear()
+        sr.text.clear()
     }
 
 }

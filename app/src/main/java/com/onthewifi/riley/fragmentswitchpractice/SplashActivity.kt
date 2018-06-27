@@ -13,11 +13,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        if (!sharedPreferences.contains("name")) {
-            startActivity(Intent(this, InitializeActivity::class.java))
-        } else {
-            startActivity(Intent(this, SignInActivity::class.java))
-        }
+        startActivity(Intent(this, SignInActivity::class.java))
         finish()
     }
 }

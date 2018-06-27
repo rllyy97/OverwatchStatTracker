@@ -16,9 +16,7 @@ class FragmentProfile: Fragment() {
 
     private lateinit var title : TextView
     private lateinit var sr : TextView
-    private lateinit var settingsButton : Button
     private lateinit var heroImage : ImageView
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile,container,false)
@@ -26,8 +24,6 @@ class FragmentProfile: Fragment() {
         title.text = getString(R.string.profile_title).format((activity as MainActivity).name)
         sr = view.findViewById(R.id.srLarge)
         sr.text = (activity as MainActivity).sr.toString()
-        settingsButton = view.findViewById(R.id.settingsButton)
-        settingsButton.setOnClickListener(settingsClick)
         heroImage = view.findViewById(R.id.heroImage)
         // Sets background image, there must be a better way
         when ((activity as MainActivity).mainHero) {
@@ -58,14 +54,9 @@ class FragmentProfile: Fragment() {
             "Winston" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.winston, null))
             "Zarya" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.zarya, null))
             "Zenyatta" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.zenyatta, null))
+            "" -> heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.color.transparent, null))
         }
-//        Toast.makeText(context,  (activity as MainActivity).mainHero , Toast.LENGTH_SHORT).show()
         return view
-    }
-
-    private val settingsClick: View.OnClickListener = View.OnClickListener {
-        startActivity(Intent(context, InitializeActivity::class.java))
-        (activity as MainActivity).finish()
     }
 
 }

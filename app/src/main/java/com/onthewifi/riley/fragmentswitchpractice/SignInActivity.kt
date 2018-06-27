@@ -2,8 +2,10 @@ package com.onthewifi.riley.fragmentswitchpractice
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -21,6 +23,7 @@ class SignInActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLi
     // Google Authentication objects
     private lateinit var gso : GoogleSignInOptions
     private lateinit var gac : GoogleApiClient
+    private lateinit var sharedPreferences : SharedPreferences
 
     private lateinit var baseView : ConstraintLayout
 
@@ -28,6 +31,7 @@ class SignInActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
         baseView = findViewById(R.id.base)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         if(!isNetworkConnected()) {
             Snackbar.make(baseView, R.string.no_internet_warning,
                     Snackbar.LENGTH_SHORT)
@@ -61,9 +65,11 @@ class SignInActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLi
                 val user = result.signInAccount
                 bundle.putParcelable("user",user)
                 //  Initialization Complete
+                sharedPreferences.edit().putString("name", user!!.displayName).apply()
                 closeActivity()
             }
         }
+
     }
 
     override fun onConnectionFailed(p0: ConnectionResult) {

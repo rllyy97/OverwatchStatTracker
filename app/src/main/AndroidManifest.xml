@@ -27,12 +27,6 @@
         </activity>
 
         <activity
-            android:name=".InitializeActivity"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity
             android:name=".SignInActivity"
             android:theme="@style/SplashTheme"
             android:screenOrientation="portrait">

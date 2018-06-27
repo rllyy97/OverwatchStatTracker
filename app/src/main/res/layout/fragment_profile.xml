@@ -62,15 +62,4 @@
         app:layout_constraintBottom_toBottomOf="@+id/srLarge"
         app:layout_constraintStart_toEndOf="@+id/srLarge" />
 
-    <Button
-        android:id="@+id/settingsButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="20dp"
-        android:alpha=".7"
-        android:background="@drawable/ic_settings_black_24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </android.support.constraint.ConstraintLayout>

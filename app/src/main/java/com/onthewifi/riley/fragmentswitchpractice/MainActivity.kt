@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         // Grab info from Initializer
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        updateLocals()
+        name = sharedPreferences.getString("name","NULL")
         auth = FirebaseAuth.getInstance()
         val bundle = this.intent.extras
         if(bundle != null) {
@@ -47,13 +47,6 @@ class MainActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.fragmentContainer)
         setupViewPager(viewPager)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-    }
-
-    // Updates local variables from Shared Preferences
-    private fun updateLocals() {
-        name = sharedPreferences.getString("name","NULL")
-        sr = sharedPreferences.getInt("sr",0)
-        mainHero = sharedPreferences.getString("main","Orisa")
     }
 
     // Initializes new fragments and adapter

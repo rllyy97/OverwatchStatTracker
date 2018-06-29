@@ -170,7 +170,8 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
             Toast.makeText(context, "Fill all fields", Toast.LENGTH_SHORT).show()
             return
         }
-
+        // Sends User
+        parent.databaseRef.child("users").child(parent.user!!.uid).child("name").setValue(parent.user!!.displayName)
         // Submits Match
         val match = Match(
                 sr.text.toString().toInt(),
@@ -188,7 +189,29 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
                 length.text.toString().toInt())
         val matchKey = parent.databaseRef.child("users").child(parent.user!!.uid).child("matches").push().key
         match.uuid = matchKey!!.toString()
+        // Records Match
         parent.databaseRef.child("users").child(parent.user!!.uid).child("matches").child(matchKey).setValue(match)
+        // Records User Info
+        parent.databaseRef.child("users").child(parent.user!!.uid).child("sr").setValue(sr.text.toString().toInt())
+
+        // Increments server side match count
+        var matchCount: Int
+        parent.databaseRef.child("users").child(parent.user!!.uid).child("matchCount").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snap: DataSnapshot) {
+                if(snap.child("users").child(parent.user!!.uid).child("matchCount").value == null) {
+                    matchCount = 1
+                } else {
+                    matchCount = snap.value as Int
+                    matchCount++
+                }
+                snap.ref.setValue(matchCount)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "whoops", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
         clearFields()
 
         Toast.makeText(context, "Submitted Match", Toast.LENGTH_SHORT).show()

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowId
 import android.widget.*
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -198,7 +199,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
         var matchCount: Int
         parent.databaseRef.child("users").child(parent.user!!.uid).child("matchCount").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snap: DataSnapshot) {
-                if(snap.child("users").child(parent.user!!.uid).child("matchCount").value == null) {
+                if(snap.value == null) {
                     matchCount = 1
                 } else {
                     matchCount = snap.value as Int

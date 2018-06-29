@@ -10,8 +10,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -20,9 +22,10 @@ class MainActivity : AppCompatActivity() {
     var sr = 0
     var mainHero : String = ""
     // Firebase variables
-    private var user: FirebaseUser? = null
-    private lateinit var auth : FirebaseAuth
-    private lateinit var database: DatabaseReference
+    var user : FirebaseUser? = null
+    lateinit var auth : FirebaseAuth
+    lateinit var database : FirebaseDatabase
+    lateinit var databaseRef : DatabaseReference
 
     private lateinit var sharedPreferences : SharedPreferences
 
@@ -40,7 +43,8 @@ class MainActivity : AppCompatActivity() {
             user = firebaseAuthWithGoogle(bundle.getParcelable("user"))
 //            Toast.makeText(this, bundle.getParcelable<GoogleSignInAccount>("user").displayName, Toast.LENGTH_SHORT).show()
         }
-        database = FirebaseDatabase.getInstance().reference
+        database = FirebaseDatabase.getInstance()
+        databaseRef = FirebaseDatabase.getInstance().reference
 
         setContentView(R.layout.activity_main)
         fragmentAdapter = FragmentAdapter(supportFragmentManager)
@@ -90,4 +94,5 @@ class MainActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
         return auth.currentUser
     }
+
 }

@@ -9,11 +9,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_new_match.*
 import org.jetbrains.anko.find
 
 class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
     private var TAG = "new_match"
+    private lateinit var parent: MainActivity
 
     override fun sendInput(input: String) {
         heroStringArray[heroCounter] = input
@@ -29,11 +34,11 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
     }
 
     private var heroCounter = 0
-    private var hero1: String? = null
-    private var hero2: String? = null
-    private var hero3: String? = null
-    private var hero4: String? = null
-    private var hero5: String? = null
+    private var hero1: String = ""
+    private var hero2: String = ""
+    private var hero3: String = ""
+    private var hero4: String = ""
+    private var hero5: String = ""
     private var heroStringArray = arrayOf(hero1,hero2,hero3,hero4,hero5)
 
     // View References
@@ -85,6 +90,11 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
         clearButton = view.findViewById(R.id.clearButton)
         clearButton.setOnClickListener(clearFields)
 
+        submitButton = view.findViewById(R.id.submitButton)
+        submitButton.setOnClickListener(submitMatch)
+
+        parent = activity as MainActivity
+
         heroIconArray = arrayOf(hero1icon, hero2icon, hero3icon, hero4icon, hero5icon)
         for (icon in heroIconArray) {
             icon.setOnClickListener(addCharacter)
@@ -104,7 +114,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
             heroIconArray[marker].setImageResource(Hero.from(heroStringArray[marker]!!)!!.getDrawable())
             marker++
         }
-        heroStringArray[marker] = null
+        heroStringArray[marker] = ""
         heroIconArray[marker].setOnClickListener(addCharacter)
         heroIconArray[marker].setImageResource(R.drawable.ic_add_black_24dp)
         if (heroCounter < 5) {
@@ -124,6 +134,10 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
 
     // Clears fragment by restarting it
     private var clearFields = View.OnClickListener {
+        clearFields()
+    }
+
+    private fun clearFields() {
         while (heroCounter != 0) {
             deleteCharacter(hero1icon)
         }
@@ -134,5 +148,50 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
         length.text.clear()
         accuracy.text.clear()
         sr.text.clear()
+    }
+
+    // Submits data to database
+    private var submitMatch: View.OnClickListener = View.OnClickListener {
+        submitMatch()
+    }
+
+    private fun submitMatch() {
+        // Checks fields are full
+        if (
+            heroStringArray[0] == ""
+            || eliminations.text.isEmpty()
+            || damage.text.isEmpty()
+            || heals.text.isEmpty()
+            || deaths.text.isEmpty()
+            || accuracy.text.isEmpty()
+            || length.text.isEmpty()
+            || sr.text.isEmpty()
+                ) {
+            Toast.makeText(context, "Fill all fields", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Submits Match
+        val match = Match(
+                sr.text.toString().toInt(),
+                mapSpinner.selectedItem.toString(),
+                heroStringArray[0],
+                heroStringArray[1],
+                heroStringArray[2],
+                heroStringArray[3],
+                heroStringArray[4],
+                eliminations.text.toString().toInt(),
+                damage.text.toString().toInt(),
+                heals.text.toString().toInt(),
+                deaths.text.toString().toInt(),
+                accuracy.text.toString().toInt(),
+                length.text.toString().toInt())
+        val matchKey = parent.databaseRef.child("users").child(parent.user!!.uid).child("matches").push().key
+        match.uuid = matchKey!!.toString()
+        parent.databaseRef.child("users").child(parent.user!!.uid).child("matches").child(matchKey).setValue(match)
+        clearFields()
+
+        Toast.makeText(context, "Submitted Match", Toast.LENGTH_SHORT).show()
+
     }
 }

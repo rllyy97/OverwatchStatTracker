@@ -10,10 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowId
 import android.widget.*
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_new_match.*
 import org.jetbrains.anko.find
 
@@ -171,8 +168,8 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
             Toast.makeText(context, "Fill all fields", Toast.LENGTH_SHORT).show()
             return
         }
-        // Sends User
-        parent.databaseRef.child("users").child(parent.user!!.uid).child("name").setValue(parent.user!!.displayName)
+        // Stores user path in database
+        val userPath = parent.databaseRef.child("users").child(parent.user!!.uid)
         // Submits Match
         val match = Match(
                 sr.text.toString().toInt(),
@@ -188,29 +185,27 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
                 deaths.text.toString().toInt(),
                 accuracy.text.toString().toInt(),
                 length.text.toString().toInt())
-        val matchKey = parent.databaseRef.child("users").child(parent.user!!.uid).child("matches").push().key
+        val matchKey = userPath.child("matches").push().key
         match.uuid = matchKey!!.toString()
-        // Records Match
-        parent.databaseRef.child("users").child(parent.user!!.uid).child("matches").child(matchKey).setValue(match)
+        userPath.child("matches").child(matchKey).setValue(match)
         // Records User Info
-        parent.databaseRef.child("users").child(parent.user!!.uid).child("sr").setValue(sr.text.toString().toInt())
+        userPath.child("sr").setValue(sr.text.toString().toInt())
+        userPath.child("name").setValue(parent.user!!.displayName)
 
-        // Increments server side match count
         var matchCount: Int
-        parent.databaseRef.child("users").child(parent.user!!.uid).child("matchCount").addValueEventListener(object : ValueEventListener {
+        userPath.child("matchCount").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snap: DataSnapshot) {
                 if(snap.value == null) {
                     matchCount = 1
                 } else {
-                    matchCount = snap.value as Int
+                    matchCount = (snap.value as Long).toInt()
                     matchCount++
                 }
-                snap.ref.setValue(matchCount)
+                userPath.child("matchCount").setValue(matchCount)
             }
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, "whoops", Toast.LENGTH_SHORT).show()
             }
-
         })
 
         clearFields()

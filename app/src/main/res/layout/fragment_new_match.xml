@@ -235,7 +235,7 @@
         android:ems="10"
         android:gravity="center"
         android:hint="@string/sr"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="58sp"

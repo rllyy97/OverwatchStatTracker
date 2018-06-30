@@ -16,6 +16,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
     private var TAG = "new_match"
     private lateinit var parent: MainActivity
 
+    // For character picker
     override fun sendInput(input: String) {
         heroStringArray[heroCounter] = input
         heroIconArray[heroCounter].setOnClickListener(deleteCharacter)
@@ -26,7 +27,6 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
             heroIconArray[heroCounter].isClickable = true
             heroIconArray[heroCounter].setImageResource(R.drawable.ic_add_black_24dp)
         }
-
     }
 
     private var heroCounter = 0

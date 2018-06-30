@@ -1,6 +1,5 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
-import android.media.Image
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.DialogFragment
@@ -8,11 +7,10 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowId
 import android.widget.*
-import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_new_match.*
-import org.jetbrains.anko.find
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 
 class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
     private var TAG = "new_match"
@@ -109,7 +107,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
         var marker = view.tag as Int
         while (marker+1 < heroCounter) {
             heroStringArray[marker] = heroStringArray[marker+1]
-            heroIconArray[marker].setImageResource(Hero.from(heroStringArray[marker]!!)!!.getDrawable())
+            heroIconArray[marker].setImageResource(Hero.from(heroStringArray[marker])!!.getDrawable())
             marker++
         }
         heroStringArray[marker] = ""
@@ -168,11 +166,49 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
             Toast.makeText(context, "Fill all fields", Toast.LENGTH_SHORT).show()
             return
         }
+
         // Stores user path in database
         val userPath = parent.databaseRef.child("users").child(parent.user!!.uid)
-        // Submits Match
+
+        // Grab previous info
+        var oldSr: Int = 0
+        val newSr: Int = sr.text.toString().toInt()
+        var oldWinRate: Int
+        var newWinRate: Int
+        var matchCount: Int
+        var winSign = -100
+        var delta: Int
+
+        userPath.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snap: DataSnapshot) {
+                // Set winSign, 100 for win, -100 for loss
+                oldSr = (snap.child("sr").value as Long).toInt()
+                if (oldSr < newSr) winSign = 100
+                // Update Match Count
+                if(snap.child("matchCount").value == null) {
+                    matchCount = 1
+                } else {
+                    matchCount = (snap.value as Long).toInt()
+                    matchCount++
+                }
+                userPath.child("matchCount").setValue(matchCount)
+                // Update Win Rate
+                if(snap.child("winRate").value == null) {
+                    newWinRate = winSign
+                } else {
+                    oldWinRate = (snap.child("winRate").value as Long).toInt()
+                    newWinRate = oldWinRate + (winSign / matchCount)
+                }
+                userPath.child("winRate").setValue(newWinRate)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "whoops", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        // Submit Match
         val match = Match(
-                sr.text.toString().toInt(),
+                newSr,
                 mapSpinner.selectedItem.toString(),
                 heroStringArray[0],
                 heroStringArray[1],
@@ -188,29 +224,15 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
         val matchKey = userPath.child("matches").push().key
         match.uuid = matchKey!!.toString()
         userPath.child("matches").child(matchKey).setValue(match)
+
         // Records User Info
         userPath.child("sr").setValue(sr.text.toString().toInt())
         userPath.child("name").setValue(parent.user!!.displayName)
-
-        var matchCount: Int
-        userPath.child("matchCount").addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snap: DataSnapshot) {
-                if(snap.value == null) {
-                    matchCount = 1
-                } else {
-                    matchCount = (snap.value as Long).toInt()
-                    matchCount++
-                }
-                userPath.child("matchCount").setValue(matchCount)
-            }
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, "whoops", Toast.LENGTH_SHORT).show()
-            }
-        })
 
         clearFields()
 
         Toast.makeText(context, "Submitted Match", Toast.LENGTH_SHORT).show()
 
     }
+
 }

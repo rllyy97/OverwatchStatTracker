@@ -188,7 +188,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
                 if(snap.child("matchCount").value == null) {
                     matchCount = 1
                 } else {
-                    matchCount = (snap.value as Long).toInt()
+                    matchCount = (snap.child("matchCount").value as Long).toInt()
                     matchCount++
                 }
                 userPath.child("matchCount").setValue(matchCount)
@@ -199,7 +199,10 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
                     oldWinRate = (snap.child("winRate").value as Long).toInt()
                     newWinRate = oldWinRate + (winSign / matchCount)
                 }
+                if (newWinRate > 100) newWinRate = 100
+                if (newWinRate < 0) newWinRate = 0
                 userPath.child("winRate").setValue(newWinRate)
+                parent.databaseRef
             }
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, "whoops", Toast.LENGTH_SHORT).show()

@@ -12,7 +12,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
-class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener{
+class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
     private var TAG = "new_match"
     private lateinit var parent: MainActivity
 

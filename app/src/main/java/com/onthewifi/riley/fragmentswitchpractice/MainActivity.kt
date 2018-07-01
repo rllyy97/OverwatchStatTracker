@@ -34,9 +34,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Grab info from Initializer
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        name = sharedPreferences.getString("name","NULL")
         auth = FirebaseAuth.getInstance()
         val bundle = this.intent.extras
         if(bundle != null) {

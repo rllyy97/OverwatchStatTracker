@@ -10,7 +10,6 @@ import android.widget.ImageButton
 import kotlinx.android.synthetic.main.activity_main.*
 
 class CharacterSelectorDialog: DialogFragment() {
-
     interface OnInputListener {
         fun sendInput(input: String)
     }

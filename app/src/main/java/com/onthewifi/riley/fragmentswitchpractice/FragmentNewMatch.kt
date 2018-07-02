@@ -11,6 +11,9 @@ import android.widget.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.fragment_sr_init_dialog.*
+import java.util.*
+import kotlin.collections.HashMap
 
 class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
     private var TAG = "new_match"
@@ -171,38 +174,39 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
         val userPath = parent.databaseRef.child("users").child(parent.user!!.uid)
 
         // Grab previous info
-        var oldSr: Int = 0
+        var oldSr: Int
         val newSr: Int = sr.text.toString().toInt()
-        var oldWinRate: Int
-        var newWinRate: Int
-        var matchCount: Int
-        var winSign = -100
-        var delta: Int
+        var matchCount = 0
+        var win = false
+        var winRate= 0.0F
+        var winCount = 0
+
+        val time = Calendar.getInstance().timeInMillis
+        val timeString = time.toString()
 
         userPath.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snap: DataSnapshot) {
-                // Set winSign, 100 for win, -100 for loss
                 oldSr = (snap.child("sr").value as Long).toInt()
-                if (oldSr < newSr) winSign = 100
+                if (oldSr < newSr) win = true
                 // Update Match Count
                 if(snap.child("matchCount").value == null) {
                     matchCount = 1
+                    winRate = if (win) 1F else 0F
+                    winCount = if (win) 1 else 0
                 } else {
                     matchCount = (snap.child("matchCount").value as Long).toInt()
                     matchCount++
+                    winCount = (snap.child("winCount").value as Long).toInt()
+                    if (win) winCount++
+                    winRate = winCount.toFloat() / matchCount.toFloat()
                 }
+                // Updates Profile Data
                 userPath.child("matchCount").setValue(matchCount)
-                // Update Win Rate
-                if(snap.child("winRate").value == null) {
-                    newWinRate = winSign
-                } else {
-                    oldWinRate = (snap.child("winRate").value as Long).toInt()
-                    newWinRate = oldWinRate + (winSign / matchCount)
-                }
-                if (newWinRate > 100) newWinRate = 100
-                if (newWinRate < 0) newWinRate = 0
-                userPath.child("winRate").setValue(newWinRate)
-                parent.databaseRef
+                userPath.child("winCount").setValue(winCount)
+                userPath.child("winRate").setValue(winRate)
+                userPath.child("sr").setValue(newSr)
+                // Updates Match Win Rate
+                userPath.child("matches").child(timeString).child("winRate").setValue(winRate)
             }
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, "whoops", Toast.LENGTH_SHORT).show()
@@ -211,6 +215,8 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
 
         // Submit Match
         val match = Match(
+                time,
+                winRate,
                 newSr,
                 mapSpinner.selectedItem.toString(),
                 heroStringArray[0],
@@ -224,18 +230,11 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
                 deaths.text.toString().toInt(),
                 accuracy.text.toString().toInt(),
                 length.text.toString().toInt())
-        val matchKey = userPath.child("matches").push().key
-        match.uuid = matchKey!!.toString()
-        userPath.child("matches").child(matchKey).setValue(match)
 
-        // Records User Info
-        userPath.child("sr").setValue(sr.text.toString().toInt())
-        userPath.child("name").setValue(parent.user!!.displayName)
+        userPath.child("matches").child(timeString).setValue(match)
+
 
         clearFields()
-
         Toast.makeText(context, "Submitted Match", Toast.LENGTH_SHORT).show()
-
     }
-
 }

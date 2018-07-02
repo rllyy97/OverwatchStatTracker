@@ -14,7 +14,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import org.w3c.dom.Text
 
 class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     private var TAG = "profile"
@@ -23,6 +22,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     // For sr init
     override fun sendInput(input: Int) {
         userPath.child("sr").setValue(input)
+        userPath.child("name").setValue(parent.user!!.displayName)
     }
 
     private lateinit var userPath: DatabaseReference

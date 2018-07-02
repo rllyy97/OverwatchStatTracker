@@ -5,6 +5,8 @@ import java.util.*
 import kotlin.collections.HashMap
 
 data class Match(
+        var time: Long,
+        var winRate: Float,
         var sr: Int,
         var map: String,
         var hero1: String,
@@ -18,10 +20,4 @@ data class Match(
         var deaths: Int,
         var accuracy: Int,
         var length: Int
-        ) {
-
-    var uuid: String = ""
-    var time  = Calendar.getInstance().timeInMillis
-
-
-}
+        )

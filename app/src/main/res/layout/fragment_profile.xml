@@ -11,12 +11,12 @@
         android:layout_margin="-30dp"
         android:adjustViewBounds="false"
         android:alpha="0.1"
+        android:contentDescription="@string/background_hero_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/orisa"
-        android:contentDescription="@string/background_hero_image" />
+        app:srcCompat="@color/transparent" />
 
     <TextView
         android:id="@+id/titleTextView"
@@ -42,7 +42,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:editable="false"
-        android:text="@string/null_string"
+        android:text="@string/loading"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@color/colorAccent"
         android:textSize="62sp"

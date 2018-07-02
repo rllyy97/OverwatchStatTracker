@@ -6,13 +6,13 @@
     <string name="title_new_match">New Match</string>
     <string name="title_tracker">Tracker</string>
 
-    <!-- -->
+    <!-- Technical / Warnings -->
     <string name="null_string">null</string>
     <string name="no_internet_warning">Please connect to the internet.</string>
+    <string name="loading">Loading</string>
 
     <string name="background_hero_image">Background Hero Image</string>
     <string name="sr">SR</string>
-    <string name="edit_profile_info">Edit Profile Info</string>
     <string name="welcome">Welcome</string>
     <string name="username">Username</string>
     <string name="current_sr">Current SR</string>

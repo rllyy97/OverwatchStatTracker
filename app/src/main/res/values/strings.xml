@@ -20,6 +20,7 @@
 
     <!-- Profile Fragment Strings -->
     <string name="profile_title">%s\'s Profile</string>
+    <string name="profile_title_s">%s\' Profile</string>
 
     <!-- New Match Fragment Strings-->
     <string name="eliminations">ELIMINATIONS</string>
@@ -58,9 +59,11 @@
     <string name="moira">Moira</string>
     <string name="mei">Mei</string>
     <string name="bastion">Bastion</string>
+
     <string name="tankCategory">TANK</string>
     <string name="damageCategory">DAMAGE</string>
     <string name="supportCategory">SUPPORT</string>
+
     <string name="hero_1">Hero 1</string>
     <string name="hero_2">Hero 2</string>
     <string name="hero_3">Hero 3</string>

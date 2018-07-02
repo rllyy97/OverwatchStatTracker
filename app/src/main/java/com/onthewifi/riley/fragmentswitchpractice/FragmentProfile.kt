@@ -60,12 +60,12 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     fun loadData(snap: DataSnapshot) {
         parent.name = parent.user!!.displayName ?: "User"
         parent.sr = (snap.child("sr").value as Long).toInt()
-        title.text = getString(R.string.profile_title).format(parent.name)
+        if(parent.name.last() != 's') title.text = getString(R.string.profile_title).format(parent.name)
+        else title.text = getString(R.string.profile_title_s).format(parent.name)
         sr.text = parent.sr.toString()
 
         if (parent.mainHero == null) heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, Hero.from(parent.mainHero)!!.getDrawable(), null))
         else heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.color.transparent, null))
-
     }
 
     fun initSr() {

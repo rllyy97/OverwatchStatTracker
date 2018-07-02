@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         adapter.addFragment(FragmentTracker())
         viewPager.adapter = adapter
         // Disables swiping
-        viewPager.beginFakeDrag()
+//        viewPager.beginFakeDrag()
     }
 
     //  Function to control bottom navigation clicks

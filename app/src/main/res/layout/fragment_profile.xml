@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -51,13 +52,14 @@
         app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/srTail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:layout_marginStart="8dp"
         android:text="@string/sr"
         android:textColor="@color/colorAccent"
+        android:textSize="18sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/srLarge"
         app:layout_constraintStart_toEndOf="@+id/srLarge" />
@@ -74,5 +76,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/srLarge"
         app:spark_scrubEnabled="false" />
+
+    <Button
+        android:id="@+id/wrGraphButton"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="wr%"
+        android:textColor="@color/white"
+        android:textStyle="italic"
+        app:layout_constraintStart_toEndOf="@+id/srGraphButton"
+        app:layout_constraintTop_toBottomOf="@+id/mainGraph" />
+
+    <Button
+        android:id="@+id/srGraphButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
+        android:text="@string/sr"
+        android:textColor="@color/white"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainGraph" />
 
 </android.support.constraint.ConstraintLayout>

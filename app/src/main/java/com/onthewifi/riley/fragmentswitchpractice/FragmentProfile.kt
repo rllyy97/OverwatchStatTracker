@@ -9,6 +9,7 @@ import android.support.v4.content.res.ResourcesCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -33,9 +34,13 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
     private lateinit var title : TextView
     private lateinit var srView : TextView
+    private lateinit var srTail : TextView
     private lateinit var heroImage : ImageView
     private lateinit var graph : SparkView
     private lateinit var winRateView : TextView
+
+    private lateinit var srGraphButton : Button
+    private lateinit var wrGraphButton : Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile,container,false)
@@ -44,8 +49,14 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
         title = view.findViewById(R.id.titleTextView)
         srView = view.findViewById(R.id.srLarge)
+        srTail = view.findViewById(R.id.srTail)
         heroImage = view.findViewById(R.id.heroImage)
         graph = view.findViewById(R.id.mainGraph)
+        srGraphButton = view.findViewById(R.id.srGraphButton)
+        wrGraphButton = view.findViewById(R.id.wrGraphButton)
+
+        srGraphButton.setOnClickListener { initGraph(0) }
+        wrGraphButton.setOnClickListener { initGraph(1) }
 
         srInitializationCheck()
 
@@ -77,7 +88,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         if (parent.mainHero == null) heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, Hero.from(parent.mainHero)!!.getDrawable(), null))
         else heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.color.transparent, null))
 
-        graphInit(0)
+        initGraph(0)
 
     }
 
@@ -89,11 +100,12 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
     // Graph functions
 
-    private fun graphInit(tab: Int) {
+    private fun initGraph(tab: Int) {
         if (parent.matchCount < 2)
             // Display 'Play more matches to see your stats'
         else {
             val newAdapter = GraphAdapter()
+            var color = 0
             when (tab) {
                 0 -> { // SR
                     val srArray: ArrayList<Float> = ArrayList()
@@ -102,6 +114,11 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
                     }
                     newAdapter.setY(srArray)
                     newAdapter.setBaseLineBoolean(false)
+                    color = ContextCompat.getColor(parent.baseContext, R.color.colorAccent)
+                    wrGraphButton.alpha = 0.5F
+                    srGraphButton.alpha = 1F
+                    srView.text = parent.sr.toString()
+                    srTail.text = getString(R.string.sr)
                 }
                 1 -> { // Win Rate
                     val wrArray: ArrayList<Float> = ArrayList()
@@ -111,9 +128,16 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
                     newAdapter.setY(wrArray)
                     newAdapter.setBaseLineBoolean(true)
                     newAdapter.setBase(50F)
-
+                    color = ContextCompat.getColor(parent.baseContext, R.color.colorPrimary)
+                    srGraphButton.alpha = 0.5F
+                    wrGraphButton.alpha = 1F
+                    srView.text = "%.2f".format(parent.winRate*100F)
+                    srTail.text = "%"
                 }
             }
+            graph.lineColor = color
+            srView.setTextColor(color)
+            srTail.setTextColor(color)
             graph.adapter = newAdapter
         }
     }

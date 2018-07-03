@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.robinhood.spark.SparkView
+import org.jetbrains.anko.find
+import java.util.*
 
 class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     private var TAG = "profile"
@@ -41,6 +43,12 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
     private lateinit var srGraphButton : Button
     private lateinit var wrGraphButton : Button
+    private var currentGraphTab : Int = 0
+
+    private lateinit var allGraphButton : Button
+    private lateinit var weeklyGraphButton : Button
+    private lateinit var dailyGraphButton : Button
+    private var currentGraphSpan : Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile,container,false)
@@ -54,9 +62,17 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         graph = view.findViewById(R.id.mainGraph)
         srGraphButton = view.findViewById(R.id.srGraphButton)
         wrGraphButton = view.findViewById(R.id.wrGraphButton)
+        allGraphButton = view.findViewById(R.id.allGraphButton)
+        weeklyGraphButton = view.find(R.id.weeklyGraphButton)
+        dailyGraphButton = view.findViewById(R.id.dailyGraphButton)
 
-        srGraphButton.setOnClickListener { initGraph(0) }
-        wrGraphButton.setOnClickListener { initGraph(1) }
+        srGraphButton.setOnClickListener { initGraph(0, currentGraphSpan) }
+        wrGraphButton.setOnClickListener { initGraph(1, currentGraphSpan) }
+
+        allGraphButton.setOnClickListener { initGraph(currentGraphTab, 0) }
+        weeklyGraphButton.setOnClickListener { initGraph(currentGraphTab, 1) }
+        dailyGraphButton.setOnClickListener { initGraph(currentGraphTab, 2) }
+
 
         srInitializationCheck()
 
@@ -88,7 +104,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         if (parent.mainHero == null) heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, Hero.from(parent.mainHero)!!.getDrawable(), null))
         else heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.color.transparent, null))
 
-        initGraph(0)
+        initGraph(0, 1)
 
     }
 
@@ -100,17 +116,44 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
     // Graph functions
 
-    private fun initGraph(tab: Int) {
+    private fun initGraph(tab: Int, span: Int) {
+        currentGraphTab = tab
+        currentGraphSpan = span
         if (parent.matchCount < 2)
             // Display 'Play more matches to see your stats'
         else {
             val newAdapter = GraphAdapter()
             var color = 0
-            when (tab) {
+            val currentTime = Calendar.getInstance().timeInMillis
+            when (currentGraphTab) {
                 0 -> { // SR
                     val srArray: ArrayList<Float> = ArrayList()
                     parent.latestSnap!!.child("matches").children.forEach {
-                        srArray.add(it.child("sr").value.toString().toFloat())
+                        when (currentGraphSpan) {
+                            0 -> { // All
+                                srArray.add(it.child("sr").value.toString().toFloat())
+                                allGraphButton.alpha = 1.0F
+                                weeklyGraphButton.alpha = 0.5F
+                                dailyGraphButton.alpha = 0.5F
+                            }
+                            1 -> { // Weekly
+                                if(it.key!!.toLong() > (currentTime - 7 * 24 * 60 * 60 * 1000)) {
+                                    srArray.add(it.child("sr").value.toString().toFloat())
+                                    allGraphButton.alpha = 0.5F
+                                    weeklyGraphButton.alpha = 1.0F
+                                    dailyGraphButton.alpha = 0.5F
+                                }
+                            }
+                            2 -> { // Daily
+                                if(it.key!!.toLong() > (currentTime - 24 * 60 * 60 * 1000)) {
+                                    srArray.add(it.child("sr").value.toString().toFloat())
+                                    allGraphButton.alpha = 0.5F
+                                    weeklyGraphButton.alpha = 0.5F
+                                    dailyGraphButton.alpha = 1.0F
+                                }
+                            }
+                        }
+
                     }
                     newAdapter.setY(srArray)
                     newAdapter.setBaseLineBoolean(false)
@@ -123,7 +166,30 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
                 1 -> { // Win Rate
                     val wrArray: ArrayList<Float> = ArrayList()
                     parent.latestSnap!!.child("matches").children.forEach {
-                        wrArray.add(it.child("winRate").value.toString().toFloat() * 100F)
+                        when (currentGraphSpan) {
+                            0 -> { // All
+                                wrArray.add(it.child("winRate").value.toString().toFloat()*100F)
+                                allGraphButton.alpha = 1.0F
+                                weeklyGraphButton.alpha = 0.5F
+                                dailyGraphButton.alpha = 0.5F
+                            }
+                            1 -> { // Weekly
+                                if(it.key!!.toLong() > (currentTime - 7 * 24 * 60 * 60 * 1000)) {
+                                    wrArray.add(it.child("winRate").value.toString().toFloat()*100F)
+                                    allGraphButton.alpha = 0.5F
+                                    weeklyGraphButton.alpha = 1.0F
+                                    dailyGraphButton.alpha = 0.5F
+                                }
+                            }
+                            2 -> { // Daily
+                                if(it.key!!.toLong() > (currentTime - 24 * 60 * 60 * 1000)) {
+                                    wrArray.add(it.child("winRate").value.toString().toFloat()*100F)
+                                    allGraphButton.alpha = 0.5F
+                                    weeklyGraphButton.alpha = 0.5F
+                                    dailyGraphButton.alpha = 1.0F
+                                }
+                            }
+                        }
                     }
                     newAdapter.setY(wrArray)
                     newAdapter.setBaseLineBoolean(true)

@@ -69,5 +69,7 @@
     <string name="hero_3">Hero 3</string>
     <string name="hero_4">Hero 4</string>
     <string name="hero_5">Hero 5</string>
+    <string name="winrate">WINRATE</string>
+    <string name="sample_text">sample text</string>
 
 </resources>

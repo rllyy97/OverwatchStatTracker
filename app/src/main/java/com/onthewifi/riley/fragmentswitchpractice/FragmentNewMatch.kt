@@ -207,6 +207,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
                 userPath.child("sr").setValue(newSr)
                 // Updates Match Win Rate
                 userPath.child("matches").child(timeString).child("winRate").setValue(winRate)
+                parent.latestSnap = snap
             }
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, "whoops", Toast.LENGTH_SHORT).show()

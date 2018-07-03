@@ -20,12 +20,16 @@ class MainActivity : AppCompatActivity() {
 
     var name : String = ""
     var sr = 0
+    var winRate = 0F
+    var matchCount = 0
     var mainHero : String = ""
+
     // Firebase variables
     var user : FirebaseUser? = null
     lateinit var auth : FirebaseAuth
     lateinit var database : FirebaseDatabase
     lateinit var databaseRef : DatabaseReference
+    var latestSnap : DataSnapshot? = null
 
     private lateinit var sharedPreferences : SharedPreferences
 
@@ -59,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         adapter.addFragment(FragmentTracker())
         viewPager.adapter = adapter
         // Disables swiping
-//        viewPager.beginFakeDrag()
+        viewPager.beginFakeDrag()
     }
 
     //  Function to control bottom navigation clicks

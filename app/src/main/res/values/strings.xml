@@ -69,7 +69,12 @@
     <string name="hero_3">Hero 3</string>
     <string name="hero_4">Hero 4</string>
     <string name="hero_5">Hero 5</string>
-    <string name="winrate">WINRATE</string>
     <string name="sample_text">sample text</string>
+    <string name="submit_button">submit button</string>
+    <string name="all">All</string>
+    <string name="weekly">Weekly</string>
+    <string name="daily">Daily</string>
+    <string name="wr_percent">wr%</string>
+    <string name="init_message">Enter your current SR</string>
 
 </resources>

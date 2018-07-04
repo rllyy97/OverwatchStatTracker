@@ -2,7 +2,7 @@
 Riley Evans
 ___
 
-Overwatch Competetive Statistic Tracking Application
+Overwatch Competitive Statistic Tracking Application
 
 Android
 

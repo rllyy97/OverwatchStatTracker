@@ -17,7 +17,6 @@ class SrInitDialog: DialogFragment()  {
 
     private lateinit var srEdit: EditText
     private lateinit var submitButton: ImageButton
-    private var sr: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_sr_init_dialog, container, false)

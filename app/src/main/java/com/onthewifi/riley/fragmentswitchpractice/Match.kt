@@ -1,9 +1,5 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
-import com.google.firebase.database.IgnoreExtraProperties
-import java.util.*
-import kotlin.collections.HashMap
-
 data class Match(
         var time: Long,
         var winRate: Float,

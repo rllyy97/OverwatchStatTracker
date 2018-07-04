@@ -1,7 +1,5 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
-import android.graphics.Rect
-import android.graphics.RectF
 import com.robinhood.spark.SparkAdapter
 
 class GraphAdapter : SparkAdapter() {

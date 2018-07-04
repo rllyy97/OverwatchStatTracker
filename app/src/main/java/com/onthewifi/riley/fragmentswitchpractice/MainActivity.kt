@@ -1,8 +1,6 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
@@ -13,7 +11,6 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,12 +23,10 @@ class MainActivity : AppCompatActivity() {
 
     // Firebase variables
     var user : FirebaseUser? = null
-    lateinit var auth : FirebaseAuth
-    lateinit var database : FirebaseDatabase
+    private lateinit var auth : FirebaseAuth
+    private lateinit var database : FirebaseDatabase
     lateinit var databaseRef : DatabaseReference
     var latestSnap : DataSnapshot? = null
-
-    private lateinit var sharedPreferences : SharedPreferences
 
     private lateinit var fragmentAdapter: FragmentAdapter
     private lateinit var viewPager: ViewPager

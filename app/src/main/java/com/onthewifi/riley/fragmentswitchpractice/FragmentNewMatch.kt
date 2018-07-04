@@ -11,12 +11,10 @@ import android.widget.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.fragment_sr_init_dialog.*
 import java.util.*
-import kotlin.collections.HashMap
 
 class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
-    private var TAG = "new_match"
+    private var fragmentTag = "new_match"
     private lateinit var parent: MainActivity
 
     // For character picker
@@ -176,10 +174,16 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
         // Grab previous info
         var oldSr: Int
         val newSr: Int = sr.text.toString().toInt()
-        var matchCount = 0
+        var matchCount: Int
         var win = false
         var winRate= 0.0F
-        var winCount = 0
+        var winCount: Int
+        // Profile Averages
+//        var avgEliminations : Int
+//        var avgDeaths : Int
+//        var avgDamage : Int
+//        var avgHealing : Int
+//        var avgAccuracy : Int
 
         val time = Calendar.getInstance().timeInMillis
         val timeString = time.toString()
@@ -193,6 +197,8 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
                     matchCount = 1
                     winRate = if (win) 1F else 0F
                     winCount = if (win) 1 else 0
+                    // Profile Averages
+
                 } else {
                     matchCount = (snap.child("matchCount").value as Long).toInt()
                     matchCount++

@@ -1,6 +1,6 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
-import android.content.res.Resources
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
@@ -13,7 +13,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.firebase.ui.auth.data.model.Resource
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -23,7 +22,7 @@ import org.jetbrains.anko.find
 import java.util.*
 
 class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
-    private var TAG = "profile"
+    private var fragmentTag = "profile"
     private lateinit var parent: MainActivity
 
     // For sr init
@@ -39,7 +38,6 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     private lateinit var srTail : TextView
     private lateinit var heroImage : ImageView
     private lateinit var graph : SparkView
-    private lateinit var winRateView : TextView
 
     private lateinit var srGraphButton : Button
     private lateinit var wrGraphButton : Button
@@ -116,6 +114,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
     // Graph functions
 
+    @SuppressLint("SetTextI18n")
     private fun initGraph(tab: Int, span: Int) {
         currentGraphTab = tab
         currentGraphSpan = span

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -85,7 +84,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/button_background"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="All"
+        android:text="@string/all"
         android:textColor="@color/white"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,7 +98,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/button_background"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="Weekly"
+        android:text="@string/weekly"
         android:textColor="@color/white"
         android:textStyle="italic"
         app:layout_constraintEnd_toStartOf="@+id/allGraphButton"
@@ -113,7 +112,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/button_background"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="Daily"
+        android:text="@string/daily"
         android:textColor="@color/white"
         android:textStyle="italic"
         app:layout_constraintEnd_toStartOf="@+id/weeklyGraphButton"
@@ -127,7 +126,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/button_background"
         android:backgroundTint="@color/colorPrimary"
-        android:text="wr%"
+        android:text="@string/wr_percent"
         android:textColor="@color/white"
         android:textStyle="italic"
         app:layout_constraintStart_toEndOf="@+id/srGraphButton"

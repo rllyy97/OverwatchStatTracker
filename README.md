@@ -1,16 +1,19 @@
-# OverwatchStatTracker
-Riley Evans
+![](OverwatchTrackerLogo.png)
+
+# Overwatch Competitive Statistic Tracker
+
+**Author - Riley Evans**
+
+An Overwatch statistic tracking application.
+
+Helps you track individual statistics per game and compare averages.
 ___
-
-Overwatch Competitive Statistic Tracking Application
-
-Android
-
-Built with Kotlin
-
+Built With
+--------
+* **Kotlin** - Language
+* **Android Studio** - IDE
+* **Google Firebase** - Database
 ___
-
-
 License
 --------
 Copyright 2018 Riley Evans

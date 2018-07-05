@@ -2,6 +2,8 @@ package com.onthewifi.riley.fragmentswitchpractice
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
+import android.support.constraint.ConstraintSet
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -21,6 +23,7 @@ import com.robinhood.spark.SparkView
 import org.jetbrains.anko.find
 import java.util.*
 
+
 class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     private var fragmentTag = "profile"
     private lateinit var parent: MainActivity
@@ -39,6 +42,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     private lateinit var heroImage : ImageView
     private lateinit var graph : SparkView
     private lateinit var lowMatchWarning : TextView
+    private lateinit var fiftyPercentView : TextView
 
     private lateinit var srGraphButton : Button
     private lateinit var wrGraphButton : Button
@@ -59,6 +63,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         graphInfoTail = view.findViewById(R.id.graphInfoTail)
         heroImage = view.findViewById(R.id.heroImage)
         lowMatchWarning = view.findViewById(R.id.lowMatchWarning)
+        fiftyPercentView = view.findViewById(R.id.fiftyPercent)
         graph = view.findViewById(R.id.mainGraph)
         srGraphButton = view.findViewById(R.id.srGraphButton)
         wrGraphButton = view.findViewById(R.id.wrGraphButton)
@@ -180,6 +185,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
                 graphInfo.text = parent.sr.toString()
                 graphInfoTail.text = getString(R.string.sr)
                 newAdapter.setBaseLineBoolean(false)
+                fiftyPercentView.alpha = 0.0F
             }
             1 -> { // Win Rate
                 newAdapter.setBaseLineBoolean(true)
@@ -189,10 +195,20 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
                 wrGraphButton.alpha = 1F
                 graphInfo.text = "%.2f".format(parent.winRate*100F)
                 graphInfoTail.text = "%"
+                // Constrains 50% Indicator to baseline
+                val base = graph.baseline
+                val fiftyPercentId = fiftyPercentView.id
+                val constraintSet = ConstraintSet()
+                constraintSet.clone(this.view as ConstraintLayout)
+                constraintSet.connect(base, ConstraintSet.TOP, fiftyPercentId, ConstraintSet.BOTTOM, 8)
+                constraintSet.connect(base, ConstraintSet.LEFT, fiftyPercentId, ConstraintSet.LEFT, 0)
+                constraintSet.applyTo(this.view as ConstraintLayout)
+                fiftyPercentView.alpha = 1.0F
             }
         }
         newAdapter.setY(floatArray)
         graph.lineColor = color
+        graph.scrubLineColor = color
         graphInfo.setTextColor(color)
         graphInfoTail.setTextColor(color)
         graph.adapter = newAdapter

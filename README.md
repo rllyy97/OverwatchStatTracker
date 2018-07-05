@@ -1,4 +1,4 @@
-![](OverwatchTrackerLogo.png)
+![](OverwatchTrackerBanner.png)
 
 # Overwatch Competitive Statistic Tracker
 

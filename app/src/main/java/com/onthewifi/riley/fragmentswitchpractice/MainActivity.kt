@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     var latestSnap : DataSnapshot? = null
 
     private lateinit var fragmentAdapter: FragmentAdapter
-    private lateinit var viewPager: ViewPager
+    private lateinit var viewPager: LockableViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,8 +57,6 @@ class MainActivity : AppCompatActivity() {
         adapter.addFragment(FragmentNewMatch())
         adapter.addFragment(FragmentTracker())
         viewPager.adapter = adapter
-        // Disables swiping
-        viewPager.beginFakeDrag()
     }
 
     //  Function to control bottom navigation clicks

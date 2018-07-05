@@ -34,8 +34,8 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     private lateinit var userPath: DatabaseReference
 
     private lateinit var title : TextView
-    private lateinit var srView : TextView
-    private lateinit var srTail : TextView
+    private lateinit var graphInfo : TextView
+    private lateinit var graphInfoTail : TextView
     private lateinit var heroImage : ImageView
     private lateinit var graph : SparkView
     private lateinit var lowMatchWarning : TextView
@@ -55,8 +55,8 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         userPath = parent.databaseRef.child("users").child(parent.user!!.uid)
 
         title = view.findViewById(R.id.titleTextView)
-        srView = view.findViewById(R.id.srLarge)
-        srTail = view.findViewById(R.id.srTail)
+        graphInfo = view.findViewById(R.id.graphInfo)
+        graphInfoTail = view.findViewById(R.id.graphInfoTail)
         heroImage = view.findViewById(R.id.heroImage)
         lowMatchWarning = view.findViewById(R.id.lowMatchWarning)
         graph = view.findViewById(R.id.mainGraph)
@@ -98,7 +98,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         parent.matchCount = (snap.child("matchCount").value as Long).toInt()
         if(parent.name.last() != 's') title.text = getString(R.string.profile_title).format(parent.name)
         else title.text = getString(R.string.profile_title_s).format(parent.name)
-        srView.text = parent.sr.toString()
+        graphInfo.text = parent.sr.toString()
 
         if (parent.mainHero == null) heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, Hero.from(parent.mainHero)!!.getDrawable(), null))
         else heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.color.transparent, null))
@@ -160,13 +160,13 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         graph.scrubListener = SparkView.OnScrubListener {
             if (it != null) {
                 when (currentGraphTab) {
-                    0 -> srView.text = it.toString()
-                    1 -> srView.text =  "%.2f".format(it)
+                    0 -> graphInfo.text = it.toString()
+                    1 -> graphInfo.text =  "%.2f".format(it)
                 }
             } else {
                 when (currentGraphTab) {
-                    0 -> srView.text = parent.sr.toString()
-                    1 -> srView.text = "%.2f".format(parent.winRate*100F)
+                    0 -> graphInfo.text = parent.sr.toString()
+                    1 -> graphInfo.text = "%.2f".format(parent.winRate*100F)
                 }
             }
         }
@@ -177,8 +177,8 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
                 color = ContextCompat.getColor(parent.baseContext, R.color.colorAccent)
                 wrGraphButton.alpha = 0.5F
                 srGraphButton.alpha = 1F
-                srView.text = parent.sr.toString()
-                srTail.text = getString(R.string.sr)
+                graphInfo.text = parent.sr.toString()
+                graphInfoTail.text = getString(R.string.sr)
                 newAdapter.setBaseLineBoolean(false)
             }
             1 -> { // Win Rate
@@ -187,14 +187,14 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
                 color = ContextCompat.getColor(parent.baseContext, R.color.colorPrimary)
                 srGraphButton.alpha = 0.5F
                 wrGraphButton.alpha = 1F
-                srView.text = "%.2f".format(parent.winRate*100F)
-                srTail.text = "%"
+                graphInfo.text = "%.2f".format(parent.winRate*100F)
+                graphInfoTail.text = "%"
             }
         }
         newAdapter.setY(floatArray)
         graph.lineColor = color
-        srView.setTextColor(color)
-        srTail.setTextColor(color)
+        graphInfo.setTextColor(color)
+        graphInfoTail.setTextColor(color)
         graph.adapter = newAdapter
     }
 

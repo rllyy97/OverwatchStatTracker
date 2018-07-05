@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/srLarge"
+        android:id="@+id/graphInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
     <TextView
-        android:id="@+id/srTail"
+        android:id="@+id/graphInfoTail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -60,8 +60,8 @@
         android:textColor="@color/colorAccent"
         android:textSize="18sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="@+id/srLarge"
-        app:layout_constraintStart_toEndOf="@+id/srLarge" />
+        app:layout_constraintBottom_toBottomOf="@+id/graphInfo"
+        app:layout_constraintStart_toEndOf="@+id/graphInfo" />
 
     <com.robinhood.spark.SparkView
         android:id="@+id/mainGraph"
@@ -74,7 +74,7 @@
         android:background="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/srLarge"
+        app:layout_constraintTop_toBottomOf="@+id/graphInfo"
         app:spark_scrubEnabled="true" />
 
     <Button

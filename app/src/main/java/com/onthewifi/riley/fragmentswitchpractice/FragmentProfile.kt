@@ -117,8 +117,6 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     private fun initGraph(tab: Int, span: Int) {
         currentGraphTab = tab
         currentGraphSpan = span
-        graph.alpha = 1.0F
-        lowMatchWarning.alpha = 0.0F
         val newAdapter = GraphAdapter()
         var color = 0
         val currentTime = Calendar.getInstance().timeInMillis
@@ -148,10 +146,31 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
                 }
             }
         }
+
         if (floatArray.size < 2) { // Not enough matches to display graph
             graph.alpha = 0.0F
             lowMatchWarning.alpha = 1.0F
+            graph.isScrubEnabled = false
+        } else {
+            graph.alpha = 1.0F
+            lowMatchWarning.alpha = 0.0F
+            graph.isScrubEnabled = true
         }
+
+        graph.scrubListener = SparkView.OnScrubListener {
+            if (it != null) {
+                when (currentGraphTab) {
+                    0 -> srView.text = it.toString()
+                    1 -> srView.text =  "%.2f".format(it)
+                }
+            } else {
+                when (currentGraphTab) {
+                    0 -> srView.text = parent.sr.toString()
+                    1 -> srView.text = "%.2f".format(parent.winRate*100F)
+                }
+            }
+        }
+
 
         when (currentGraphTab) {
             0 -> { // SR

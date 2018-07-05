@@ -38,6 +38,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     private lateinit var srTail : TextView
     private lateinit var heroImage : ImageView
     private lateinit var graph : SparkView
+    private lateinit var lowMatchWarning : TextView
 
     private lateinit var srGraphButton : Button
     private lateinit var wrGraphButton : Button
@@ -57,6 +58,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         srView = view.findViewById(R.id.srLarge)
         srTail = view.findViewById(R.id.srTail)
         heroImage = view.findViewById(R.id.heroImage)
+        lowMatchWarning = view.findViewById(R.id.lowMatchWarning)
         graph = view.findViewById(R.id.mainGraph)
         srGraphButton = view.findViewById(R.id.srGraphButton)
         wrGraphButton = view.findViewById(R.id.wrGraphButton)
@@ -70,7 +72,6 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         allGraphButton.setOnClickListener { initGraph(currentGraphTab, 0) }
         weeklyGraphButton.setOnClickListener { initGraph(currentGraphTab, 1) }
         dailyGraphButton.setOnClickListener { initGraph(currentGraphTab, 2) }
-
 
         srInitializationCheck()
 
@@ -118,94 +119,98 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     private fun initGraph(tab: Int, span: Int) {
         currentGraphTab = tab
         currentGraphSpan = span
-        if (parent.matchCount < 2)
-            // Display 'Play more matches to see your stats'
-        else {
-            val newAdapter = GraphAdapter()
-            var color = 0
-            val currentTime = Calendar.getInstance().timeInMillis
-            when (currentGraphTab) {
-                0 -> { // SR
-                    val srArray: ArrayList<Float> = ArrayList()
-                    parent.latestSnap!!.child("matches").children.forEach {
-                        when (currentGraphSpan) {
-                            0 -> { // All
+        graph.alpha = 1.0F
+        lowMatchWarning.alpha = 0.0F
+        val newAdapter = GraphAdapter()
+        var color = 0
+        val currentTime = Calendar.getInstance().timeInMillis
+        when (currentGraphTab) {
+            0 -> { // SR
+                val srArray: ArrayList<Float> = ArrayList()
+                parent.latestSnap!!.child("matches").children.forEach {
+                    when (currentGraphSpan) {
+                        0 -> { // All
+                            srArray.add(it.child("sr").value.toString().toFloat())
+                            allGraphButton.alpha = 1.0F
+                            weeklyGraphButton.alpha = 0.5F
+                            dailyGraphButton.alpha = 0.5F
+                        }
+                        1 -> { // Weekly
+                            if(it.key!!.toLong() > (currentTime - 7 * 24 * 60 * 60 * 1000)) {
                                 srArray.add(it.child("sr").value.toString().toFloat())
-                                allGraphButton.alpha = 1.0F
-                                weeklyGraphButton.alpha = 0.5F
+                                allGraphButton.alpha = 0.5F
+                                weeklyGraphButton.alpha = 1.0F
                                 dailyGraphButton.alpha = 0.5F
                             }
-                            1 -> { // Weekly
-                                if(it.key!!.toLong() > (currentTime - 7 * 24 * 60 * 60 * 1000)) {
-                                    srArray.add(it.child("sr").value.toString().toFloat())
-                                    allGraphButton.alpha = 0.5F
-                                    weeklyGraphButton.alpha = 1.0F
-                                    dailyGraphButton.alpha = 0.5F
-                                }
-                            }
-                            2 -> { // Daily
-                                if(it.key!!.toLong() > (currentTime - 24 * 60 * 60 * 1000)) {
-                                    srArray.add(it.child("sr").value.toString().toFloat())
-                                    allGraphButton.alpha = 0.5F
-                                    weeklyGraphButton.alpha = 0.5F
-                                    dailyGraphButton.alpha = 1.0F
-                                }
+                        }
+                        2 -> { // Daily
+                            if(it.key!!.toLong() > (currentTime - 24 * 60 * 60 * 1000)) {
+                                srArray.add(it.child("sr").value.toString().toFloat())
+                                allGraphButton.alpha = 0.5F
+                                weeklyGraphButton.alpha = 0.5F
+                                dailyGraphButton.alpha = 1.0F
                             }
                         }
+                    }
 
-                    }
-                    newAdapter.setY(srArray)
-                    newAdapter.setBaseLineBoolean(false)
-                    color = ContextCompat.getColor(parent.baseContext, R.color.colorAccent)
-                    wrGraphButton.alpha = 0.5F
-                    srGraphButton.alpha = 1F
-                    srView.text = parent.sr.toString()
-                    srTail.text = getString(R.string.sr)
                 }
-                1 -> { // Win Rate
-                    val wrArray: ArrayList<Float> = ArrayList()
-                    parent.latestSnap!!.child("matches").children.forEach {
-                        when (currentGraphSpan) {
-                            0 -> { // All
-                                wrArray.add(it.child("winRate").value.toString().toFloat()*100F)
-                                allGraphButton.alpha = 1.0F
-                                weeklyGraphButton.alpha = 0.5F
-                                dailyGraphButton.alpha = 0.5F
-                            }
-                            1 -> { // Weekly
-                                if(it.key!!.toLong() > (currentTime - 7 * 24 * 60 * 60 * 1000)) {
-                                    wrArray.add(it.child("winRate").value.toString().toFloat()*100F)
-                                    allGraphButton.alpha = 0.5F
-                                    weeklyGraphButton.alpha = 1.0F
-                                    dailyGraphButton.alpha = 0.5F
-                                }
-                            }
-                            2 -> { // Daily
-                                if(it.key!!.toLong() > (currentTime - 24 * 60 * 60 * 1000)) {
-                                    wrArray.add(it.child("winRate").value.toString().toFloat()*100F)
-                                    allGraphButton.alpha = 0.5F
-                                    weeklyGraphButton.alpha = 0.5F
-                                    dailyGraphButton.alpha = 1.0F
-                                }
-                            }
-                        }
-                    }
-                    newAdapter.setY(wrArray)
-                    newAdapter.setBaseLineBoolean(true)
-                    newAdapter.setBase(50F)
-                    color = ContextCompat.getColor(parent.baseContext, R.color.colorPrimary)
-                    srGraphButton.alpha = 0.5F
-                    wrGraphButton.alpha = 1F
-                    srView.text = "%.2f".format(parent.winRate*100F)
-                    srTail.text = "%"
+                if (srArray.size < 2) { // Not enough matches to display graph
+                    graph.alpha = 0.0F
+                    lowMatchWarning.alpha = 1.0F
                 }
+                newAdapter.setY(srArray)
+                newAdapter.setBaseLineBoolean(false)
+                color = ContextCompat.getColor(parent.baseContext, R.color.colorAccent)
+                wrGraphButton.alpha = 0.5F
+                srGraphButton.alpha = 1F
+                srView.text = parent.sr.toString()
+                srTail.text = getString(R.string.sr)
             }
-            graph.lineColor = color
-            srView.setTextColor(color)
-            srTail.setTextColor(color)
-            graph.adapter = newAdapter
+            1 -> { // Win Rate
+                val wrArray: ArrayList<Float> = ArrayList()
+                parent.latestSnap!!.child("matches").children.forEach {
+                    when (currentGraphSpan) {
+                        0 -> { // All
+                            wrArray.add(it.child("winRate").value.toString().toFloat()*100F)
+                            allGraphButton.alpha = 1.0F
+                            weeklyGraphButton.alpha = 0.5F
+                            dailyGraphButton.alpha = 0.5F
+                        }
+                        1 -> { // Weekly
+                            if(it.key!!.toLong() > (currentTime - 7 * 24 * 60 * 60 * 1000)) {
+                                wrArray.add(it.child("winRate").value.toString().toFloat()*100F)
+                                allGraphButton.alpha = 0.5F
+                                weeklyGraphButton.alpha = 1.0F
+                                dailyGraphButton.alpha = 0.5F
+                            }
+                        }
+                        2 -> { // Daily
+                            if(it.key!!.toLong() > (currentTime - 24 * 60 * 60 * 1000)) {
+                                wrArray.add(it.child("winRate").value.toString().toFloat()*100F)
+                                allGraphButton.alpha = 0.5F
+                                weeklyGraphButton.alpha = 0.5F
+                                dailyGraphButton.alpha = 1.0F
+                            }
+                        }
+                    }
+                }
+                if (wrArray.size < 2) { // Not enough matches to display graph
+                    graph.alpha = 0.0F
+                    lowMatchWarning.alpha = 1.0F
+                }
+                newAdapter.setY(wrArray)
+                newAdapter.setBaseLineBoolean(true)
+                newAdapter.setBase(50F)
+                color = ContextCompat.getColor(parent.baseContext, R.color.colorPrimary)
+                srGraphButton.alpha = 0.5F
+                wrGraphButton.alpha = 1F
+                srView.text = "%.2f".format(parent.winRate*100F)
+                srTail.text = "%"
+            }
         }
+        graph.lineColor = color
+        srView.setTextColor(color)
+        srTail.setTextColor(color)
+        graph.adapter = newAdapter
     }
-
-
 }

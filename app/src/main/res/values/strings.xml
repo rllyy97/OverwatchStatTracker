@@ -76,5 +76,6 @@
     <string name="daily">Daily</string>
     <string name="wr_percent">wr%</string>
     <string name="init_message">Enter your current SR</string>
+    <string name="play_more_matches_to_display_graph">Play more matches to display graph</string>
 
 </resources>

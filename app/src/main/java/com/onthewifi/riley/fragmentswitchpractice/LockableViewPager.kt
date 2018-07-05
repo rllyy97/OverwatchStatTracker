@@ -23,4 +23,8 @@ class LockableViewPager : ViewPager {
         return if(locked) false
         else super.performClick()
     }
+
+    fun isLocked(bool: Boolean) {
+        locked = bool
+    }
 }

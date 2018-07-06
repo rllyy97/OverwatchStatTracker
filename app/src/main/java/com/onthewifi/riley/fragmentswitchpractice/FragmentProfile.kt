@@ -40,22 +40,26 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
     private lateinit var baseView: ConstraintLayout
 
+    // Header Views
     private lateinit var title : TextView
     private lateinit var graphInfo : TextView
     private lateinit var graphInfoTail : TextView
     private lateinit var heroImage : ImageView
+
+    // Graph Views
     private lateinit var graph : SparkView
     private val newAdapter: GraphAdapter = GraphAdapter()
     private lateinit var lowMatchWarning : TextView
-
     private lateinit var srGraphButton : Button
     private lateinit var wrGraphButton : Button
     private var currentGraphTab : Int = 0
-
     private lateinit var allGraphButton : Button
     private lateinit var weeklyGraphButton : Button
     private lateinit var dailyGraphButton : Button
     private var currentGraphSpan : Int = 0
+
+    // Footer Views
+    private lateinit var careerHigh : TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile,container,false)
@@ -67,11 +71,10 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         graphInfo = view.findViewById(R.id.graphInfo)
         graphInfoTail = view.findViewById(R.id.graphInfoTail)
         heroImage = view.findViewById(R.id.heroImage)
-        lowMatchWarning = view.findViewById(R.id.lowMatchWarning)
 
         graph = view.findViewById(R.id.mainGraph)
         newAdapter.setBase(50F)
-        var paint = Paint()
+        val paint = Paint()
         paint.strokeCap = Paint.Cap.ROUND
         paint.strokeWidth = 3F
         paint.color = Color.GRAY
@@ -83,6 +86,9 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         allGraphButton = view.findViewById(R.id.allGraphButton)
         weeklyGraphButton = view.find(R.id.weeklyGraphButton)
         dailyGraphButton = view.findViewById(R.id.dailyGraphButton)
+        lowMatchWarning = view.findViewById(R.id.lowMatchWarning)
+
+        careerHigh = view.findViewById(R.id.careerHigh)
 
         srGraphButton.setOnClickListener { initGraph(0, currentGraphSpan) }
         wrGraphButton.setOnClickListener { initGraph(1, currentGraphSpan) }
@@ -114,9 +120,12 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         parent.sr = (snap.child("sr").value as Long).toInt()
         parent.winRate = (snap.child("winRate").value as Double).toFloat()
         parent.matchCount = (snap.child("matchCount").value as Long).toInt()
+        parent.careerHigh = (snap.child("careerHigh").value as Long).toInt()
         if(parent.name.last() != 's') title.text = getString(R.string.profile_title).format(parent.name)
         else title.text = getString(R.string.profile_title_s).format(parent.name)
         graphInfo.text = parent.sr.toString()
+
+        careerHigh.text = parent.careerHigh.toString()
 
         if (parent.mainHero == null) heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, Hero.from(parent.mainHero)!!.getDrawable(), null))
         else heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.color.transparent, null))
@@ -218,4 +227,6 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         return if (tab == 0) it.child("sr").value.toString().toFloat()
         else it.child("winRate").value.toString().toFloat()*100F
     }
+
+
 }

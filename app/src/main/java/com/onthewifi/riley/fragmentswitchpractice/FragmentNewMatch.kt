@@ -197,6 +197,8 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
                     matchCount = 1
                     winRate = if (win) 1F else 0F
                     winCount = if (win) 1 else 0
+                    if (win) userPath.child("careerHigh").setValue(newSr)
+                    else userPath.child("careerHigh").setValue(oldSr)
                     // Profile Averages
 
                 } else {
@@ -205,12 +207,14 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
                     winCount = (snap.child("winCount").value as Long).toInt()
                     if (win) winCount++
                     winRate = winCount.toFloat() / matchCount.toFloat()
+                    if (newSr > snap.child("careerHigh").value as Long) userPath.child("careerHigh").setValue(newSr)
                 }
                 // Updates Profile Data
                 userPath.child("matchCount").setValue(matchCount)
                 userPath.child("winCount").setValue(winCount)
                 userPath.child("winRate").setValue(winRate)
                 userPath.child("sr").setValue(newSr)
+                snap.child("careerHigh").value
                 // Updates Match Win Rate
                 userPath.child("matches").child(timeString).child("winRate").setValue(winRate)
                 parent.latestSnap = snap
@@ -239,7 +243,6 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
                 length.text.toString().toInt())
 
         userPath.child("matches").child(timeString).setValue(match)
-
 
         clearFields()
         Toast.makeText(context, "Submitted Match", Toast.LENGTH_SHORT).show()

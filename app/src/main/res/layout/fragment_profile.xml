@@ -83,7 +83,7 @@
         android:id="@+id/allGraphButton"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_background"
         android:backgroundTint="@color/colorPrimaryDark"
@@ -139,7 +139,7 @@
         android:id="@+id/srGraphButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_background"
         android:text="@string/sr"
@@ -158,5 +158,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/mainGraph" />
+
+    <TextView
+        android:id="@+id/careerHighTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Career High"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/srGraphButton" />
+
+    <TextView
+        android:id="@+id/careerHigh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/loading"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintStart_toEndOf="@+id/careerHighTitle"
+        app:layout_constraintTop_toBottomOf="@+id/wrGraphButton" />
 
 </android.support.constraint.ConstraintLayout>

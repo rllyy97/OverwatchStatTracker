@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     var name : String = ""
     var sr = 0
+    var careerHigh = 0
     var winRate = 0F
     var matchCount = 0
     var mainHero : String = ""

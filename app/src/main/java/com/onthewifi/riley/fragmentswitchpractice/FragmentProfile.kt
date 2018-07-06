@@ -44,7 +44,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     private lateinit var title : TextView
     private lateinit var graphInfo : TextView
     private lateinit var graphInfoTail : TextView
-    private lateinit var heroImage : ImageView
+    private lateinit var backgroundImage : ImageView
 
     // Graph Views
     private lateinit var graph : SparkView
@@ -70,7 +70,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         title = view.findViewById(R.id.titleTextView)
         graphInfo = view.findViewById(R.id.graphInfo)
         graphInfoTail = view.findViewById(R.id.graphInfoTail)
-        heroImage = view.findViewById(R.id.heroImage)
+        backgroundImage = view.findViewById(R.id.backgroundImage)
 
         graph = view.findViewById(R.id.mainGraph)
         newAdapter.setBase(50F)
@@ -124,11 +124,9 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         if(parent.name.last() != 's') title.text = getString(R.string.profile_title).format(parent.name)
         else title.text = getString(R.string.profile_title_s).format(parent.name)
         graphInfo.text = parent.sr.toString()
+        updateRankingImage(parent.sr)
 
         careerHigh.text = parent.careerHigh.toString()
-
-        if (parent.mainHero == null) heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, Hero.from(parent.mainHero)!!.getDrawable(), null))
-        else heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.color.transparent, null))
 
         initGraph(0, 1)
     }
@@ -228,5 +226,15 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         else it.child("winRate").value.toString().toFloat()*100F
     }
 
-
+    fun updateRankingImage(rank: Int) {
+        when (rank) {
+            in 0..1499 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.bronze, null))
+            in 1500..1999 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.silver, null))
+            in 2000..2499 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.gold, null))
+            in 2500..2999 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.platinum, null))
+            in 3000..3499 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.diamond, null))
+            in 3500..3999 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.masters, null))
+            in 4000..5000 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.grandmasters, null))
+        }
+    }
 }

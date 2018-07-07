@@ -4,10 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.Toast
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.ConnectionResult
@@ -22,16 +21,12 @@ class SignInActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLi
     private lateinit var gso : GoogleSignInOptions
     private lateinit var gac : GoogleApiClient
 
-    private lateinit var baseView : ConstraintLayout
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
-        baseView = findViewById(R.id.base)
+//        setContentView(R.layout.activity_sign_in)
         if(!isNetworkConnected()) {
-            Snackbar.make(baseView, R.string.no_internet_warning,
-                    Snackbar.LENGTH_SHORT)
-                    .show()
+            Toast.makeText(baseContext, R.string.no_internet_warning, Toast.LENGTH_LONG).show()
+
         }
         // Initialize Firebase Objects
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

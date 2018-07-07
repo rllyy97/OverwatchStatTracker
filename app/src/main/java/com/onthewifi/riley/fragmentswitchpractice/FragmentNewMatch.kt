@@ -12,6 +12,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import java.util.*
+import kotlin.collections.ArrayList
 
 class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
     private var fragmentTag = "new_match"
@@ -19,7 +20,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
 
     // For character picker
     override fun sendInput(input: String) {
-        heroStringArray[heroCounter] = input
+        heroStringArray.add(input)
         heroIconArray[heroCounter].setOnClickListener(deleteCharacter)
         heroIconArray[heroCounter].setImageResource(Hero.from(input)!!.getDrawable())
 
@@ -31,12 +32,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
     }
 
     private var heroCounter = 0
-    private var hero1: String = ""
-    private var hero2: String = ""
-    private var hero3: String = ""
-    private var hero4: String = ""
-    private var hero5: String = ""
-    private var heroStringArray = arrayOf(hero1,hero2,hero3,hero4,hero5)
+    private var heroStringArray: ArrayList<String> = ArrayList()
 
     // View References
     private lateinit var title: TextView
@@ -92,6 +88,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
 
         parent = activity as MainActivity
 
+        heroStringArray.clear()
         heroIconArray = arrayOf(hero1icon, hero2icon, hero3icon, hero4icon, hero5icon)
         for (icon in heroIconArray) {
             icon.setOnClickListener(addCharacter)
@@ -106,12 +103,11 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
 
     private fun deleteCharacter(view: ImageButton) {
         var marker = view.tag as Int
+        heroStringArray.removeAt(marker)
         while (marker+1 < heroCounter) {
-            heroStringArray[marker] = heroStringArray[marker+1]
             heroIconArray[marker].setImageResource(Hero.from(heroStringArray[marker])!!.getDrawable())
             marker++
         }
-        heroStringArray[marker] = ""
         heroIconArray[marker].setOnClickListener(addCharacter)
         heroIconArray[marker].setImageResource(R.drawable.ic_add_black_24dp)
         if (heroCounter < 5) {
@@ -155,7 +151,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
     private fun submitMatch() {
         // Checks fields are full
         if (
-            heroStringArray[0] == ""
+            heroStringArray.size == 0
             || eliminations.text.isEmpty()
             || damage.text.isEmpty()
             || heals.text.isEmpty()
@@ -231,11 +227,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
                 newSr,
                 win,
                 mapSpinner.selectedItem.toString(),
-                heroStringArray[0],
-                heroStringArray[1],
-                heroStringArray[2],
-                heroStringArray[3],
-                heroStringArray[4],
+                heroStringArray,
                 eliminations.text.toString().toInt(),
                 damage.text.toString().toInt(),
                 heals.text.toString().toInt(),

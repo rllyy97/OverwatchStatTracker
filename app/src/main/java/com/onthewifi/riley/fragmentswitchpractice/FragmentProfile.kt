@@ -183,11 +183,11 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
         graph.scrubListener = SparkView.OnScrubListener {
             if (it != null) {
-                when (currentGraphTab) {
-                    0 -> graphInfo.text = it.toString()
+                when (currentGraphTab) { // SR
+                    0 -> graphInfo.text = (it as Float).toInt().toString()
                     1 -> graphInfo.text =  "%.2f".format(it)
                 }
-            } else {
+            } else { // Win Rate
                 when (currentGraphTab) {
                     0 -> graphInfo.text = parent.sr.toString()
                     1 -> graphInfo.text = "%.2f".format(parent.winRate*100F)
@@ -221,12 +221,14 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         graph.adapter = newAdapter
     }
 
+    // Helper function to return sr or win rate of a match
     private fun addValue(tab: Int, it: DataSnapshot): Float {
         return if (tab == 0) it.child("sr").value.toString().toFloat()
         else it.child("winRate").value.toString().toFloat()*100F
     }
 
-    fun updateRankingImage(rank: Int) {
+    // Sets the background image to the current SR rank
+    private fun updateRankingImage(rank: Int) {
         when (rank) {
             in 0..1499 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.bronze, null))
             in 1500..1999 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.silver, null))

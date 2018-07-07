@@ -16,8 +16,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     var name : String = ""
-    var sr = 0
-    var careerHigh = 0
+    var sr : Int = 0
+    var careerHigh: Int = 0
     var winRate = 0F
     var matchCount = 0
     var mainHero : String = ""

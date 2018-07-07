@@ -229,6 +229,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
                 time,
                 winRate,
                 newSr,
+                win,
                 mapSpinner.selectedItem.toString(),
                 heroStringArray[0],
                 heroStringArray[1],

@@ -4,6 +4,7 @@ data class Match(
         var time: Long,
         var winRate: Float,
         var sr: Int,
+        var isWin: Boolean,
         var map: String,
         var hero1: String,
         var hero2: String,

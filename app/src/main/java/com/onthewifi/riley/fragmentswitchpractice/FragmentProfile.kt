@@ -60,6 +60,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
     // Footer Views
     private lateinit var careerHigh : TextView
+    private lateinit var totalMatches : TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile,container,false)
@@ -89,6 +90,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         lowMatchWarning = view.findViewById(R.id.lowMatchWarning)
 
         careerHigh = view.findViewById(R.id.careerHigh)
+        totalMatches = view.findViewById(R.id.totalMatches)
 
         srGraphButton.setOnClickListener { initGraph(0, currentGraphSpan) }
         wrGraphButton.setOnClickListener { initGraph(1, currentGraphSpan) }
@@ -127,6 +129,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         updateRankingImage(parent.sr)
 
         careerHigh.text = parent.careerHigh.toString()
+        totalMatches.text = parent.matchCount.toString()
 
         initGraph(0, 1)
     }

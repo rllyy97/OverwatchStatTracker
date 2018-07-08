@@ -162,44 +162,49 @@
 
     <TextView
         android:id="@+id/totalMatchesTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="24dp"
         android:text="Total Matches"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/careerHighTitle" />
+        android:textAlignment="center"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/graphInfo"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/careerHighTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="24dp"
         android:text="Career High"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/srGraphButton" />
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/graphInfo"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/careerHigh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:text="@string/loading"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintStart_toEndOf="@+id/careerHighTitle"
-        app:layout_constraintTop_toBottomOf="@+id/wrGraphButton" />
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/careerHighTitle"
+        app:layout_constraintEnd_toEndOf="@+id/careerHighTitle"
+        app:layout_constraintStart_toStartOf="@+id/careerHighTitle" />
 
     <TextView
         android:id="@+id/totalMatches"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:text="@string/loading"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintStart_toEndOf="@+id/totalMatchesTitle"
-        app:layout_constraintTop_toBottomOf="@+id/careerHigh" />
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/totalMatchesTitle"
+        app:layout_constraintEnd_toEndOf="@+id/totalMatchesTitle"
+        app:layout_constraintStart_toStartOf="@+id/totalMatchesTitle" />
 
 </android.support.constraint.ConstraintLayout>

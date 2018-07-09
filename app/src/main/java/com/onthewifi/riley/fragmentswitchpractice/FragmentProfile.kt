@@ -64,6 +64,9 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     // Footer Views
     private lateinit var careerHigh : TextView
     private lateinit var totalMatches : TextView
+    private lateinit var avgKDView : TextView
+    private lateinit var avgDamagePerMinView : TextView
+    private lateinit var avgHealsPerMinView : TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile,container,false)
@@ -94,6 +97,9 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
         careerHigh = view.findViewById(R.id.careerHigh)
         totalMatches = view.findViewById(R.id.totalMatches)
+        avgKDView = view.findViewById(R.id.avgKD)
+        avgDamagePerMinView = view.findViewById(R.id.avgDamagePerMin)
+        avgHealsPerMinView = view.findViewById(R.id.avgHealsperMin)
 
         srGraphButton.setOnClickListener { initGraph(0, currentGraphSpan) }
         wrGraphButton.setOnClickListener { initGraph(1, currentGraphSpan) }
@@ -232,6 +238,26 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         graph.adapter = newAdapter
 
         totalMatches.text = gameArray.size.toString()
+
+        // Gets averages for filtered games
+        val kdList: ArrayList<Double> = ArrayList()
+        val damageMinList: ArrayList<Double> = ArrayList()
+        val healsMinList: ArrayList<Double> = ArrayList()
+
+        for (game in gameArray) {
+            kdList.add((game.child("eliminations").value as Long).toDouble() / (game.child("deaths").value as Long).toDouble())
+            damageMinList.add((game.child("damage").value as Long).toDouble() / (game.child("length").value as Long).toDouble())
+            healsMinList.add((game.child("heals").value as Long).toDouble() / (game.child("length").value as Long).toDouble())
+        }
+
+        val kdAverage = kdList.average()
+        val damageMinAverage = damageMinList.average()
+        val healsMinAverage = healsMinList.average()
+
+        avgKDView.text = "%.2f".format(kdAverage)
+        avgDamagePerMinView.text = "%.0f".format(damageMinAverage)
+        avgHealsPerMinView.text = "%.0f".format(healsMinAverage)
+
     }
 
     // Helper function to return sr or win rate of a match

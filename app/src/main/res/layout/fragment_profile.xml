@@ -184,6 +184,39 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:id="@+id/healsPerMinTitle"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="Average Heals/Min"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/kdTitle"
+        app:layout_constraintTop_toTopOf="@+id/kdTitle" />
+
+    <TextView
+        android:id="@+id/kdTitle"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="Average   K/D"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/healsPerMinTitle"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/damagePerMinTitle"
+        app:layout_constraintTop_toBottomOf="@+id/avgKD" />
+
+    <TextView
+        android:id="@+id/damagePerMinTitle"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="Average DMG/Min"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/kdTitle"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/kdTitle" />
+
+    <TextView
         android:id="@+id/careerHigh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -194,6 +227,43 @@
         app:layout_constraintBottom_toTopOf="@+id/careerHighTitle"
         app:layout_constraintEnd_toEndOf="@+id/careerHighTitle"
         app:layout_constraintStart_toStartOf="@+id/careerHighTitle" />
+
+    <TextView
+        android:id="@+id/avgHealsperMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loading"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/healsPerMinTitle"
+        app:layout_constraintEnd_toEndOf="@+id/healsPerMinTitle"
+        app:layout_constraintStart_toStartOf="@+id/healsPerMinTitle" />
+
+    <TextView
+        android:id="@+id/avgDamagePerMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loading"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/damagePerMinTitle"
+        app:layout_constraintEnd_toEndOf="@+id/damagePerMinTitle"
+        app:layout_constraintStart_toStartOf="@+id/damagePerMinTitle" />
+
+    <TextView
+        android:id="@+id/avgKD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/loading"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="@+id/kdTitle"
+        app:layout_constraintStart_toStartOf="@+id/kdTitle"
+        app:layout_constraintTop_toBottomOf="@+id/dailyGraphButton" />
 
     <TextView
         android:id="@+id/totalMatches"

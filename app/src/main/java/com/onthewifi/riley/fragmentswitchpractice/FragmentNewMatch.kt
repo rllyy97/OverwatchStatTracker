@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +39,13 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
 
     private var heroCounter = 0
     private var heroStringArray: ArrayList<String> = ArrayList()
+
+    // Current Averages
+    var avgEliminations: Long = 0
+    var avgDeaths: Long = 0
+    var avgDamage: Long = 0
+    var avgHeals: Long = 0
+    var avgAccuracy: Long = 0
 
     // View References
     private lateinit var title: TextView
@@ -76,11 +86,51 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
         mapSpinner.adapter = ArrayAdapter<Map>(context, android.R.layout.simple_dropdown_item_1line, Map.values())
 
         eliminations = view.findViewById(R.id.eliminations)
+        eliminations.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(string: Editable?) {}
+            override fun beforeTextChanged(string: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(string: CharSequence?, start: Int, before: Int, count: Int) {
+                if(!string.isNullOrBlank())
+                    compareToAverage(eliminations, string?.toString()?.toLong() ?: 0, avgEliminations)
+            }
+        })
         deaths = view.findViewById(R.id.deaths)
+        deaths.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(string: Editable?) {}
+            override fun beforeTextChanged(string: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(string: CharSequence?, start: Int, before: Int, count: Int) {
+                if(!string.isNullOrBlank())
+                    compareToAverage(deaths, avgDeaths, string?.toString()?.toLong() ?: 1000) // Reversed because lower deaths is better
+            }
+        })
         damage = view.findViewById(R.id.damage)
+        damage.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(string: Editable?) {}
+            override fun beforeTextChanged(string: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(string: CharSequence?, start: Int, before: Int, count: Int) {
+                if(!string.isNullOrBlank())
+                    compareToAverage(damage, string?.toString()?.toLong() ?: 0, avgDamage)
+            }
+        })
         heals = view.findViewById(R.id.healing)
-        length = view.findViewById(R.id.length)
+        heals.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(string: Editable?) {}
+            override fun beforeTextChanged(string: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(string: CharSequence?, start: Int, before: Int, count: Int) {
+                if(!string.isNullOrBlank())
+                    compareToAverage(heals, string?.toString()?.toLong() ?: 0, avgHeals)
+            }
+        })
         accuracy = view.findViewById(R.id.accuracy)
+        accuracy.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(string: Editable?) {}
+            override fun beforeTextChanged(string: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(string: CharSequence?, start: Int, before: Int, count: Int) {
+                if(!string.isNullOrBlank())
+                    compareToAverage(accuracy, string?.toString()?.toLong() ?: 0, avgAccuracy)
+            }
+        })
+        length = view.findViewById(R.id.length)
         sr = view.findViewById(R.id.sr)
 
         clearButton = view.findViewById(R.id.clearButton)
@@ -96,7 +146,43 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
         for (icon in heroIconArray) {
             icon.setOnClickListener(addCharacter)
         }
+
+        loadAverages()
+
         return view
+    }
+
+    // Determines field averages
+    fun loadAverages() {
+        if(parent.allGameArray.size == 0) return
+        var runningEliminations: Long = 0
+        var runningDeaths: Long = 0
+        var runningDamage: Long = 0
+        var runningHeals: Long = 0
+        var runningAccuracy: Long = 0
+
+        for (game in parent.allGameArray) {
+            runningEliminations += (game.child("eliminations").value as Long)
+            runningDeaths += (game.child("deaths").value as Long)
+            runningDamage += (game.child("damage").value as Long)
+            runningHeals += (game.child("heals").value as Long)
+            runningAccuracy += (game.child("accuracy").value as Long)
+        }
+
+        avgEliminations = runningEliminations / parent.allGameArray.size
+        avgDeaths = runningDeaths / parent.allGameArray.size
+        avgDamage = runningDamage / parent.allGameArray.size
+        avgHeals = runningHeals / parent.allGameArray.size
+        avgAccuracy = runningAccuracy / parent.allGameArray.size
+    }
+
+    // Compares Text Fields to averages to show immediate good/bad
+    private fun compareToAverage(view: EditText, input: Long, avg: Long) {
+        when {
+            input < avg -> view.setTextColor(ContextCompat.getColor(parent.baseContext, R.color.negative))
+            input > avg -> view.setTextColor(ContextCompat.getColor(parent.baseContext, R.color.positive))
+            else -> view.setTextColor(ContextCompat.getColor(parent.baseContext, R.color.colorPrimaryDark))
+        }
     }
 
     // Deletes character, cascades others down

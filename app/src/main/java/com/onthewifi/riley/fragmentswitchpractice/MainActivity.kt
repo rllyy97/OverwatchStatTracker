@@ -20,7 +20,8 @@ class MainActivity : AppCompatActivity() {
     var careerHigh: Int = 0
     var winRate = 0F
     var matchCount = 0
-    var mainHero : String = ""
+
+    var allGameArray: ArrayList<DataSnapshot> = ArrayList()
 
     // Firebase variables
     var user : FirebaseUser? = null
@@ -30,7 +31,10 @@ class MainActivity : AppCompatActivity() {
     var latestSnap : DataSnapshot? = null
 
     private lateinit var fragmentAdapter: FragmentAdapter
-    private lateinit var viewPager: LockableViewPager
+    lateinit var viewPager: LockableViewPager
+    private lateinit var fragmentProfile: FragmentProfile
+    private lateinit var fragmentNewMatch: FragmentNewMatch
+    private lateinit var fragmentTracker: FragmentTracker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

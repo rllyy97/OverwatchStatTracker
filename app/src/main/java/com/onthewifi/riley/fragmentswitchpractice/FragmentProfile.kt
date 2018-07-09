@@ -34,6 +34,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     override fun sendInput(input: Int) {
         userPath.child("sr").setValue(input)
         userPath.child("name").setValue(parent.user!!.displayName)
+        graphInfo.text = input.toString()
     }
 
     private lateinit var userPath: DatabaseReference
@@ -80,6 +81,8 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         graphInfoTail = view.findViewById(R.id.graphInfoTail)
         backgroundImage = view.findViewById(R.id.backgroundImage)
 
+        srInitializationCheck()
+
         graph = view.findViewById(R.id.mainGraph)
         newAdapter.setBase(50F)
         val paint = Paint()
@@ -110,7 +113,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         weeklyGraphButton.setOnClickListener { initGraph(currentGraphTab, 1) }
         dailyGraphButton.setOnClickListener { initGraph(currentGraphTab, 2) }
 
-        srInitializationCheck()
+
 
         return view
     }
@@ -118,7 +121,10 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     private fun srInitializationCheck() {
         userPath.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snap: DataSnapshot) {
-                if (snap.child("sr").value != null) loadData(snap)
+                if (snap.child("sr").value != null) {
+                    if(snap.child("matchCount").value != null &&
+                            snap.child("matchCount").value != 0) loadData(snap)
+                }
                 else initSr()
             }
             override fun onCancelled(error: DatabaseError) {
@@ -128,10 +134,12 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     }
 
     fun loadData(snap: DataSnapshot) {
+        if(snap.child("matchCount").value == null ||
+                snap.child("winRate").value == null) return
         parent.latestSnap = snap
         parent.name = parent.user!!.displayName ?: "User"
         parent.sr = (snap.child("sr").value as Long).toInt()
-        parent.winRate = (snap.child("winRate").value as Double).toFloat()
+        parent.winRate = (snap.child("winRate").value as Number).toFloat()
         parent.matchCount = (snap.child("matchCount").value as Long).toInt()
         parent.careerHigh = (snap.child("careerHigh").value as Long).toInt()
         if(parent.name.last() != 's') title.text = getString(R.string.profile_title).format(parent.name)
@@ -161,6 +169,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         gameArray.clear()
         val floatArray: ArrayList<Float> = ArrayList()
         parent.latestSnap!!.child("matches").children.forEach {
+            parent.allGameArray.add(it)
             when (currentGraphSpan) {
                 0 -> { // All
                     gameArray.add(it)
@@ -189,6 +198,9 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
                 }
             }
         }
+
+        // Calls new match average loader
+        ((parent.viewPager.adapter as FragmentAdapter).getItem(1) as FragmentNewMatch).loadAverages()
 
         if (floatArray.size < 2) { // Not enough matches to display graph
             graph.alpha = 0.0F

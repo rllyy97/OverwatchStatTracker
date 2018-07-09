@@ -5,6 +5,9 @@
     <color name="colorPrimary">#f99e1a</color>
     <color name="colorPrimaryDark">#43484c</color>
     <color name="colorAccent">#00c3ff</color>
+    <!-- Positive / Negative Colors -->
+    <color name="positive">#00c853</color>
+    <color name="negative">#f44336</color>
     <!-- Utility Colors -->
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00ffffff</color>

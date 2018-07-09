@@ -1,5 +1,6 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.DialogFragment
@@ -7,12 +8,14 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
     private var fragmentTag = "new_match"
@@ -127,6 +130,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
 
     // Clears fragment by restarting it
     private var clearFields = View.OnClickListener {
+        hideSoftKeyboard(parent)
         clearFields()
     }
 
@@ -143,8 +147,16 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
         sr.text.clear()
     }
 
+    private fun hideSoftKeyboard(activity: Activity) {
+        val inputMethodManager = activity.getSystemService(
+                Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.currentFocus!!.windowToken, 0)
+    }
+
     // Submits data to database
     private var submitMatch: View.OnClickListener = View.OnClickListener {
+        hideSoftKeyboard(parent)
         submitMatch()
     }
 
@@ -171,6 +183,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
         val oldSr: Int = parent.sr
         val newSr: Int = sr.text.toString().toInt()
         var matchCount: Int
+
         var win = 0 // WIN = 1, DRAW = 0, LOSS = -1
         if (oldSr < newSr) win = 1
         if (oldSr > newSr) win = -1
@@ -228,7 +241,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
                 Toast.makeText(context, "whoops", Toast.LENGTH_SHORT).show()
             }
         })
-        
+
         clearFields()
         Toast.makeText(context, "Submitted Match", Toast.LENGTH_SHORT).show()
     }

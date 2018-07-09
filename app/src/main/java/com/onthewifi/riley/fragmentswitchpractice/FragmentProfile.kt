@@ -40,6 +40,9 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
     private lateinit var baseView: ConstraintLayout
 
+    // Current Game Array
+    private var gameArray : ArrayList<DataSnapshot> = ArrayList()
+
     // Header Views
     private lateinit var title : TextView
     private lateinit var graphInfo : TextView
@@ -147,26 +150,31 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         currentGraphSpan = span
         var color = 0
         val currentTime = Calendar.getInstance().timeInMillis
-
+        gameArray.clear()
         val floatArray: ArrayList<Float> = ArrayList()
         parent.latestSnap!!.child("matches").children.forEach {
             when (currentGraphSpan) {
                 0 -> { // All
+                    gameArray.add(it)
                     floatArray.add(addValue(currentGraphTab, it))
                     allGraphButton.alpha = 1.0F
                     weeklyGraphButton.alpha = 0.5F
                     dailyGraphButton.alpha = 0.5F
                 }
                 1 -> { // Weekly
-                    if(it.key!!.toLong() > (currentTime - 7 * 24 * 60 * 60 * 1000))
+                    if(it.key!!.toLong() > (currentTime - 7 * 24 * 60 * 60 * 1000)) {
+                        gameArray.add(it)
                         floatArray.add(addValue(currentGraphTab, it))
+                    }
                     allGraphButton.alpha = 0.5F
                     weeklyGraphButton.alpha = 1.0F
                     dailyGraphButton.alpha = 0.5F
                 }
                 2 -> { // Daily
-                    if(it.key!!.toLong() > (currentTime - 24 * 60 * 60 * 1000))
+                    if(it.key!!.toLong() > (currentTime - 24 * 60 * 60 * 1000)) {
+                        gameArray.add(it)
                         floatArray.add(addValue(currentGraphTab, it))
+                    }
                     allGraphButton.alpha = 0.5F
                     weeklyGraphButton.alpha = 0.5F
                     dailyGraphButton.alpha = 1.0F
@@ -222,6 +230,8 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         graphInfo.setTextColor(color)
         graphInfoTail.setTextColor(color)
         graph.adapter = newAdapter
+
+        totalMatches.text = gameArray.size.toString()
     }
 
     // Helper function to return sr or win rate of a match
@@ -242,4 +252,6 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
             in 4000..5000 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.grandmasters, null))
         }
     }
+
+
 }

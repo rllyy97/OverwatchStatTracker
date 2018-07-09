@@ -240,19 +240,23 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         totalMatches.text = gameArray.size.toString()
 
         // Gets averages for filtered games
-        val kdList: ArrayList<Double> = ArrayList()
-        val damageMinList: ArrayList<Double> = ArrayList()
-        val healsMinList: ArrayList<Double> = ArrayList()
+        var runningEliminations: Long = 0
+        var runningDeaths: Long  = 0
+        var runningDamage: Long  = 0
+        var runningHeals: Long  = 0
+        var runningLength: Long  = 0
 
         for (game in gameArray) {
-            kdList.add((game.child("eliminations").value as Long).toDouble() / (game.child("deaths").value as Long).toDouble())
-            damageMinList.add((game.child("damage").value as Long).toDouble() / (game.child("length").value as Long).toDouble())
-            healsMinList.add((game.child("heals").value as Long).toDouble() / (game.child("length").value as Long).toDouble())
+            runningEliminations += (game.child("eliminations").value as Long)
+            runningDeaths += (game.child("deaths").value as Long)
+            runningDamage += (game.child("damage").value as Long)
+            runningHeals += (game.child("heals").value as Long)
+            runningLength += (game.child("length").value as Long)
         }
 
-        val kdAverage = kdList.average()
-        val damageMinAverage = damageMinList.average()
-        val healsMinAverage = healsMinList.average()
+        val kdAverage = runningEliminations.toFloat() / runningDeaths.toFloat()
+        val damageMinAverage = runningDamage.toFloat() / runningLength.toFloat()
+        val healsMinAverage = runningHeals.toFloat() / runningLength.toFloat()
 
         avgKDView.text = "%.2f".format(kdAverage)
         avgDamagePerMinView.text = "%.0f".format(damageMinAverage)

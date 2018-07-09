@@ -67,6 +67,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     private lateinit var avgKDView : TextView
     private lateinit var avgDamagePerMinView : TextView
     private lateinit var avgHealsPerMinView : TextView
+    private lateinit var wdlView : TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile,container,false)
@@ -100,6 +101,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         avgKDView = view.findViewById(R.id.avgKD)
         avgDamagePerMinView = view.findViewById(R.id.avgDamagePerMin)
         avgHealsPerMinView = view.findViewById(R.id.avgHealsperMin)
+        wdlView = view.findViewById(R.id.wdl)
 
         srGraphButton.setOnClickListener { initGraph(0, currentGraphSpan) }
         wrGraphButton.setOnClickListener { initGraph(1, currentGraphSpan) }
@@ -239,12 +241,16 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
         totalMatches.text = gameArray.size.toString()
 
-        // Gets averages for filtered games
+        // Gets running values for filtered games
         var runningEliminations: Long = 0
-        var runningDeaths: Long  = 0
-        var runningDamage: Long  = 0
-        var runningHeals: Long  = 0
-        var runningLength: Long  = 0
+        var runningDeaths: Long = 0
+        var runningDamage: Long = 0
+        var runningHeals: Long = 0
+        var runningLength: Long = 0
+
+        var runningWins = 0
+        var runningDraws = 0
+        var runningLosses = 0
 
         for (game in gameArray) {
             runningEliminations += (game.child("eliminations").value as Long)
@@ -252,15 +258,24 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
             runningDamage += (game.child("damage").value as Long)
             runningHeals += (game.child("heals").value as Long)
             runningLength += (game.child("length").value as Long)
+            if(game.child("win").exists()){
+                when ((game.child("win").value as Long).toInt()) {
+                    1 -> runningWins++
+                    0 -> runningDraws++
+                    -1 -> runningLosses++
+                }
+            }
         }
 
         val kdAverage = runningEliminations.toFloat() / runningDeaths.toFloat()
         val damageMinAverage = runningDamage.toFloat() / runningLength.toFloat()
         val healsMinAverage = runningHeals.toFloat() / runningLength.toFloat()
-
         avgKDView.text = "%.2f".format(kdAverage)
         avgDamagePerMinView.text = "%.0f".format(damageMinAverage)
         avgHealsPerMinView.text = "%.0f".format(healsMinAverage)
+
+        val wdlString = "%d - %d - %d".format(runningWins,runningDraws,runningLosses)
+        wdlView.text = wdlString
 
     }
 
@@ -282,6 +297,4 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
             in 4000..5000 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.grandmasters, null))
         }
     }
-
-
 }

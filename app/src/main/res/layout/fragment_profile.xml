@@ -185,8 +185,8 @@
 
     <TextView
         android:id="@+id/healsPerMinTitle"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:text="Average Heals/Min"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -196,8 +196,8 @@
 
     <TextView
         android:id="@+id/kdTitle"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:text="Average K/D"
         android:textAlignment="center"
         app:layout_constraintEnd_toStartOf="@+id/healsPerMinTitle"
@@ -207,8 +207,8 @@
 
     <TextView
         android:id="@+id/damagePerMinTitle"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:text="Average DMG/Min"
         android:textAlignment="center"
         app:layout_constraintEnd_toStartOf="@+id/kdTitle"
@@ -276,5 +276,27 @@
         app:layout_constraintBottom_toTopOf="@+id/totalMatchesTitle"
         app:layout_constraintEnd_toEndOf="@+id/totalMatchesTitle"
         app:layout_constraintStart_toStartOf="@+id/totalMatchesTitle" />
+
+    <TextView
+        android:id="@+id/wdlTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Win - Draw - Loss"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wdl" />
+
+    <TextView
+        android:id="@+id/wdl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/loading"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kdTitle" />
 
 </android.support.constraint.ConstraintLayout>

@@ -4,7 +4,7 @@ data class Match(
         var time: Long,
         var winRate: Float,
         var sr: Int,
-        var isWin: Boolean,
+        var win: Int,
         var map: String,
         var heroes: ArrayList<String>,
         var eliminations: Int,

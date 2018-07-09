@@ -168,40 +168,49 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
         val userPath = parent.databaseRef.child("users").child(parent.user!!.uid)
 
         // Grab previous info
-        var oldSr: Int
+        val oldSr: Int = parent.sr
         val newSr: Int = sr.text.toString().toInt()
         var matchCount: Int
-        var win = false
+        var win = 0 // WIN = 1, DRAW = 0, LOSS = -1
+        if (oldSr < newSr) win = 1
+        if (oldSr > newSr) win = -1
         var winRate= 0.0F
         var winCount: Int
-        // Profile Averages
-//        var avgEliminations : Int
-//        var avgDeaths : Int
-//        var avgDamage : Int
-//        var avgHealing : Int
-//        var avgAccuracy : Int
 
         val time = Calendar.getInstance().timeInMillis
         val timeString = time.toString()
 
+        // Submit Match
+        val match = Match(
+                time,
+                winRate,
+                newSr,
+                win,
+                mapSpinner.selectedItem.toString(),
+                heroStringArray,
+                eliminations.text.toString().toInt(),
+                damage.text.toString().toInt(),
+                heals.text.toString().toInt(),
+                deaths.text.toString().toInt(),
+                accuracy.text.toString().toInt(),
+                length.text.toString().toInt())
+        userPath.child("matches").child(timeString).setValue(match)
+
+        // Post-Match updates
         userPath.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snap: DataSnapshot) {
-                oldSr = (snap.child("sr").value as Long).toInt()
-                if (oldSr < newSr) win = true
                 // Update Match Count
                 if(snap.child("matchCount").value == null) {
                     matchCount = 1
-                    winRate = if (win) 1F else 0F
-                    winCount = if (win) 1 else 0
-                    if (win) userPath.child("careerHigh").setValue(newSr)
+                    winRate = if (win > 0) 1F else 0F
+                    winCount = if (win > 0) 1 else 0
+                    if (win > 0) userPath.child("careerHigh").setValue(newSr)
                     else userPath.child("careerHigh").setValue(oldSr)
-                    // Profile Averages
-
                 } else {
                     matchCount = (snap.child("matchCount").value as Long).toInt()
                     matchCount++
                     winCount = (snap.child("winCount").value as Long).toInt()
-                    if (win) winCount++
+                    if (win > 0) winCount++
                     winRate = winCount.toFloat() / matchCount.toFloat()
                     if (newSr > snap.child("careerHigh").value as Long) userPath.child("careerHigh").setValue(newSr)
                 }
@@ -219,24 +228,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
                 Toast.makeText(context, "whoops", Toast.LENGTH_SHORT).show()
             }
         })
-
-        // Submit Match
-        val match = Match(
-                time,
-                winRate,
-                newSr,
-                win,
-                mapSpinner.selectedItem.toString(),
-                heroStringArray,
-                eliminations.text.toString().toInt(),
-                damage.text.toString().toInt(),
-                heals.text.toString().toInt(),
-                deaths.text.toString().toInt(),
-                accuracy.text.toString().toInt(),
-                length.text.toString().toInt())
-
-        userPath.child("matches").child(timeString).setValue(match)
-
+        
         clearFields()
         Toast.makeText(context, "Submitted Match", Toast.LENGTH_SHORT).show()
     }

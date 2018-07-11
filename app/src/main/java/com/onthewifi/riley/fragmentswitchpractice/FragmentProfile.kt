@@ -168,6 +168,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         val currentTime = Calendar.getInstance().timeInMillis
         gameArray.clear()
         val floatArray: ArrayList<Float> = ArrayList()
+        parent.allGameArray.clear()
         parent.latestSnap!!.child("matches").children.forEach {
             parent.allGameArray.add(it)
             when (currentGraphSpan) {

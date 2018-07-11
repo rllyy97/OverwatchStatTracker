@@ -32,9 +32,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var fragmentAdapter: FragmentAdapter
     lateinit var viewPager: LockableViewPager
-    private lateinit var fragmentProfile: FragmentProfile
-    private lateinit var fragmentNewMatch: FragmentNewMatch
-    private lateinit var fragmentTracker: FragmentTracker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

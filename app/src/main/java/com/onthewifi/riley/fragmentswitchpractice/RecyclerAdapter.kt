@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.tracker_list_item.view.*
 class RecyclerAdapter(private var games : ArrayList<DataSnapshot>, val context: Context) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     init { setHasStableIds(true) }
 
+
     class ViewHolder (val gameView: ConstraintLayout) : RecyclerView.ViewHolder(gameView) {
         // Holds the views for each game
         val matchNumber: TextView = gameView.findViewById(R.id.matchNumber)

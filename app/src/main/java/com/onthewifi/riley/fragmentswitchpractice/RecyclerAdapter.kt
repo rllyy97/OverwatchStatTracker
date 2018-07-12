@@ -1,6 +1,7 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
 import android.content.Context
+import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
@@ -10,12 +11,19 @@ import android.widget.TextView
 import com.google.firebase.database.DataSnapshot
 import kotlinx.android.synthetic.main.tracker_list_item.view.*
 
-class RecyclerAdapter(private var games : ArrayList<DataSnapshot>, val context: Context) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
-    init { setHasStableIds(true) }
+class RecyclerAdapter(private var games : ArrayList<DataSnapshot>, private var baseView: ConstraintLayout, val context: Context) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
+    private lateinit var mainActivity: MainActivity
+    init {
+        setHasStableIds(true)
+        if (context is MainActivity) {
+            mainActivity = context
+        }
+    }
 
     class ViewHolder (val gameView: ConstraintLayout) : RecyclerView.ViewHolder(gameView) {
         // Holds the views for each game
+        var timeID: Long = 0
         val matchNumber: TextView = gameView.findViewById(R.id.matchNumber)
         val srDiff: TextView = gameView.findViewById(R.id.srDiff)
         val mapName: TextView = gameView.findViewById(R.id.mapName)
@@ -43,10 +51,25 @@ class RecyclerAdapter(private var games : ArrayList<DataSnapshot>, val context: 
 
         }
         holder.gameView.mapName.text = games[index].child("map").value as String
+        holder.timeID = games[index].key!!.toLong()
+        // Clicking item opens detailed view fragment
+        holder.gameView.setOnClickListener {
+            fragmentJump(holder.timeID)
+        }
     }
+
     // Gets number of games in list
     override fun getItemCount(): Int {
         return games.size
+    }
+
+    // handles switching between detail view and list view
+    private fun fragmentJump(time: Long) {
+        val fragment = FragmentMatchDetail()
+        val newBundle = Bundle()
+        newBundle.putSerializable(time.toString(), time)
+        fragment.arguments = newBundle
+        mainActivity.switchContent(fragment)
     }
 
 }

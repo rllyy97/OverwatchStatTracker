@@ -14,19 +14,19 @@ class FragmentTracker: Fragment() {
     val TAG = "tracker"
     private lateinit var parent: MainActivity
 
-    private lateinit var baseView: ConstraintLayout
+    private lateinit var view: ConstraintLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var title: TextView
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        baseView = inflater.inflate(R.layout.fragment_tracker,container,false) as ConstraintLayout
+        view = inflater.inflate(R.layout.fragment_tracker,container,false) as ConstraintLayout
         parent = activity as MainActivity
-        title = baseView.findViewById(R.id.titleTextView)
-        recyclerView = baseView.findViewById(R.id.recyclerView)
+        title = view.findViewById(R.id.titleTextView)
+        recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = RecyclerAdapter(parent.allGameArray, baseView, this.context!!)
-        return baseView
+        recyclerView.adapter = RecyclerAdapter(parent.allGameArray, view, this.context!!)
+        return view
     }
 
 

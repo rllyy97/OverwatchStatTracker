@@ -29,6 +29,10 @@ enum class Map(private var friendlyName: String, private var type: String) {
         return this.type
     }
 
+    companion object {
+        fun from(name: String): Map? = Map.values().find { it.friendlyName == name }
+    }
+
 
 
 

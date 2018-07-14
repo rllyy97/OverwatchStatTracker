@@ -24,6 +24,7 @@ class RecyclerAdapter(private var games : ArrayList<DataSnapshot>, private var b
     class ViewHolder (val gameView: ConstraintLayout) : RecyclerView.ViewHolder(gameView) {
         // Holds the views for each game
         var timeID: Long = 0
+        var gameIndex: Int = 0
         val matchNumber: TextView = gameView.findViewById(R.id.matchNumber)
         val srDiff: TextView = gameView.findViewById(R.id.srDiff)
         val mapName: TextView = gameView.findViewById(R.id.mapName)
@@ -38,6 +39,7 @@ class RecyclerAdapter(private var games : ArrayList<DataSnapshot>, private var b
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val index = games.size-position-1
         holder.gameView.matchNumber.text = (index+1).toString()
+        holder.gameIndex = index
         if (index>0) {
             val diff = games[index].child("sr").value as Long - games[index-1].child("sr").value as Long
             var srString: String = diff.toString() + " SR"
@@ -54,7 +56,7 @@ class RecyclerAdapter(private var games : ArrayList<DataSnapshot>, private var b
         holder.timeID = games[index].key!!.toLong()
         // Clicking item opens detailed view fragment
         holder.gameView.setOnClickListener {
-            fragmentJump(holder.timeID)
+            fragmentJump(holder)
         }
     }
 
@@ -64,10 +66,11 @@ class RecyclerAdapter(private var games : ArrayList<DataSnapshot>, private var b
     }
 
     // handles switching between detail view and list view
-    private fun fragmentJump(time: Long) {
+    private fun fragmentJump(holder: ViewHolder) {
         val fragment = FragmentMatchDetail()
         val newBundle = Bundle()
-        newBundle.putSerializable(time.toString(), time)
+        newBundle.putInt("index", holder.gameIndex)
+        newBundle.putString("srDiff", holder.srDiff.text.toString())
         fragment.arguments = newBundle
         val newView = ((mainActivity.viewPager.adapter as FragmentAdapter).getItem(2) as FragmentEmptyFrame).baseView.id
         mainActivity.switchContent(fragment, newView, "detail")

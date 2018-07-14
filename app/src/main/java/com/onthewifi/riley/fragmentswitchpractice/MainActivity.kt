@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import android.widget.FrameLayout
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -35,7 +34,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var fragmentAdapter: FragmentAdapter
     lateinit var viewPager: LockableViewPager
-    lateinit var detailFrame: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         fragmentAdapter = FragmentAdapter(supportFragmentManager)
         viewPager = findViewById(R.id.fragmentContainer)
         setupViewPager(viewPager)
-        detailFrame = findViewById(R.id.detailFrame)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
@@ -62,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         // First fragment added is shown
         adapter.addFragment(FragmentProfile())
         adapter.addFragment(FragmentNewMatch())
-        adapter.addFragment(FragmentTracker())
+        adapter.addFragment(FragmentEmptyFrame())
         viewPager.adapter = adapter
     }
 
@@ -96,10 +93,9 @@ class MainActivity : AppCompatActivity() {
         return auth.currentUser
     }
 
-    fun switchContent(fragment: Fragment) {
+    fun switchContent(fragment: Fragment, view: Int, tag: String) {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.setCustomAnimations(R.anim.fui_slide_in_right, R.anim.fui_slide_out_left)
-        transaction.add(R.id.detailFrame, fragment, "detail")
+        transaction.replace(view, fragment, tag)
         transaction.addToBackStack(null)
         transaction.commit()
     }

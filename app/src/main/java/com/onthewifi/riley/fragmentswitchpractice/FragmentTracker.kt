@@ -28,4 +28,6 @@ class FragmentTracker: Fragment() {
         recyclerView.adapter = RecyclerAdapter(parent.allGameArray, baseView, this.context!!)
         return baseView
     }
+
+
 }

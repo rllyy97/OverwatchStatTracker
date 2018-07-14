@@ -69,7 +69,8 @@ class RecyclerAdapter(private var games : ArrayList<DataSnapshot>, private var b
         val newBundle = Bundle()
         newBundle.putSerializable(time.toString(), time)
         fragment.arguments = newBundle
-        mainActivity.switchContent(fragment)
+        val newView = ((mainActivity.viewPager.adapter as FragmentAdapter).getItem(2) as FragmentEmptyFrame).baseView.id
+        mainActivity.switchContent(fragment, newView, "detail")
     }
 
 }

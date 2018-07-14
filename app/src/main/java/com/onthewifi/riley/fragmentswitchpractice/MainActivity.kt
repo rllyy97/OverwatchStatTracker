@@ -95,6 +95,7 @@ class MainActivity : AppCompatActivity() {
 
     fun switchContent(fragment: Fragment, view: Int, tag: String) {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up, R.anim.slide_in_down, R.anim.slide_out_down)
         transaction.replace(view, fragment, tag)
         transaction.addToBackStack(null)
         transaction.commit()

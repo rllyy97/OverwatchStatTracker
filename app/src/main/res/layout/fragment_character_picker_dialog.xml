@@ -391,7 +391,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:background="@color/transparent"
-        android:contentDescription="@string/torbjorn"
+        android:contentDescription="@string/zenyatta"
         android:padding="2dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,5 +1,6 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
@@ -31,6 +32,7 @@ class FragmentMatchDetail: Fragment() {
     private lateinit var mapIcon: ImageView
     private lateinit var srDiffView: TextView
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         view = inflater.inflate(R.layout.fragment_match_detail,container,false) as ConstraintLayout
         parent = activity as MainActivity
@@ -53,6 +55,7 @@ class FragmentMatchDetail: Fragment() {
             finish()
         }
 
+        @SuppressLint("SimpleDateFormat") // Time zone is set below, warning is irrelevant
         val sdf = SimpleDateFormat("EEEE, MMMM d, yyyy - KK:mm aa")
         sdf.timeZone = Calendar.getInstance().timeZone
         dateView.text = sdf.format(gameID)

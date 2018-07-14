@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.google.firebase.database.DataSnapshot
 import kotlinx.android.synthetic.main.tracker_list_item.view.*
 
-class RecyclerAdapter(private var games : ArrayList<DataSnapshot>, private var baseView: ConstraintLayout, val context: Context) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class RecyclerAdapter(private var games : ArrayList<DataSnapshot>, val context: Context) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     private lateinit var mainActivity: MainActivity
     init {

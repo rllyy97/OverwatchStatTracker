@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 
 class FragmentEmptyFrame: Fragment()  {
-    val TAG = "empty_frame"
+    val fragmentTag = "empty_frame"
     private lateinit var mainActivity: MainActivity
     lateinit var baseView: FrameLayout
 

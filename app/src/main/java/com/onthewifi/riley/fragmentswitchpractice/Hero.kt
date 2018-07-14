@@ -1,41 +1,37 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
-enum class Hero(private var friendlyName: String, private var id: Int, private var drawable: Int) {
+enum class Hero(private var friendlyName: String, private var drawable: Int) {
 
-    Ana("Ana",0, R.drawable.ana),
-    Bastion("Bastion",1, R.drawable.bastion),
-    Brigette("Brigette",2, R.drawable.brigette),
-    Doomfist("Doomfist",3, R.drawable.doomfist),
-    DVa("DVa",4, R.drawable.dva),
-    Genji("Genji",5, R.drawable.genji),
-    Hanzo("Hanzo",6, R.drawable.hanzo),
-    Junkrat("Junkrat",7, R.drawable.junkrat),
-    Lucio("Lucio",8, R.drawable.lucio),
-    Mcree("Mcree",9, R.drawable.mcree),
-    Mei("Mei",10, R.drawable.mei),
-    Mercy("Mercy",11, R.drawable.mercy),
-    Moira("Moira",12, R.drawable.moira),
-    Orisa("Orisa",13, R.drawable.orisa),
-    Pharah("Pharah",14, R.drawable.pharah),
-    Reaper("Reaper",15, R.drawable.reaper),
-    Reinhardt("Reinhardt",16, R.drawable.reinhardt),
-    Roadhog("Roadhog",17, R.drawable.roadhog),
-    Soldier76("Soldier76",18, R.drawable.soldier76),
-    Sombra("Sombra",19, R.drawable.sombra),
-    Symmetra("Symmetra",20, R.drawable.symmetra),
-    Torbjorn("Torbjorn",21, R.drawable.torbjorn),
-    Tracer("Tracer",22, R.drawable.tracer),
-    Widowmaker("Widowmaker",23, R.drawable.widowmaker),
-    Winston("Winston",24, R.drawable.winston),
-    Zarya("Zarya",25, R.drawable.zarya),
-    Zenyatta("Zenyatta",26, R.drawable.zenyatta);
+    Ana("Ana", R.drawable.ana),
+    Bastion("Bastion", R.drawable.bastion),
+    Brigette("Brigette", R.drawable.brigette),
+    Doomfist("Doomfist", R.drawable.doomfist),
+    DVa("DVa", R.drawable.dva),
+    Genji("Genji", R.drawable.genji),
+    Hanzo("Hanzo", R.drawable.hanzo),
+    Junkrat("Junkrat", R.drawable.junkrat),
+    Lucio("Lucio", R.drawable.lucio),
+    Mcree("Mcree", R.drawable.mcree),
+    Mei("Mei", R.drawable.mei),
+    Mercy("Mercy", R.drawable.mercy),
+    Moira("Moira", R.drawable.moira),
+    Orisa("Orisa", R.drawable.orisa),
+    Pharah("Pharah", R.drawable.pharah),
+    Reaper("Reaper", R.drawable.reaper),
+    Reinhardt("Reinhardt", R.drawable.reinhardt),
+    Roadhog("Roadhog", R.drawable.roadhog),
+    Soldier76("Soldier76", R.drawable.soldier76),
+    Sombra("Sombra", R.drawable.sombra),
+    Symmetra("Symmetra", R.drawable.symmetra),
+    Torbjorn("Torbjorn", R.drawable.torbjorn),
+    Tracer("Tracer", R.drawable.tracer),
+    Widowmaker("Widowmaker", R.drawable.widowmaker),
+    Winston("Winston", R.drawable.winston),
+    Zarya("Zarya", R.drawable.zarya),
+    Zenyatta("Zenyatta", R.drawable.zenyatta);
 
     override fun toString(): String {
         return this.friendlyName
-    }
-
-    fun getID(): Int {
-        return this.id
     }
 
     fun getDrawable(): Int {

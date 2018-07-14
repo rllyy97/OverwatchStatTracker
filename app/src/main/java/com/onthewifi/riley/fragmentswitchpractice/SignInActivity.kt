@@ -23,10 +23,9 @@ class SignInActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_sign_in)
+        setContentView(R.layout.activity_sign_in)
         if(!isNetworkConnected()) {
             Toast.makeText(baseContext, R.string.no_internet_warning, Toast.LENGTH_LONG).show()
-
         }
         // Initialize Firebase Objects
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

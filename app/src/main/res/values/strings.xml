@@ -9,14 +9,10 @@
     <!-- Technical / Warnings -->
     <string name="null_string">null</string>
     <string name="no_internet_warning">Please connect to the internet.</string>
-    <string name="loading">...</string>
+    <string name="loading">…</string>
 
     <string name="background_hero_image">Background Hero Image</string>
     <string name="sr">SR</string>
-    <string name="welcome">Welcome</string>
-    <string name="username">Username</string>
-    <string name="current_sr">Current SR</string>
-    <string name="main_hero">Main Hero</string>
 
     <!-- Profile Fragment Strings -->
     <string name="profile_title">%s\'s Profile</string>
@@ -77,5 +73,15 @@
     <string name="wr_percent">wr%</string>
     <string name="init_message">Enter your current SR</string>
     <string name="play_more_matches_to_display_graph">Play more matches to display graph</string>
+    <string name="map_category_icon">Map Category Icon</string>
+    <string name="back_button">Back Button</string>
+    <string name="delete_match">Delete Match</string>
+    <string name="date">Date</string>
+    <string name="total_matches">Total Matches</string>
+    <string name="career_high">Career High</string>
+    <string name="average_heals_min">Average Heals/Min</string>
+    <string name="average_k_d">Average K/D</string>
+    <string name="average_dmg_min">Average DMG/Min</string>
+    <string name="win_draw_loss">Win - Draw - Loss</string>
 
 </resources>

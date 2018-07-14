@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 class FragmentTracker: Fragment() {
-    val TAG = "tracker"
+    val fragmentTag = "tracker"
     private lateinit var parent: MainActivity
 
     private lateinit var view: ConstraintLayout
@@ -25,7 +25,7 @@ class FragmentTracker: Fragment() {
         title = view.findViewById(R.id.titleTextView)
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = RecyclerAdapter(parent.allGameArray, view, this.context!!)
+        recyclerView.adapter = RecyclerAdapter(parent.allGameArray, this.context!!)
         return view
     }
 

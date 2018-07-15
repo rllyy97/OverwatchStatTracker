@@ -11,9 +11,15 @@ class GraphAdapter : SparkAdapter() {
         return yData[index]
     }
 
-    fun setY(input: ArrayList<Float>) {
+    fun initY(input: ArrayList<Float>) {
         yData.clear()
         yData = input
+    }
+
+    fun setY(input: ArrayList<Float>) {
+        if (input.size == yData.size)
+            for (num in input)
+                yData[input.indexOf(num)] = num
     }
 
     override fun getItem(index: Int): Any {

@@ -1,6 +1,6 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
-import android.annotation.SuppressLint
+import android.animation.ValueAnimator
 import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.graphics.Paint
@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.robinhood.spark.SparkView
+import com.robinhood.spark.animation.MorphSparkAnimator
 import org.jetbrains.anko.find
 import java.util.*
 
@@ -42,7 +43,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     private lateinit var baseView: ConstraintLayout
 
     // Current Game Array
-    private var gameArray : ArrayList<DataSnapshot> = ArrayList()
+    private var filteredGameArray : ArrayList<DataSnapshot> = ArrayList()
 
     // Header Views
     private lateinit var title : TextView
@@ -52,7 +53,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
     // Graph Views
     private lateinit var graph : SparkView
-    private val newAdapter: GraphAdapter = GraphAdapter()
+    private var color: Int = 0
     private lateinit var lowMatchWarning : TextView
     private lateinit var srGraphButton : Button
     private lateinit var wrGraphButton : Button
@@ -60,7 +61,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     private lateinit var allGraphButton : Button
     private lateinit var weeklyGraphButton : Button
     private lateinit var dailyGraphButton : Button
-    private var currentGraphSpan : Int = 0
+    private var currentGraphSpan : Int = 1
 
     // Footer Views
     private lateinit var careerHigh : TextView
@@ -84,7 +85,8 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         srInitializationCheck()
 
         graph = view.findViewById(R.id.mainGraph)
-        newAdapter.setBase(50F)
+        graph.adapter = GraphAdapter()
+        (graph.adapter as GraphAdapter).setBase(50F)
         val paint = Paint()
         paint.strokeCap = Paint.Cap.ROUND
         paint.strokeWidth = 3F
@@ -92,6 +94,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         paint.style = Paint.Style.STROKE
         paint.pathEffect = DashPathEffect(floatArrayOf(3F, 15F),0F)
         graph.baseLinePaint = paint
+        graph.sparkAnimator = MorphSparkAnimator()
         srGraphButton = view.findViewById(R.id.srGraphButton)
         wrGraphButton = view.findViewById(R.id.wrGraphButton)
         allGraphButton = view.findViewById(R.id.allGraphButton)
@@ -106,14 +109,14 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         avgHealsPerMinView = view.findViewById(R.id.avgHealsperMin)
         wdlView = view.findViewById(R.id.wdl)
 
-        srGraphButton.setOnClickListener { initGraph(0, currentGraphSpan) }
-        wrGraphButton.setOnClickListener { initGraph(1, currentGraphSpan) }
+        srGraphButton.setOnClickListener { updateGraph(0, currentGraphSpan) }
+        wrGraphButton.setOnClickListener { updateGraph(1, currentGraphSpan) }
 
-        allGraphButton.setOnClickListener { initGraph(currentGraphTab, 0) }
-        weeklyGraphButton.setOnClickListener { initGraph(currentGraphTab, 1) }
-        dailyGraphButton.setOnClickListener { initGraph(currentGraphTab, 2) }
+        allGraphButton.setOnClickListener { updateGraph(currentGraphTab, 0) }
+        weeklyGraphButton.setOnClickListener { updateGraph(currentGraphTab, 1) }
+        dailyGraphButton.setOnClickListener { updateGraph(currentGraphTab, 2) }
 
-
+        initGraph()
 
         return view
     }
@@ -150,7 +153,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         careerHigh.text = parent.careerHigh.toString()
         totalMatches.text = parent.matchCount.toString()
 
-        initGraph(0, 1)
+        updateGraph(0, 1)
     }
 
     fun initSr() {
@@ -160,20 +163,25 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     }
 
     // Graph functions
-    @SuppressLint("SetTextI18n")
-    private fun initGraph(tab: Int, span: Int) {
+    private fun initGraph() {
+
+    }
+
+    private fun updateGraph(tab: Int, span: Int) {
         currentGraphTab = tab
         currentGraphSpan = span
-        var color = 0
-        val currentTime = Calendar.getInstance().timeInMillis
-        gameArray.clear()
-        val floatArray: ArrayList<Float> = ArrayList()
         parent.allGameArray.clear()
         parent.latestSnap!!.child("matches").children.forEach {
             parent.allGameArray.add(it)
+        }
+
+        val currentTime = Calendar.getInstance().timeInMillis
+        filteredGameArray.clear()
+        val floatArray: ArrayList<Float> = ArrayList()
+        parent.latestSnap!!.child("matches").children.forEach {
             when (currentGraphSpan) {
                 0 -> { // All
-                    gameArray.add(it)
+                    filteredGameArray.add(it)
                     floatArray.add(addValue(currentGraphTab, it))
                     selectButton(allGraphButton, 0)
                     unselectButton(weeklyGraphButton)
@@ -181,7 +189,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
                 }
                 1 -> { // Weekly
                     if(it.key!!.toLong() > (currentTime - 7 * 24 * 60 * 60 * 1000)) {
-                        gameArray.add(it)
+                        filteredGameArray.add(it)
                         floatArray.add(addValue(currentGraphTab, it))
                     }
                     unselectButton(allGraphButton)
@@ -190,7 +198,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
                 }
                 2 -> { // Daily
                     if(it.key!!.toLong() > (currentTime - 24 * 60 * 60 * 1000)) {
-                        gameArray.add(it)
+                        filteredGameArray.add(it)
                         floatArray.add(addValue(currentGraphTab, it))
                     }
                     unselectButton(allGraphButton)
@@ -227,32 +235,40 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
             }
         }
 
+        var valueAnimator = ValueAnimator()
         when (currentGraphTab) {
             0 -> { // SR
-                color = ContextCompat.getColor(parent.baseContext, R.color.colorAccent)
+                valueAnimator = ValueAnimator.ofArgb(color, ContextCompat.getColor(parent.baseContext, R.color.colorAccent))
+                (graph.adapter as GraphAdapter).setBaseLineBoolean(false)
                 unselectButton(wrGraphButton)
                 selectButton(srGraphButton, 1)
                 graphInfo.text = parent.sr.toString()
                 graphInfoTail.text = getString(R.string.sr)
-                newAdapter.setBaseLineBoolean(false)
+
             }
             1 -> { // Win Rate
-                newAdapter.setBaseLineBoolean(true)
-                color = ContextCompat.getColor(parent.baseContext, R.color.colorPrimary)
+                valueAnimator = ValueAnimator.ofArgb(color, ContextCompat.getColor(parent.baseContext, R.color.colorPrimary))
+                (graph.adapter as GraphAdapter).setBaseLineBoolean(true)
                 selectButton(wrGraphButton, 2)
                 unselectButton(srGraphButton)
                 graphInfo.text = "%.2f".format(parent.winRate*100F)
                 graphInfoTail.text = "%"
             }
         }
-        newAdapter.setY(floatArray)
-        graph.lineColor = color
-        graph.scrubLineColor = color
-        graphInfo.setTextColor(color)
-        graphInfoTail.setTextColor(color)
-        graph.adapter = newAdapter
 
-        totalMatches.text = gameArray.size.toString()
+        (graph.adapter as GraphAdapter).initY(floatArray)
+        graph.adapter.notifyDataSetChanged()
+        //                valueAnimator.setTarget(color)
+        valueAnimator.addUpdateListener {
+            color = it.animatedValue as Int
+            graph.lineColor = color
+            graphInfo.setTextColor(color)
+            graphInfoTail.setTextColor(color)
+            graph.scrubLineColor = color
+        }
+        valueAnimator.start()
+
+        totalMatches.text = filteredGameArray.size.toString()
 
         // Gets running values for filtered games
         var runningEliminations: Long = 0
@@ -265,7 +281,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         var runningDraws = 0
         var runningLosses = 0
 
-        for (game in gameArray) {
+        for (game in filteredGameArray) {
             runningEliminations += (game.child("eliminations").value as Long)
             runningDeaths += (game.child("deaths").value as Long)
             runningDamage += (game.child("damage").value as Long)
@@ -312,7 +328,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     }
 
     // Sets Button to selected
-    fun selectButton(button: Button, color: Int) {
+    private fun selectButton(button: Button, color: Int) {
         when (color) {
             0 -> { // dates - grey
                 button.backgroundTintList = ResourcesCompat.getColorStateList(resources, R.color.buttonSelected, null)
@@ -320,17 +336,17 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
             }
             1 -> { // SR - accent
                 button.backgroundTintList = ResourcesCompat.getColorStateList(resources, R.color.colorAccentLight, null)
-                button.setTextColor(ResourcesCompat.getColorStateList(resources, R.color.colorAccent, null))
+                button.setTextColor(ResourcesCompat.getColorStateList(resources, R.color.colorAccentDark, null))
             }
             2 -> { // WR - primary
                 button.backgroundTintList = ResourcesCompat.getColorStateList(resources, R.color.colorPrimaryLight, null)
-                button.setTextColor(ResourcesCompat.getColorStateList(resources, R.color.colorPrimary, null))
+                button.setTextColor(ResourcesCompat.getColorStateList(resources, R.color.colorPrimaryDark, null))
             }
         }
     }
 
     // Sets Button to unselected
-    fun unselectButton(button: Button) {
+    private fun unselectButton(button: Button) {
         button.backgroundTintList = ResourcesCompat.getColorStateList(resources, R.color.buttonUnselected, null)
         button.setTextColor(ResourcesCompat.getColorStateList(resources, R.color.buttonUnselectedText, null))
     }

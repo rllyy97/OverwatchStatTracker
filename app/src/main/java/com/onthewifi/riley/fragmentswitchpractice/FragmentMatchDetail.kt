@@ -73,7 +73,7 @@ class FragmentMatchDetail: Fragment() {
         when {
             srDiffView.text[0] == '+' -> srDiffView.setBackgroundColor(ContextCompat.getColor(context!!, R.color.positive))
             srDiffView.text[0] == '-' -> srDiffView.setBackgroundColor(ContextCompat.getColor(context!!, R.color.negative))
-            else                      -> srDiffView.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorPrimaryDark))
+            else                      -> srDiffView.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorDark))
         }
 
         return view

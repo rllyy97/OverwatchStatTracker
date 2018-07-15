@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -20,7 +21,7 @@
         android:nextFocusForward="@id/accuracy"
         android:singleLine="true"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorDark"
         android:textSize="36sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toStartOf="@+id/accuracy"
@@ -44,7 +45,7 @@
         android:nextFocusForward="@id/sr"
         android:singleLine="true"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorDark"
         android:textSize="36sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +117,7 @@
         android:nextFocusForward="@id/damage"
         android:singleLine="true"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorDark"
         android:textSize="36sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
@@ -139,7 +140,7 @@
         android:nextFocusForward="@id/length"
         android:singleLine="true"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorDark"
         android:textSize="36sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
@@ -163,7 +164,7 @@
         android:nextFocusForward="@id/healing"
         android:singleLine="true"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorDark"
         android:textSize="36sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toStartOf="@+id/healing"
@@ -189,7 +190,7 @@
         android:singleLine="true"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorDark"
         android:textSize="36sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toStartOf="@+id/deaths"
@@ -198,51 +199,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/heroText" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/submitButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_add_white_24dp"
-        app:backgroundTint="@color/positive"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/clearButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_clear_white_24dp"
-        app:backgroundTint="@color/negative"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <EditText
         android:id="@+id/sr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:background="@color/transparent"
         android:ems="10"
         android:gravity="center"
         android:hint="@string/sr"
         android:inputType="number"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorDark"
         android:textSize="58sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
         android:id="@+id/textView4"
@@ -386,5 +361,29 @@
         app:layout_constraintTop_toTopOf="@+id/hero2icon"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_add_black_24dp" />
+
+    <Button
+        android:id="@+id/submitButton"
+        style="@android:style/Widget.Material.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/colorAccent"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:text="Submit Match"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/clearButton"
+        style="@android:style/Widget.Material.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="clear"
+        android:textColor="@color/colorDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/submitButton" />
 
 </android.support.constraint.ConstraintLayout>

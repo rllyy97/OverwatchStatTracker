@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Main Colors -->
-    <color name="colorPrimaryLight">#ffc70e</color>
+    <color name="colorPrimaryLight">#ffe296</color>
     <color name="colorPrimary">#f99e1a</color>
-    <color name="colorPrimaryDark">#43484c</color>
+    <color name="colorPrimaryDark">#c06f00</color>
+    <color name="colorAccentLight">#9ff9ff</color>
     <color name="colorAccent">#00c3ff</color>
+    <color name="colorAccentDark">#0093cc</color>
+    <color name="colorDark">#43484c</color>
     <!-- Positive / Negative Colors -->
     <color name="positive">#00c853</color>
     <color name="negative">#f44336</color>
@@ -12,6 +15,10 @@
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00ffffff</color>
     <color name="nearlyTransparent">#22000000</color>
+    <color name="buttonUnselected">#EBEBEB</color>
+    <color name="buttonUnselectedText">#5E5E5E</color>
+    <color name="buttonSelected">#c4c4c4</color>
+    <color name="buttonSelectedText">#151515</color>
     <!-- Ranking Colors -->
     <color name="bronze">#a25641</color>
     <color name="silver">#747575</color>

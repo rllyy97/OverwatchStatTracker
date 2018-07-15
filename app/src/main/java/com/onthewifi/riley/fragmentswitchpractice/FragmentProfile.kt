@@ -175,27 +175,27 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
                 0 -> { // All
                     gameArray.add(it)
                     floatArray.add(addValue(currentGraphTab, it))
-                    allGraphButton.alpha = 1.0F
-                    weeklyGraphButton.alpha = 0.5F
-                    dailyGraphButton.alpha = 0.5F
+                    selectButton(allGraphButton, 0)
+                    unselectButton(weeklyGraphButton)
+                    unselectButton(dailyGraphButton)
                 }
                 1 -> { // Weekly
                     if(it.key!!.toLong() > (currentTime - 7 * 24 * 60 * 60 * 1000)) {
                         gameArray.add(it)
                         floatArray.add(addValue(currentGraphTab, it))
                     }
-                    allGraphButton.alpha = 0.5F
-                    weeklyGraphButton.alpha = 1.0F
-                    dailyGraphButton.alpha = 0.5F
+                    unselectButton(allGraphButton)
+                    selectButton(weeklyGraphButton, 0)
+                    unselectButton(dailyGraphButton)
                 }
                 2 -> { // Daily
                     if(it.key!!.toLong() > (currentTime - 24 * 60 * 60 * 1000)) {
                         gameArray.add(it)
                         floatArray.add(addValue(currentGraphTab, it))
                     }
-                    allGraphButton.alpha = 0.5F
-                    weeklyGraphButton.alpha = 0.5F
-                    dailyGraphButton.alpha = 1.0F
+                    unselectButton(allGraphButton)
+                    unselectButton(weeklyGraphButton)
+                    selectButton(dailyGraphButton, 0)
                 }
             }
         }
@@ -230,8 +230,8 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         when (currentGraphTab) {
             0 -> { // SR
                 color = ContextCompat.getColor(parent.baseContext, R.color.colorAccent)
-                wrGraphButton.alpha = 0.5F
-                srGraphButton.alpha = 1F
+                unselectButton(wrGraphButton)
+                selectButton(srGraphButton, 1)
                 graphInfo.text = parent.sr.toString()
                 graphInfoTail.text = getString(R.string.sr)
                 newAdapter.setBaseLineBoolean(false)
@@ -239,8 +239,8 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
             1 -> { // Win Rate
                 newAdapter.setBaseLineBoolean(true)
                 color = ContextCompat.getColor(parent.baseContext, R.color.colorPrimary)
-                srGraphButton.alpha = 0.5F
-                wrGraphButton.alpha = 1F
+                selectButton(wrGraphButton, 2)
+                unselectButton(srGraphButton)
                 graphInfo.text = "%.2f".format(parent.winRate*100F)
                 graphInfoTail.text = "%"
             }
@@ -309,5 +309,29 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
             in 3500..3999 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.masters, null))
             in 4000..5000 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.grandmasters, null))
         }
+    }
+
+    // Sets Button to selected
+    fun selectButton(button: Button, color: Int) {
+        when (color) {
+            0 -> { // dates - grey
+                button.backgroundTintList = ResourcesCompat.getColorStateList(resources, R.color.buttonSelected, null)
+                button.setTextColor(ResourcesCompat.getColorStateList(resources, R.color.buttonSelectedText, null))
+            }
+            1 -> { // SR - accent
+                button.backgroundTintList = ResourcesCompat.getColorStateList(resources, R.color.colorAccentLight, null)
+                button.setTextColor(ResourcesCompat.getColorStateList(resources, R.color.colorAccent, null))
+            }
+            2 -> { // WR - primary
+                button.backgroundTintList = ResourcesCompat.getColorStateList(resources, R.color.colorPrimaryLight, null)
+                button.setTextColor(ResourcesCompat.getColorStateList(resources, R.color.colorPrimary, null))
+            }
+        }
+    }
+
+    // Sets Button to unselected
+    fun unselectButton(button: Button) {
+        button.backgroundTintList = ResourcesCompat.getColorStateList(resources, R.color.buttonUnselected, null)
+        button.setTextColor(ResourcesCompat.getColorStateList(resources, R.color.buttonUnselectedText, null))
     }
 }

@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+        <item name="android:navigationBarColor">@color/colorDark</item>
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="windowNoTitle">true</item>
@@ -14,7 +14,7 @@
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="android:navigationBarColor">@color/colorPrimary</item>
@@ -27,7 +27,7 @@
         <item name="spark_cornerRadius">@dimen/corner_radius</item>
         <item name="spark_fill">false</item>
 
-        <item name="spark_baseLineColor">@color/colorPrimaryDark</item>
+        <item name="spark_baseLineColor">@color/colorDark</item>
         <item name="spark_baseLineWidth">@dimen/base_line_width</item>
 
         <item name="spark_scrubLineColor">@color/colorAccent</item>
@@ -35,6 +35,18 @@
         <item name="spark_scrubEnabled">true</item>
 
         <item name="spark_animateChanges">true</item>
+    </style>
+
+    <style name="graphFilterButtonUnselected">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:ambientShadowAlpha">0</item>
+        <item name="android:spotShadowAlpha">0</item>
+        <item name="android:background">@drawable/button_background</item>
+        <item name="android:textColor">@color/buttonUnselectedText</item>
+        <item name="android:backgroundTint">@color/buttonUnselected</item>
+
+
     </style>
 
 

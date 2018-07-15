@@ -1,8 +1,6 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
-import android.app.Activity
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -11,7 +9,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -65,8 +62,8 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
     private lateinit var accuracy: EditText
     private lateinit var sr: EditText
 
-    private lateinit var clearButton: FloatingActionButton
-    private lateinit var submitButton: FloatingActionButton
+    private lateinit var clearButton: Button
+    private lateinit var submitButton: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_new_match,container,false)
@@ -181,7 +178,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
         when {
             input < avg -> view.setTextColor(ContextCompat.getColor(parent.baseContext, R.color.negative))
             input > avg -> view.setTextColor(ContextCompat.getColor(parent.baseContext, R.color.positive))
-            else -> view.setTextColor(ContextCompat.getColor(parent.baseContext, R.color.colorPrimaryDark))
+            else -> view.setTextColor(ContextCompat.getColor(parent.baseContext, R.color.colorDark))
         }
     }
 
@@ -216,7 +213,6 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
 
     // Clears fragment by restarting it
     private var clearFields = View.OnClickListener {
-        hideSoftKeyboard(parent)
         clearFields()
     }
 
@@ -233,16 +229,8 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
         sr.text.clear()
     }
 
-    private fun hideSoftKeyboard(activity: Activity) {
-        val inputMethodManager = activity.getSystemService(
-                Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.currentFocus!!.windowToken, 0)
-    }
-
     // Submits data to database
     private var submitMatch: View.OnClickListener = View.OnClickListener {
-        hideSoftKeyboard(parent)
         submitMatch()
     }
 

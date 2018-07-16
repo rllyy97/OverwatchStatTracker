@@ -1,6 +1,7 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.graphics.Paint
@@ -167,6 +168,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateGraph(tab: Int, span: Int) {
         currentGraphTab = tab
         currentGraphSpan = span

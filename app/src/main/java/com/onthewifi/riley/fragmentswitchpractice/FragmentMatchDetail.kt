@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.res.ResourcesCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.firebase.database.DataSnapshot
 import java.text.SimpleDateFormat
@@ -32,6 +34,7 @@ class FragmentMatchDetail: Fragment() {
     private lateinit var mapIcon: ImageView
     private lateinit var srDiffView: TextView
 
+    private lateinit var heroContainer: LinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         view = inflater.inflate(R.layout.fragment_match_detail,container,false) as ConstraintLayout
@@ -47,6 +50,7 @@ class FragmentMatchDetail: Fragment() {
         mapView = view.findViewById(R.id.map)
         mapIcon = view.findViewById(R.id.mapIcon)
         srDiffView = view.findViewById(R.id.srDiff)
+        heroContainer = view.findViewById(R.id.heroContainer)
 
         backButton.setOnClickListener { finish() }
         deleteMatchButton.setOnClickListener{
@@ -55,6 +59,16 @@ class FragmentMatchDetail: Fragment() {
             finish()
         }
 
+        loadUI()
+
+        return view
+    }
+
+    private fun finish() {
+        fragmentManager!!.popBackStack()
+    }
+
+    private fun loadUI() {
         @SuppressLint("SimpleDateFormat") // Time zone is set below, warning is irrelevant
         val sdf = SimpleDateFormat("EEEE, MMMM d, yyyy - KK:mm aa")
         sdf.timeZone = Calendar.getInstance().timeZone
@@ -76,11 +90,20 @@ class FragmentMatchDetail: Fragment() {
             else                      -> srDiffView.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorDark))
         }
 
-        return view
+        for (hero in gameSnap.child("heroes").children) {
+            addCharacter(hero.value as String)
+        }
+
     }
 
-    private fun finish() {
-        fragmentManager!!.popBackStack()
+    private fun addCharacter(heroString: String) {
+        val heroImage = ImageView(context)
+        val scale = context!!.resources.displayMetrics.density
+        val width = (70 * scale + 0.5f).toInt()
+        heroImage.layoutParams = ViewGroup.LayoutParams(width, ViewGroup.LayoutParams.MATCH_PARENT)
+        heroImage.setImageDrawable(ResourcesCompat.getDrawable(resources, Hero.from(heroString)!!.getDrawable(), null))
+        heroImage.adjustViewBounds = true
+        heroContainer.addView(heroImage)
     }
 
 }

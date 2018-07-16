@@ -101,4 +101,11 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    fun refreshGameArray() {
+        allGameArray.clear()
+        latestSnap!!.child("matches").children.forEach {
+            allGameArray.add(it)
+        }
+    }
+
 }

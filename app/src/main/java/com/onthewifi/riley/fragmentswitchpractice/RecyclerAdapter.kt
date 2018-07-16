@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import com.google.firebase.database.DataSnapshot
-import kotlinx.android.synthetic.main.tracker_list_item.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 

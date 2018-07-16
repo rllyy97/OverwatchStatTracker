@@ -1,12 +1,8 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
-import android.graphics.Color
-import android.graphics.DashPathEffect
-import android.graphics.Paint
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
-import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView

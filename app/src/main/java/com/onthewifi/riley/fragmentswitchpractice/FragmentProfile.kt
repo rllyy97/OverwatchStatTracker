@@ -117,8 +117,6 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         weeklyGraphButton.setOnClickListener { updateGraph(currentGraphTab, 1) }
         dailyGraphButton.setOnClickListener { updateGraph(currentGraphTab, 2) }
 
-        initGraph()
-
         return view
     }
 
@@ -141,6 +139,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         if(snap.child("matchCount").value == null ||
                 snap.child("winRate").value == null) return
         parent.latestSnap = snap
+        parent.refreshGameArray()
         parent.name = parent.user!!.displayName ?: "User"
         parent.sr = (snap.child("sr").value as Long).toInt()
         parent.winRate = (snap.child("winRate").value as Number).toFloat()
@@ -163,19 +162,10 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         dialog.show(fragmentManager,"dialog")
     }
 
-    // Graph functions
-    private fun initGraph() {
-
-    }
-
     @SuppressLint("SetTextI18n")
     private fun updateGraph(tab: Int, span: Int) {
         currentGraphTab = tab
         currentGraphSpan = span
-        parent.allGameArray.clear()
-        parent.latestSnap!!.child("matches").children.forEach {
-            parent.allGameArray.add(it)
-        }
 
         val currentTime = Calendar.getInstance().timeInMillis
         filteredGameArray.clear()

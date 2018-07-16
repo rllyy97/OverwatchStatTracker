@@ -86,7 +86,6 @@
         android:layout_marginTop="24dp"
         android:gravity="center"
         android:text="@string/map"
-        android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
@@ -98,7 +97,6 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="@string/hero"
-        android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mapText" />
 
@@ -126,7 +124,7 @@
         app:layout_constraintTop_toTopOf="@+id/eliminations" />
 
     <EditText
-        android:id="@+id/healing"
+        android:id="@+id/healingPerDeathPercent"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginEnd="16dp"
@@ -160,14 +158,14 @@
         android:gravity="center"
         android:hint="@string/dash"
         android:inputType="number"
-        android:nextFocusDown="@id/healing"
-        android:nextFocusForward="@id/healing"
+        android:nextFocusDown="@id/healingPerDeathPercent"
+        android:nextFocusForward="@id/healingPerDeathPercent"
         android:singleLine="true"
         android:textAlignment="center"
         android:textColor="@color/colorDark"
         android:textSize="36sp"
         android:textStyle="bold|italic"
-        app:layout_constraintEnd_toStartOf="@+id/healing"
+        app:layout_constraintEnd_toStartOf="@+id/healingPerDeathPercent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
@@ -225,7 +223,6 @@
         android:layout_height="wrap_content"
         android:text="@string/eliminations"
         android:textSize="12sp"
-        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/eliminations"
         app:layout_constraintEnd_toEndOf="@+id/eliminations"
         app:layout_constraintStart_toStartOf="@+id/eliminations" />
@@ -236,7 +233,6 @@
         android:layout_height="wrap_content"
         android:text="@string/deaths"
         android:textSize="12sp"
-        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/deaths"
         app:layout_constraintEnd_toEndOf="@+id/deaths"
         app:layout_constraintStart_toStartOf="@+id/deaths" />
@@ -247,7 +243,6 @@
         android:layout_height="wrap_content"
         android:text="@string/damage"
         android:textSize="12sp"
-        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/damage"
         app:layout_constraintEnd_toEndOf="@+id/damage"
         app:layout_constraintStart_toStartOf="@+id/damage" />
@@ -258,10 +253,9 @@
         android:layout_height="wrap_content"
         android:text="@string/healing"
         android:textSize="12sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="@+id/healing"
-        app:layout_constraintEnd_toEndOf="@+id/healing"
-        app:layout_constraintStart_toStartOf="@+id/healing" />
+        app:layout_constraintBottom_toBottomOf="@+id/healingPerDeathPercent"
+        app:layout_constraintEnd_toEndOf="@+id/healingPerDeathPercent"
+        app:layout_constraintStart_toStartOf="@+id/healingPerDeathPercent" />
 
     <TextView
         android:id="@+id/textView11"
@@ -269,7 +263,6 @@
         android:layout_height="wrap_content"
         android:text="@string/length"
         android:textSize="12sp"
-        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/length"
         app:layout_constraintEnd_toEndOf="@+id/length"
         app:layout_constraintStart_toStartOf="@+id/length" />
@@ -280,7 +273,6 @@
         android:layout_height="wrap_content"
         android:text="@string/accuracy"
         android:textSize="12sp"
-        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/accuracy"
         app:layout_constraintEnd_toEndOf="@+id/accuracy"
         app:layout_constraintStart_toStartOf="@+id/accuracy" />

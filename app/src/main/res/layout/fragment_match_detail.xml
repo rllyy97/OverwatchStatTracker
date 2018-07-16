@@ -37,22 +37,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/deleteMatchButton"
-        style="@android:style/Widget.Material.Light.Button.Borderless.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:elevation="0dp"
-        android:text="@string/delete_match"
-        android:textColor="@color/negative"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/srDiff"
         android:layout_width="0dp"
@@ -75,38 +59,522 @@
         android:layout_height="37dp"
         android:layout_marginStart="16dp"
         android:background="@color/transparent"
+        android:contentDescription="@string/back_button"
         android:padding="4dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/map"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/map"
-        app:srcCompat="@drawable/ic_arrow_back_black_24dp"
-        android:contentDescription="@string/back_button" />
+        app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
 
     <ImageView
         android:id="@+id/mapIcon"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
+        android:contentDescription="@string/map_category_icon"
         android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/map"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/map"
-        app:srcCompat="@drawable/assault"
-        android:contentDescription="@string/map_category_icon" />
+        app:srcCompat="@drawable/assault" />
 
-    <LinearLayout
-        android:id="@+id/heroContainer"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="16dp"
-        android:gravity="center"
+    <ScrollView
+        android:id="@+id/scrollView"
+        style="@android:style/Widget.Material.Light.ScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/srDiff"
-        android:orientation="horizontal">
+        app:layout_constraintTop_toBottomOf="@+id/srDiff">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/detailLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/heroContainer"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="179dp">
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider" />
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="347dp">
+
+                <TextView
+                    android:id="@+id/damagePerMinTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/perMinute"
+                    android:textAppearance="@android:style/TextAppearance.Material.Small"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/damagePerMin"
+                    app:layout_constraintTop_toTopOf="@+id/damageTitle" />
+
+                <TextView
+                    android:id="@+id/damagePerDeath"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/damagePerMin"
+                    app:layout_constraintTop_toBottomOf="@+id/damageTitle" />
+
+                <TextView
+                    android:id="@+id/damageTotal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintEnd_toStartOf="@+id/damagePerMin"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/damageTitle" />
+
+                <TextView
+                    android:id="@+id/damagePerMinPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="14sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintStart_toStartOf="@+id/damagePerMin"
+                    app:layout_constraintTop_toBottomOf="@+id/damagePerMin" />
+
+                <TextView
+                    android:id="@+id/damagePerMin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintEnd_toStartOf="@+id/damagePerDeath"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/damageTotal"
+                    app:layout_constraintTop_toBottomOf="@+id/damageTitle" />
+
+                <TextView
+                    android:id="@+id/damagePerDeathPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="14sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintStart_toStartOf="@+id/damagePerDeath"
+                    app:layout_constraintTop_toBottomOf="@+id/damagePerDeath" />
+
+                <TextView
+                    android:id="@+id/damageTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/damage"
+                    android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/damagePerDeathTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/perDeath"
+                    android:textAppearance="@android:style/TextAppearance.Material.Small"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/damagePerDeath"
+                    app:layout_constraintTop_toTopOf="@+id/damageTitle" />
+            </android.support.constraint.ConstraintLayout>
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider" />
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="347dp">
+
+                <TextView
+                    android:id="@+id/healingPerMinTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/perMinute"
+                    android:textAppearance="@android:style/TextAppearance.Material.Small"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/healingPerMin"
+                    app:layout_constraintTop_toTopOf="@+id/healingTitle" />
+
+                <TextView
+                    android:id="@+id/healingPerDeath"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/healingPerMin"
+                    app:layout_constraintTop_toBottomOf="@+id/healingTitle" />
+
+                <TextView
+                    android:id="@+id/healingTotal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintEnd_toStartOf="@+id/healingPerMin"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/healingTitle" />
+
+                <TextView
+                    android:id="@+id/healingPerMinPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="14sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintStart_toStartOf="@+id/healingPerMin"
+                    app:layout_constraintTop_toBottomOf="@+id/healingPerMin" />
+
+                <TextView
+                    android:id="@+id/healingPerMin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintEnd_toStartOf="@+id/healingPerDeath"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/healingTotal"
+                    app:layout_constraintTop_toBottomOf="@+id/healingTitle" />
+
+                <TextView
+                    android:id="@+id/healingPerDeathPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="14sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintStart_toStartOf="@+id/healingPerDeath"
+                    app:layout_constraintTop_toBottomOf="@+id/healingPerDeath" />
+
+                <TextView
+                    android:id="@+id/healingTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/healing"
+                    android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/healingPerDeathTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/perDeath"
+                    android:textAppearance="@android:style/TextAppearance.Material.Small"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/healingPerDeath"
+                    app:layout_constraintTop_toTopOf="@+id/healingTitle" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <View
+                android:id="@+id/divider7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider" />
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="347dp">
+
+                <TextView
+                    android:id="@+id/elimsPerMinTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/perMinute"
+                    android:textAppearance="@android:style/TextAppearance.Material.Small"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/elimsPerMin"
+                    app:layout_constraintTop_toTopOf="@+id/elimsTitle" />
+
+                <TextView
+                    android:id="@+id/elimsPerDeath"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/elimsPerMin"
+                    app:layout_constraintTop_toBottomOf="@+id/elimsTitle" />
+
+                <TextView
+                    android:id="@+id/elimsTotal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintEnd_toStartOf="@+id/elimsPerMin"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/elimsTitle" />
+
+                <TextView
+                    android:id="@+id/elimsPerMinPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="14sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintStart_toStartOf="@+id/elimsPerMin"
+                    app:layout_constraintTop_toBottomOf="@+id/elimsPerMin" />
+
+                <TextView
+                    android:id="@+id/elimsPerMin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintEnd_toStartOf="@+id/elimsPerDeath"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/elimsTotal"
+                    app:layout_constraintTop_toBottomOf="@+id/elimsTitle" />
+
+                <TextView
+                    android:id="@+id/elimsPerDeathPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="14sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintStart_toStartOf="@+id/elimsPerDeath"
+                    app:layout_constraintTop_toBottomOf="@+id/elimsPerDeath" />
+
+                <TextView
+                    android:id="@+id/elimsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/eliminations"
+                    android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/elimsPerDeathTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/perDeath"
+                    android:textAppearance="@android:style/TextAppearance.Material.Small"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/elimsPerDeath"
+                    app:layout_constraintTop_toTopOf="@+id/elimsTitle" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <View
+                android:id="@+id/divider9"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider" />
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="347dp">
+
+                <TextView
+                    android:id="@+id/deathPerMinTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/perMinute"
+                    android:textAppearance="@android:style/TextAppearance.Material.Small"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/deathsPerMin"
+                    app:layout_constraintTop_toTopOf="@+id/deathsTitle" />
+
+                <TextView
+                    android:id="@+id/deathsPerDeath"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/deathsPerMin"
+                    app:layout_constraintTop_toBottomOf="@+id/deathsTitle" />
+
+                <TextView
+                    android:id="@+id/deathsTotal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintEnd_toStartOf="@+id/deathsPerMin"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/deathsTitle" />
+
+                <TextView
+                    android:id="@+id/deathsPerMinPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="14sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintStart_toStartOf="@+id/deathsPerMin"
+                    app:layout_constraintTop_toBottomOf="@+id/deathsPerMin" />
+
+                <TextView
+                    android:id="@+id/deathsPerMin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintEnd_toStartOf="@+id/deathsPerDeath"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/deathsTotal"
+                    app:layout_constraintTop_toBottomOf="@+id/deathsTitle" />
+
+                <TextView
+                    android:id="@+id/deathsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/deaths"
+                    android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <View
+                android:id="@+id/divider8"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider" />
+
+            <Button
+                android:id="@+id/deleteMatchButton"
+                style="@android:style/Widget.Material.Light.Button.Borderless.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:elevation="0dp"
+                android:text="@string/delete_match"
+                android:textColor="@color/negative"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </android.support.constraint.ConstraintLayout>

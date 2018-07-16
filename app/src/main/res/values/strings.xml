@@ -19,12 +19,12 @@
     <string name="profile_title_s">%s\' Profile</string>
 
     <!-- New Match Fragment Strings-->
-    <string name="eliminations">ELIMINATIONS</string>
-    <string name="deaths">DEATHS</string>
-    <string name="damage">DAMAGE</string>
-    <string name="healing">HEALING</string>
-    <string name="length">LENGTH (MIN)</string>
-    <string name="accuracy">ACCURACY (%)</string>
+    <string name="eliminations">Eliminations</string>
+    <string name="deaths">Deaths</string>
+    <string name="damage">Damage</string>
+    <string name="healing">Healing</string>
+    <string name="length">Length (Min)</string>
+    <string name="accuracy">Accuracy (%)</string>
     <string name="hero">Hero</string>
     <string name="map">Map</string>
     <string name="dash">-</string>
@@ -83,5 +83,9 @@
     <string name="average_k_d">Average K/D</string>
     <string name="average_dmg_min">Average DMG/Min</string>
     <string name="win_draw_loss">Win - Draw - Loss</string>
+    <string name="perMin">/ minute</string>
+    <string name="perDeath">/ death</string>
+    <string name="perMinute">/ minute</string>
+    <string name="perDeaths">/ death</string>
 
 </resources>

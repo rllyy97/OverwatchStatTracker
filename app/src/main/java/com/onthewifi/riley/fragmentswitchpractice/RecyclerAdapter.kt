@@ -84,7 +84,7 @@ class RecyclerAdapter(private var games : ArrayList<DataSnapshot>, val context: 
 
     private fun formatDateToString(input: Long): String {
         @SuppressLint("SimpleDateFormat") // Time zone is set below, warning is irrelevant
-        val sdf = SimpleDateFormat("EEEE, MMMM d, yyyy - KK:mm aa")
+        val sdf = SimpleDateFormat("EEE, MM/d/yy")
         sdf.timeZone = Calendar.getInstance().timeZone
         return sdf.format(input)
     }

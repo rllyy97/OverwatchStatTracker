@@ -12,8 +12,8 @@
         android:layout_margin="-30dp"
         android:layout_marginBottom="16dp"
         android:adjustViewBounds="false"
-        android:alpha="0.1"
         android:contentDescription="@string/background_hero_image"
+        android:tint="@color/buttonUnselected"
         app:layout_constraintBottom_toBottomOf="@+id/mainGraph"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,6 @@
         android:layout_marginTop="8dp"
         android:text="@string/loading"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textColor="@color/colorAccent"
         android:textSize="72sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +58,6 @@
         android:layout_marginBottom="32dp"
         android:layout_marginStart="8dp"
         android:text="@string/sr"
-        android:textColor="@color/colorAccent"
         android:textSize="18sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/graphInfo"
@@ -174,7 +172,6 @@
         android:layout_marginEnd="24dp"
         android:text="@string/total_matches"
         android:textAlignment="center"
-        android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/graphInfo"
         app:layout_constraintEnd_toEndOf="parent" />
 

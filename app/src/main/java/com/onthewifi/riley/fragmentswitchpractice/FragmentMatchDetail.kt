@@ -180,24 +180,24 @@ class FragmentMatchDetail: Fragment() {
         damageTotalView.text = damage.toString()
         damageMinView.text = damageMin.toString()
         damageDeathView.text = damageDeath.toString()
-        damageMinPercentView.text = damageMinPercent.toString()
-        damageDeathPercentView.text = damageDeathPercent.toString()
+        formatPercentView(damageMinPercentView, damageMinPercent)
+        formatPercentView(damageDeathPercentView, damageDeathPercent)
 
         healingTotalView.text = healing.toString()
         healingMinView.text = healingMin.toString()
         healingDeathView.text = healingDeath.toString()
-        healingMinPercentView.text = healingMinPercent.toString()
-        healingDeathPercentView.text = healingDeathPercent.toString()
+        formatPercentView(healingMinPercentView, healingMinPercent)
+        formatPercentView(healingDeathPercentView, healingDeathPercent)
 
         elimsTotalView.text = elims.toString()
         elimsMinView.text = elimsMin.toString()
         elimsDeathView.text = elimsDeath.toString()
-        elimsMinPercentView.text = elimsMinPercent.toString()
-        elimsDeathPercentView.text = elimsDeathPercent.toString()
+        formatPercentView(elimsMinPercentView, elimsMinPercent)
+        formatPercentView(elimsDeathPercentView, elimsDeathPercent)
 
         deathsTotalView.text = deaths.toString()
         deathsMinView.text = damageMin.toString()
-        deathsMinPercentView.text = deathsMinPercent.toString()
+        formatPercentView(deathsMinPercentView, deathsMinPercent)
 
     }
 
@@ -252,6 +252,21 @@ class FragmentMatchDetail: Fragment() {
 
     private fun getDataItem(key: String): Float {
         return (gameSnap.child(key).value as Long).toFloat()
+    }
+
+    private fun formatPercentView(view: TextView, input: Float){
+        var string = "-"
+        when {
+            input > 0f -> {
+                view.setTextColor(ResourcesCompat.getColor(resources, R.color.positive, null))
+                string = "+%.2f%%".format(input*100)
+            }
+            input < 0f -> {
+                view.setTextColor(ResourcesCompat.getColor(resources, R.color.negative, null))
+                string = "%.2f%%".format(input*100)
+            }
+        }
+        view.text = string
     }
 
 }

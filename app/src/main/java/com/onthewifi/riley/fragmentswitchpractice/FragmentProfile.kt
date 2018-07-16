@@ -262,23 +262,13 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
         totalMatches.text = filteredGameArray.size.toString()
 
-        // Gets running values for filtered games
-        var runningEliminations: Long = 0
-        var runningDeaths: Long = 0
-        var runningDamage: Long = 0
-        var runningHeals: Long = 0
-        var runningLength: Long = 0
+        parent.getAverages()
 
         var runningWins = 0
         var runningDraws = 0
         var runningLosses = 0
 
         for (game in filteredGameArray) {
-            runningEliminations += (game.child("eliminations").value as Long)
-            runningDeaths += (game.child("deaths").value as Long)
-            runningDamage += (game.child("damage").value as Long)
-            runningHeals += (game.child("heals").value as Long)
-            runningLength += (game.child("length").value as Long)
             if(game.child("win").exists()){
                 when ((game.child("win").value as Long).toInt()) {
                     1 -> runningWins++
@@ -288,12 +278,9 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
             }
         }
 
-        val kdAverage = runningEliminations.toFloat() / runningDeaths.toFloat()
-        val damageMinAverage = runningDamage.toFloat() / runningLength.toFloat()
-        val healsMinAverage = runningHeals.toFloat() / runningLength.toFloat()
-        avgKDView.text = "%.2f".format(kdAverage)
-        avgDamagePerMinView.text = "%.0f".format(damageMinAverage)
-        avgHealsPerMinView.text = "%.0f".format(healsMinAverage)
+        avgKDView.text = "%.2f".format(parent.avgEliminationsDeath)
+        avgDamagePerMinView.text = "%.0f".format(parent.avgDamageMin)
+        avgHealsPerMinView.text = "%.0f".format(parent.avgHealingMin)
 
         val wdlString = "%d - %d - %d".format(runningWins,runningDraws,runningLosses)
         wdlView.text = wdlString
@@ -342,4 +329,5 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         button.backgroundTintList = ResourcesCompat.getColorStateList(resources, R.color.buttonUnselected, null)
         button.setTextColor(ResourcesCompat.getColorStateList(resources, R.color.buttonUnselectedText, null))
     }
+
 }

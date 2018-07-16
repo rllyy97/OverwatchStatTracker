@@ -13,7 +13,7 @@ import com.google.firebase.database.DataSnapshot
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RecyclerAdapter(private var games : ArrayList<DataSnapshot>, val context: Context) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class TrackerRecyclerAdapter(private var games : ArrayList<DataSnapshot>, val context: Context) : RecyclerView.Adapter<TrackerRecyclerAdapter.ViewHolder>() {
 
     private lateinit var mainActivity: MainActivity
     init {

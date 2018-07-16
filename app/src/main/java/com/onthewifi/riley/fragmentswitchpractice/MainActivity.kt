@@ -25,6 +25,18 @@ class MainActivity : AppCompatActivity() {
 
     var allGameArray: ArrayList<DataSnapshot> = ArrayList()
 
+    // Profile Averages
+    var avgDamageMin = 0f
+    var avgHealingMin = 0f
+    var avgEliminationsMin = 0f
+    var avgDeathsMin = 0f
+
+    var avgDamageDeath = 0f
+    var avgHealingDeath = 0f
+    var avgEliminationsDeath = 0f
+
+    var avgAccuracy = 0f
+
     // Firebase variables
     var user : FirebaseUser? = null
     private lateinit var auth : FirebaseAuth
@@ -106,6 +118,40 @@ class MainActivity : AppCompatActivity() {
         latestSnap!!.child("matches").children.forEach {
             allGameArray.add(it)
         }
+        getAverages()
+    }
+
+    fun getAverages() {
+
+        var runningEliminations = 0f
+        var runningDeaths = 0f
+        var runningDamage = 0f
+        var runningHeals = 0f
+        var runningLength = 0f
+        var runningAccuracy = 0f
+        var matchCount = 0f
+
+        for (game in allGameArray) {
+            matchCount++
+            runningEliminations += (game.child("eliminations").value as Long).toFloat()
+            runningDeaths += (game.child("deaths").value as Long).toFloat()
+            runningDamage += (game.child("damage").value as Long).toFloat()
+            runningHeals += (game.child("heals").value as Long).toFloat()
+            runningLength += (game.child("length").value as Long).toFloat()
+            runningAccuracy += (game.child("accuracy").value as Long).toFloat()
+        }
+
+        avgDamageMin = runningDamage / runningLength
+        avgHealingMin = runningHeals / runningLength
+        avgEliminationsMin = runningEliminations / runningLength
+        avgDeathsMin = runningDeaths / runningLength
+
+        avgDamageDeath = runningDamage / runningDeaths
+        avgHealingDeath = runningHeals / runningDeaths
+        avgEliminationsDeath = runningEliminations / runningDeaths
+
+        avgAccuracy = runningAccuracy / matchCount
+
     }
 
 }

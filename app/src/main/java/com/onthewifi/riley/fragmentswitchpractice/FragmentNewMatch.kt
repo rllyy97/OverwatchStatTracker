@@ -109,7 +109,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
                     compareToAverage(damage, string?.toString()?.toLong() ?: 0, avgDamage)
             }
         })
-        heals = view.findViewById(R.id.healing)
+        heals = view.findViewById(R.id.healingPerDeathPercent)
         heals.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(string: Editable?) {}
             override fun beforeTextChanged(string: CharSequence?, start: Int, count: Int, after: Int) {}

@@ -28,7 +28,7 @@ class FragmentTracker: Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        recyclerView.adapter = RecyclerAdapter(parent.allGameArray, this.context!!)
+        recyclerView.adapter = TrackerRecyclerAdapter(parent.allGameArray, this.context!!)
         return view
     }
 

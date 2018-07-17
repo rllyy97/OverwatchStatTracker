@@ -35,12 +35,11 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     // For sr init
     override fun sendInput(input: Int) {
         userPath.child("sr").setValue(input)
+        userPath.child("careerHigh").setValue(input)
         userPath.child("name").setValue(parent.user!!.displayName)
-        graphInfo.text = input.toString()
     }
 
     private lateinit var userPath: DatabaseReference
-
     private lateinit var baseView: ConstraintLayout
 
     // Current Game Array
@@ -83,7 +82,6 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         graphInfoTail = view.findViewById(R.id.graphInfoTail)
         backgroundImage = view.findViewById(R.id.backgroundImage)
 
-        srInitializationCheck()
 
         graph = view.findViewById(R.id.mainGraph)
         graph.adapter = GraphAdapter()
@@ -117,15 +115,17 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         weeklyGraphButton.setOnClickListener { updateGraph(currentGraphTab, 1) }
         dailyGraphButton.setOnClickListener { updateGraph(currentGraphTab, 2) }
 
+        initialize()
+
         return view
     }
 
-    private fun srInitializationCheck() {
+    private fun initialize() {
         userPath.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snap: DataSnapshot) {
                 if (snap.child("sr").value != null) {
-                    if(snap.child("matchCount").value != null &&
-                            snap.child("matchCount").value != 0) loadData(snap)
+                    if(snap.child("matches").childrenCount.toInt() != 0)
+                        loadData(snap)
                 }
                 else initSr()
             }
@@ -136,24 +136,24 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     }
 
     fun loadData(snap: DataSnapshot) {
-        if(snap.child("matchCount").value == null ||
-                snap.child("winRate").value == null) return
         parent.latestSnap = snap
         parent.refreshGameArray()
-        parent.name = parent.user!!.displayName ?: "User"
         parent.sr = (snap.child("sr").value as Long).toInt()
         parent.winRate = (snap.child("winRate").value as Number).toFloat()
-        parent.matchCount = (snap.child("matchCount").value as Long).toInt()
         parent.careerHigh = (snap.child("careerHigh").value as Long).toInt()
+        parent.matchCount = (snap.child("matches").childrenCount).toInt()
+        if (context != null) loadUI()
+    }
+
+    private fun loadUI() {
+        parent.name = parent.user!!.displayName ?: "User"
         if(parent.name.last() != 's') title.text = getString(R.string.profile_title).format(parent.name)
         else title.text = getString(R.string.profile_title_s).format(parent.name)
-        graphInfo.text = parent.sr.toString()
         updateRankingImage(parent.sr)
-
+        updateGraph(currentGraphTab, currentGraphSpan)
+        graphInfo.text = parent.sr.toString()
         careerHigh.text = parent.careerHigh.toString()
         totalMatches.text = parent.matchCount.toString()
-
-        updateGraph(0, 1)
     }
 
     fun initSr() {
@@ -296,7 +296,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
     // Sets the background image to the current SR rank
     private fun updateRankingImage(rank: Int) {
         when (rank) {
-            in 0..1499 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.bronze, null))
+            in 1..1499 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.bronze, null))
             in 1500..1999 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.silver, null))
             in 2000..2499 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.gold, null))
             in 2500..2999 -> backgroundImage.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.platinum, null))

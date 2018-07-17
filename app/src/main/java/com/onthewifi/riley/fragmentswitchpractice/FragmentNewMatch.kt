@@ -314,7 +314,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
                 Toast.makeText(context, "whoops", Toast.LENGTH_SHORT).show()
             }
         })
-
+        parent.refreshAverages(heroStringArray)
         clearFields()
         Toast.makeText(context, "Submitted Match", Toast.LENGTH_SHORT).show()
     }

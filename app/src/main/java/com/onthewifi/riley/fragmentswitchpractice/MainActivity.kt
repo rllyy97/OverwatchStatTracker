@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -24,18 +25,10 @@ class MainActivity : AppCompatActivity() {
     var matchCount = 0
 
     var allGameArray: ArrayList<DataSnapshot> = ArrayList()
+    private var heroAvgHash: HashMap<String, HeroAverageData?> = HashMap()
+    lateinit var profileAverages: HeroAverageData
 
-    // Profile Averages
-    var avgDamageMin = 0f
-    var avgHealingMin = 0f
-    var avgEliminationsMin = 0f
-    var avgDeathsMin = 0f
-
-    var avgDamageDeath = 0f
-    var avgHealingDeath = 0f
-    var avgEliminationsDeath = 0f
-
-    var avgAccuracy = 0f
+    lateinit var focusedMatchData: HeroMatchData
 
     // Firebase variables
     var user : FirebaseUser? = null
@@ -63,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.fragmentContainer)
         setupViewPager(viewPager)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        profileAverages = HeroAverageData(null, allGameArray)
     }
 
     // Initializes new fragments and adapter
@@ -118,40 +112,53 @@ class MainActivity : AppCompatActivity() {
         latestSnap!!.child("matches").children.forEach {
             allGameArray.add(it)
         }
-        getAverages()
+        profileAverages = HeroAverageData(null, allGameArray)
     }
 
-    fun getAverages() {
-
-        var runningEliminations = 0f
-        var runningDeaths = 0f
-        var runningDamage = 0f
-        var runningHeals = 0f
-        var runningLength = 0f
-        var runningAccuracy = 0f
-        var matchCount = 0f
-
-        for (game in allGameArray) {
-            matchCount++
-            runningEliminations += (game.child("eliminations").value as Long).toFloat()
-            runningDeaths += (game.child("deaths").value as Long).toFloat()
-            runningDamage += (game.child("damage").value as Long).toFloat()
-            runningHeals += (game.child("heals").value as Long).toFloat()
-            runningLength += (game.child("length").value as Long).toFloat()
-            runningAccuracy += (game.child("accuracy").value as Long).toFloat()
+    private fun getHeroAverages(heroList: ArrayList<String>): HashMap<String, HeroAverageData?> {
+        val output = HashMap<String, HeroAverageData?>()
+        for (hero in heroList) {
+            if (heroAvgHash[hero] == null) {
+                heroAvgHash[hero] = HeroAverageData(hero, allGameArray)
+            }
+            output[hero] = heroAvgHash[hero]
         }
+        return output
+    }
 
-        avgDamageMin = runningDamage / runningLength
-        avgHealingMin = runningHeals / runningLength
-        avgEliminationsMin = runningEliminations / runningLength
-        avgDeathsMin = runningDeaths / runningLength
+    fun getAveragedAverages(heroList: ArrayList<String>): HeroAverageData {
+        val heroAverages = getHeroAverages(heroList)
+        var outputHero: HeroAverageData? = null
+        val averagesSize: Float = heroAverages.size.toFloat()
+        for (hero in heroAverages) {
+            if (outputHero == null){
+                outputHero = hero.value
+            } else {
+                outputHero.avgDamageMin += hero.value!!.avgDamageMin
+                outputHero.avgHealingMin += hero.value!!.avgHealingMin
+                outputHero.avgEliminationsMin += hero.value!!.avgEliminationsMin
+                outputHero.avgDeathsMin += hero.value!!.avgDeathsMin
+                outputHero.avgDamageDeath += hero.value!!.avgDamageDeath
+                outputHero.avgHealingDeath += hero.value!!.avgHealingDeath
+                outputHero.avgEliminationsDeath += hero.value!!.avgEliminationsDeath
+                outputHero.avgAccuracy += hero.value!!.avgAccuracy
+            }
+        }
+        outputHero!!.avgDamageMin /= averagesSize
+        outputHero!!.avgHealingMin /= averagesSize
+        outputHero!!.avgEliminationsMin /= averagesSize
+        outputHero!!.avgDeathsMin /= averagesSize
+        outputHero!!.avgDamageDeath /= averagesSize
+        outputHero!!.avgHealingDeath /= averagesSize
+        outputHero!!.avgEliminationsDeath /= averagesSize
+        outputHero!!.avgAccuracy /= averagesSize
 
-        avgDamageDeath = runningDamage / runningDeaths
-        avgHealingDeath = runningHeals / runningDeaths
-        avgEliminationsDeath = runningEliminations / runningDeaths
+        return outputHero!!
+    }
 
-        avgAccuracy = runningAccuracy / matchCount
-
+    fun refreshAverages(heroList: ArrayList<String>) {
+        for (hero in heroList) heroAvgHash[hero] = null
+        getHeroAverages(heroList)
     }
 
 }

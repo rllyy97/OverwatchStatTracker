@@ -151,9 +151,7 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         else title.text = getString(R.string.profile_title_s).format(parent.name)
         updateRankingImage(parent.sr)
         updateGraph(currentGraphTab, currentGraphSpan)
-        graphInfo.text = parent.sr.toString()
-        careerHigh.text = parent.careerHigh.toString()
-        totalMatches.text = parent.matchCount.toString()
+        updateData()
     }
 
     fun initSr() {
@@ -260,9 +258,19 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
         }
         valueAnimator.start()
 
-        totalMatches.text = filteredGameArray.size.toString()
+    }
 
-        parent.getAverages()
+    @SuppressLint("SetTextI18n")
+    private fun updateData() {
+        val averages = parent.profileAverages
+
+        avgKDView.text = "%.2f".format(averages.avgEliminationsDeath)
+        avgDamagePerMinView.text = "%.0f".format(averages.avgDamageMin)
+        avgHealsPerMinView.text = "%.0f".format(averages.avgHealingMin)
+
+        graphInfo.text = parent.sr.toString()
+        careerHigh.text = parent.careerHigh.toString()
+        totalMatches.text = filteredGameArray.size.toString()
 
         var runningWins = 0
         var runningDraws = 0
@@ -278,13 +286,8 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
             }
         }
 
-        avgKDView.text = "%.2f".format(parent.avgEliminationsDeath)
-        avgDamagePerMinView.text = "%.0f".format(parent.avgDamageMin)
-        avgHealsPerMinView.text = "%.0f".format(parent.avgHealingMin)
-
         val wdlString = "%d - %d - %d".format(runningWins,runningDraws,runningLosses)
         wdlView.text = wdlString
-
     }
 
     // Helper function to return sr or win rate of a match

@@ -5,7 +5,9 @@ import android.content.Context
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -32,6 +34,9 @@ class TrackerRecyclerAdapter(private var games : ArrayList<DataSnapshot>, val co
         val mapName: TextView = gameView.findViewById(R.id.mapName)
         val date: TextView = gameView.findViewById(R.id.date)
         val percentage: TextView = gameView.findViewById(R.id.percent)
+
+        lateinit var avgData: HeroAverageData
+        lateinit var matchData: HeroMatchData
     }
 
     // Inflates the item views
@@ -42,22 +47,46 @@ class TrackerRecyclerAdapter(private var games : ArrayList<DataSnapshot>, val co
     // Binds each game in the ArrayList to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val index = games.size-position-1
+        val gameSnap = games[index]
+        holder.matchData = HeroMatchData(gameSnap)
+        val heroes = ArrayList<String>()
+        for (hero in gameSnap.child("heroes").children)
+            heroes.add(hero.value as String)
+
+        holder.avgData = mainActivity.getAveragedAverages(heroes)
+        holder.matchData.getPercents(holder.avgData)
+        var percentString = ""
+        when {
+            holder.matchData.totalPercent > 0f -> {
+                percentString = "+%.0f%%".format(holder.matchData.totalPercent)
+                holder.percentage.backgroundTintList = ResourcesCompat.getColorStateList(mainActivity.resources, R.color.positive, null)
+            }
+            holder.matchData.totalPercent < 0f -> {
+                percentString = "%.0f%%".format(holder.matchData.totalPercent)
+                holder.percentage.backgroundTintList = ResourcesCompat.getColorStateList(mainActivity.resources, R.color.negative, null)
+            }
+            holder.matchData.totalPercent == 0f -> {
+                percentString = "+%.0f%%".format(holder.matchData.totalPercent)
+                holder.percentage.backgroundTintList = ResourcesCompat.getColorStateList(mainActivity.resources, R.color.colorDark, null)
+            }
+        }
+        holder.percentage.text = percentString
         holder.matchNumber.text = (index+1).toString()
         holder.gameIndex = index
         if (index>0) {
-            val diff = games[index].child("sr").value as Long - games[index-1].child("sr").value as Long
+            val diff = gameSnap.child("sr").value as Long - games[index-1].child("sr").value as Long
             var srString: String = diff.toString() + " SR"
-            if(games[index].child("win").value.toString() == "1") {
+            if(gameSnap.child("win").value.toString() == "1") {
                 srString = "+" + diff.toString() + " SR"
                 holder.srDiff.setTextColor(ContextCompat.getColor(context, R.color.positive))
-            } else if (games[index].child("win").value.toString() == "-1") {
+            } else if (gameSnap.child("win").value.toString() == "-1") {
                 holder.srDiff.setTextColor(ContextCompat.getColor(context,R.color.negative))
             }
             holder.srDiff.text = srString
 
         }
-        holder.mapName.text = games[index].child("map").value as String
-        holder.timeID = games[index].key!!.toLong()
+        holder.mapName.text = gameSnap.child("map").value as String
+        holder.timeID = gameSnap.key!!.toLong()
         holder.date.text = formatDateToString(holder.timeID)
         // Clicking item opens detailed view fragment
         holder.gameView.setOnClickListener {
@@ -73,6 +102,7 @@ class TrackerRecyclerAdapter(private var games : ArrayList<DataSnapshot>, val co
     // handles switching between detail view and list view
     private fun fragmentJump(holder: ViewHolder) {
         val fragment = FragmentMatchDetail()
+        mainActivity.focusedMatchData = holder.matchData
         val newBundle = Bundle()
         newBundle.putInt("index", holder.gameIndex)
         newBundle.putString("srDiff", holder.srDiff.text.toString())

@@ -26,41 +26,8 @@ class FragmentMatchDetail: Fragment() {
     private var gameIndex: Int = 0
     private lateinit var gameSnap: DataSnapshot
 
-    // Match Stats
-    private var damage = 0f
-    private var damageMin = 0f
-    private var damageDeath = 0f
-    private var damageMinPercent = 0f
-    private var damageDeathPercent = 0f
-    private var healing = 0f
-    private var healingMin = 0f
-    private var healingDeath = 0f
-    private var healingMinPercent = 0f
-    private var healingDeathPercent = 0f
-    private var elims = 0f
-    private var elimsMin = 0f
-    private var elimsDeath = 0f
-    private var elimsMinPercent = 0f
-    private var elimsDeathPercent = 0f
-    private var deaths = 0f
-    private var deathsMin = 0f
-    private var deathsDeaths = 0f // this is redundant but it makes me laugh so it stays
-    private var deathsMinPercent = 0f
-    private var deathsDeathsPercent = 0f // this is also redundant
-    private var length = 0f
-    private var accuracy = 0f
-    private var accuracyPercent = 0f
-    private var totalPercent = 0f
-
-    // Averages to get percentages
-    private var avgDamageMin = 0f
-    private var avgHealingMin = 0f
-    private var avgEliminationsMin = 0f
-    private var avgDeathsMin = 0f
-    private var avgDamageDeath = 0f
-    private var avgHealingDeath = 0f
-    private var avgEliminationsDeath = 0f
-    private var avgAccuracy = 0f
+    // all match data and percentages
+    private lateinit var dataChunk: HeroMatchData
 
     // UI Elements
     private lateinit var deleteMatchButton: Button
@@ -178,27 +145,27 @@ class FragmentMatchDetail: Fragment() {
             addCharacter(hero.value as String)
         }
 
-        damageTotalView.text = damage.toString()
-        damageMinView.text = damageMin.toString()
-        damageDeathView.text = damageDeath.toString()
-        formatPercentView(damageMinPercentView, damageMinPercent)
-        formatPercentView(damageDeathPercentView, damageDeathPercent)
+        damageTotalView.text = dataChunk.damage.toString()
+        damageMinView.text = dataChunk.damageMin.toString()
+        damageDeathView.text = dataChunk.damageDeath.toString()
+        formatPercentView(damageMinPercentView, dataChunk.damageMinPercent)
+        formatPercentView(damageDeathPercentView, dataChunk.damageDeathPercent)
 
-        healingTotalView.text = healing.toString()
-        healingMinView.text = healingMin.toString()
-        healingDeathView.text = healingDeath.toString()
-        formatPercentView(healingMinPercentView, healingMinPercent)
-        formatPercentView(healingDeathPercentView, healingDeathPercent)
+        healingTotalView.text = dataChunk.healing.toString()
+        healingMinView.text = dataChunk.healingMin.toString()
+        healingDeathView.text = dataChunk.healingDeath.toString()
+        formatPercentView(healingMinPercentView, dataChunk.healingMinPercent)
+        formatPercentView(healingDeathPercentView, dataChunk.healingDeathPercent)
 
-        elimsTotalView.text = elims.toString()
-        elimsMinView.text = elimsMin.toString()
-        elimsDeathView.text = elimsDeath.toString()
-        formatPercentView(elimsMinPercentView, elimsMinPercent)
-        formatPercentView(elimsDeathPercentView, elimsDeathPercent)
+        elimsTotalView.text = dataChunk.elims.toString()
+        elimsMinView.text = dataChunk.elimsMin.toString()
+        elimsDeathView.text = dataChunk.elimsDeath.toString()
+        formatPercentView(elimsMinPercentView, dataChunk.elimsMinPercent)
+        formatPercentView(elimsDeathPercentView, dataChunk.elimsDeathPercent)
 
-        deathsTotalView.text = deaths.toString()
-        deathsMinView.text = deathsMin.toString()
-        formatPercentView(deathsMinPercentView, deathsMinPercent)
+        deathsTotalView.text = dataChunk.deaths.toString()
+        deathsMinView.text = dataChunk.deathsMin.toString()
+        formatPercentView(deathsMinPercentView, dataChunk.deathsMinPercent)
 
     }
 
@@ -212,47 +179,8 @@ class FragmentMatchDetail: Fragment() {
         heroContainer.addView(heroImage)
     }
 
-    private fun loadAverages() {
-        avgDamageMin = parent.avgDamageMin
-        avgHealingMin = parent.avgHealingMin
-        avgEliminationsMin = parent.avgEliminationsMin
-        avgDeathsMin = parent.avgDeathsMin
-        avgDamageDeath = parent.avgDamageDeath
-        avgHealingDeath = parent.avgHealingDeath
-        avgEliminationsDeath = parent.avgEliminationsDeath
-        avgAccuracy = parent.avgAccuracy
-    }
-
     private fun loadData() {
-        loadAverages()
-        length = getDataItem("length")
-        accuracy = getDataItem("accuracy")
-        damage = getDataItem("damage")
-        healing = getDataItem("heals")
-        elims = getDataItem("eliminations")
-        deaths = getDataItem("deaths")
-
-        damageMin = damage / length
-        healingMin = healing / length
-        elimsMin = elims / length
-        deathsMin = deaths / length
-        damageDeath = damage / deaths
-        healingDeath = healing / deaths
-        elimsDeath = elims / deaths
-
-        damageMinPercent = (damageMin / avgDamageMin) - 1
-        healingMinPercent = (healingMin / avgHealingMin) - 1
-        elimsMinPercent = (elimsMin / avgEliminationsMin) - 1
-        deathsMinPercent = (deathsMin / avgDeathsMin) - 1
-        damageDeathPercent = (damageDeath / avgDamageDeath) - 1
-        healingDeathPercent = (healingDeath / avgHealingDeath) - 1
-        elimsDeathPercent = (elimsDeath / avgEliminationsDeath) - 1
-        accuracyPercent = (accuracy / avgAccuracy) - 1
-
-    }
-
-    private fun getDataItem(key: String): Float {
-        return (gameSnap.child(key).value as Long).toFloat()
+        dataChunk = parent.focusedMatchData
     }
 
     private fun formatPercentView(view: TextView, input: Float) {

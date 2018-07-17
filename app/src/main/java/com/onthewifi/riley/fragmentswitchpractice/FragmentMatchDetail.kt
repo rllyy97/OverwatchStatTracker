@@ -137,7 +137,7 @@ class FragmentMatchDetail: Fragment() {
         backButton.setOnClickListener { finish() }
         deleteMatchButton.setOnClickListener{
             // Toast deletion
-            // Delete Match from database
+            parent.databaseRef.child("users").child(parent.user!!.uid).child("matches").child(gameID.toString()).removeValue()
             finish()
         }
 
@@ -196,7 +196,7 @@ class FragmentMatchDetail: Fragment() {
         formatPercentView(elimsDeathPercentView, elimsDeathPercent)
 
         deathsTotalView.text = deaths.toString()
-        deathsMinView.text = damageMin.toString()
+        deathsMinView.text = deathsMin.toString()
         formatPercentView(deathsMinPercentView, deathsMinPercent)
 
     }
@@ -254,7 +254,7 @@ class FragmentMatchDetail: Fragment() {
         return (gameSnap.child(key).value as Long).toFloat()
     }
 
-    private fun formatPercentView(view: TextView, input: Float){
+    private fun formatPercentView(view: TextView, input: Float) {
         var string = "-"
         when {
             input > 0f -> {

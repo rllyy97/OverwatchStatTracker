@@ -256,7 +256,6 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
         // Grab previous info
         val oldSr: Int = parent.sr
         val newSr: Int = sr.text.toString().toInt()
-        var matchCount: Int
 
         var win = 0 // WIN = 1, DRAW = 0, LOSS = -1
         if (oldSr < newSr) win = 1
@@ -287,22 +286,18 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
         userPath.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snap: DataSnapshot) {
                 // Update Match Count
-                if(snap.child("matchCount").value == null) {
-                    matchCount = 1
+                if(snap.child("matches").childrenCount.toInt() == 0) {
                     winRate = if (win > 0) 1F else 0F
                     winCount = if (win > 0) 1 else 0
                     if (win > 0) userPath.child("careerHigh").setValue(newSr)
                     else userPath.child("careerHigh").setValue(oldSr)
                 } else {
-                    matchCount = (snap.child("matchCount").value as Long).toInt()
-                    matchCount++
                     winCount = (snap.child("winCount").value as Long).toInt()
                     if (win > 0) winCount++
-                    winRate = winCount.toFloat() / matchCount.toFloat()
+                    winRate = winCount.toFloat() / snap.child("matches").childrenCount.toFloat()
                     if (newSr > snap.child("careerHigh").value as Long) userPath.child("careerHigh").setValue(newSr)
                 }
                 // Updates Profile Data
-                userPath.child("matchCount").setValue(matchCount)
                 userPath.child("winCount").setValue(winCount)
                 userPath.child("winRate").setValue(winRate)
                 userPath.child("sr").setValue(newSr)

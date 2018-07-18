@@ -87,5 +87,6 @@
     <string name="perDeath">/ death</string>
     <string name="perMinute">/ minute</string>
     <string name="perDeaths">/ death</string>
+    <string name="dot">•</string>
 
 </resources>

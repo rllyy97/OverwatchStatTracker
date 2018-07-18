@@ -6,7 +6,6 @@ import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,6 +61,8 @@ class FragmentMatchDetail: Fragment() {
     private lateinit var deathsMinView: TextView
     private lateinit var deathsMinPercentView: TextView
 
+    private lateinit var accuracyView: TextView
+    private lateinit var accuracyPercentView: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         view = inflater.inflate(R.layout.fragment_match_detail,container,false) as ConstraintLayout
@@ -100,6 +101,9 @@ class FragmentMatchDetail: Fragment() {
         deathsTotalView = view.findViewById(R.id.deathsTotal)
         deathsMinView = view.findViewById(R.id.deathsPerMin)
         deathsMinPercentView = view.findViewById(R.id.deathsPerMinPercent)
+
+        accuracyView = view.findViewById(R.id.accuracy)
+        accuracyPercentView = view.findViewById(R.id.accuracyPercent)
 
         backButton.setOnClickListener { finish() }
         deleteMatchButton.setOnClickListener{
@@ -166,6 +170,10 @@ class FragmentMatchDetail: Fragment() {
         deathsTotalView.text = dataChunk.deaths.toString()
         deathsMinView.text = dataChunk.deathsMin.toString()
         formatPercentView(deathsMinPercentView, dataChunk.deathsMinPercent)
+
+        val accString = dataChunk.accuracy.toString() + "%"
+        accuracyView.text = accString
+        formatPercentView(accuracyPercentView, dataChunk.accuracyPercent)
 
     }
 

@@ -167,10 +167,12 @@
                     android:id="@+id/damagePerMinPercent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/loading"
                     android:textAppearance="@android:style/TextAppearance.Material.Body2"
                     android:textSize="14sp"
                     android:textStyle="bold|italic"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/damagePerMin"
                     app:layout_constraintTop_toBottomOf="@+id/damagePerMin" />
 
@@ -227,7 +229,6 @@
                 android:id="@+id/divider2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
                 android:layout_weight="1"
                 android:background="?android:attr/listDivider" />
 
@@ -283,10 +284,12 @@
                     android:id="@+id/healingPerMinPercent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="@string/loading"
                     android:textAppearance="@android:style/TextAppearance.Material.Body2"
                     android:textSize="14sp"
                     android:textStyle="bold|italic"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/healingPerMin"
                     app:layout_constraintTop_toBottomOf="@+id/healingPerMin" />
 
@@ -344,7 +347,6 @@
                 android:id="@+id/divider7"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
                 android:layout_weight="1"
                 android:background="?android:attr/listDivider" />
 
@@ -400,10 +402,12 @@
                     android:id="@+id/elimsPerMinPercent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/loading"
                     android:textAppearance="@android:style/TextAppearance.Material.Body2"
                     android:textSize="14sp"
                     android:textStyle="bold|italic"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/elimsPerMin"
                     app:layout_constraintTop_toBottomOf="@+id/elimsPerMin" />
 
@@ -461,7 +465,6 @@
                 android:id="@+id/divider9"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
                 android:layout_weight="1"
                 android:background="?android:attr/listDivider" />
 
@@ -482,12 +485,13 @@
                     app:layout_constraintTop_toTopOf="@+id/deathsTitle" />
 
                 <TextView
-                    android:id="@+id/deathsPerDeath"
+                    android:id="@+id/accuracy"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
+                    android:text="@string/loading"
                     android:textAppearance="@android:style/TextAppearance.Material.Body2"
                     android:textSize="16sp"
                     android:textStyle="bold|italic"
@@ -516,10 +520,12 @@
                     android:id="@+id/deathsPerMinPercent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/loading"
                     android:textAppearance="@android:style/TextAppearance.Material.Body2"
                     android:textSize="14sp"
                     android:textStyle="bold|italic"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/deathsPerMin"
                     app:layout_constraintTop_toBottomOf="@+id/deathsPerMin" />
 
@@ -534,7 +540,7 @@
                     android:textAppearance="@android:style/TextAppearance.Material.Body2"
                     android:textSize="16sp"
                     android:textStyle="bold|italic"
-                    app:layout_constraintEnd_toStartOf="@+id/deathsPerDeath"
+                    app:layout_constraintEnd_toStartOf="@+id/accuracy"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/deathsTotal"
                     app:layout_constraintTop_toBottomOf="@+id/deathsTitle" />
@@ -544,10 +550,38 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:text="@string/deaths"
                     android:textAppearance="@android:style/TextAppearance.Material.Subhead"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/deathsPerMin"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/accuracyPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    app:layout_constraintStart_toStartOf="@+id/accuracy"
+                    app:layout_constraintTop_toBottomOf="@+id/accuracy" />
+
+                <TextView
+                    android:id="@+id/accuracyTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/accuracy"
+                    android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+                    app:layout_constraintStart_toStartOf="@+id/accuracy"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
@@ -556,7 +590,6 @@
                 android:id="@+id/divider8"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
                 android:layout_weight="1"
                 android:background="?android:attr/listDivider" />
 

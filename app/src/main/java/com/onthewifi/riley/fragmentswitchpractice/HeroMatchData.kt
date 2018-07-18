@@ -1,6 +1,5 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
-import android.util.Log
 import com.google.firebase.database.DataSnapshot
 
 class HeroMatchData(private val gameSnap: DataSnapshot) {

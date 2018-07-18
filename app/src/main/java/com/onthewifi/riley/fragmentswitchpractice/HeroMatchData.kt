@@ -64,24 +64,18 @@ class HeroMatchData(private val gameSnap: DataSnapshot) {
 
     private fun getTotalPercent() {
         var running = 0f
+        var itemCount = 8f
         running += damageMinPercent
-        Log.w("1", damageMinPercent.toString())
-        running += healingMinPercent // BROKEN
-        Log.w("2", healingMinPercent.toString())
+        if (!healingMinPercent.isNaN()) running += healingMinPercent // BROKEN
+        else itemCount--
         running += elimsMinPercent
-        Log.w("3", elimsMinPercent.toString())
         running += deathsMinPercent
-        Log.w("4", deathsMinPercent.toString())
         running += damageDeathPercent
-        Log.w("5", damageDeathPercent.toString())
-        running += healingDeathPercent // BROKEN
-        Log.w("6", healingDeathPercent.toString())
+        if (!healingDeathPercent.isNaN()) running += healingDeathPercent // BROKEN
+        else itemCount--
         running += elimsDeathPercent
-        Log.w("7", elimsDeathPercent.toString())
         running += accuracyPercent
-        Log.w("8", accuracyPercent.toString())
-        totalPercent = running / 8f
-        Log.w("Total Percent", totalPercent.toString())
+        totalPercent = running / itemCount
     }
 
     private fun getDataItem(key: String): Float {

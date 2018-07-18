@@ -58,15 +58,15 @@ class TrackerRecyclerAdapter(private var games : ArrayList<DataSnapshot>, val co
         var percentString = ""
         when {
             holder.matchData.totalPercent > 0f -> {
-                percentString = "+%.0f%%".format(holder.matchData.totalPercent)
+                percentString = "+%.0f%%".format(holder.matchData.totalPercent*100)
                 holder.percentage.backgroundTintList = ResourcesCompat.getColorStateList(mainActivity.resources, R.color.positive, null)
             }
             holder.matchData.totalPercent < 0f -> {
-                percentString = "%.0f%%".format(holder.matchData.totalPercent)
+                percentString = "%.0f%%".format(holder.matchData.totalPercent*100)
                 holder.percentage.backgroundTintList = ResourcesCompat.getColorStateList(mainActivity.resources, R.color.negative, null)
             }
             holder.matchData.totalPercent == 0f -> {
-                percentString = "+%.0f%%".format(holder.matchData.totalPercent)
+                percentString = "+%.0f%%".format(holder.matchData.totalPercent*100)
                 holder.percentage.backgroundTintList = ResourcesCompat.getColorStateList(mainActivity.resources, R.color.colorDark, null)
             }
         }

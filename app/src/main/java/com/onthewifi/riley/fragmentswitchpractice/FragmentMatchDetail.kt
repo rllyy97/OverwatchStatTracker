@@ -149,26 +149,26 @@ class FragmentMatchDetail: Fragment() {
             addCharacter(hero.value as String)
         }
 
-        damageTotalView.text = dataChunk.damage.toString()
-        damageMinView.text = dataChunk.damageMin.toString()
-        damageDeathView.text = dataChunk.damageDeath.toString()
+        damageTotalView.text = "%.0f".format(dataChunk.damage)
+        damageMinView.text = "%.0f".format(dataChunk.damageMin)
+        damageDeathView.text = "%.0f".format(dataChunk.damageDeath)
         formatPercentView(damageMinPercentView, dataChunk.damageMinPercent)
         formatPercentView(damageDeathPercentView, dataChunk.damageDeathPercent)
 
-        healingTotalView.text = dataChunk.healing.toString()
-        healingMinView.text = dataChunk.healingMin.toString()
-        healingDeathView.text = dataChunk.healingDeath.toString()
+        healingTotalView.text = "%.0f".format(dataChunk.healing)
+        healingMinView.text = "%.0f".format(dataChunk.healingMin)
+        healingDeathView.text = "%.0f".format(dataChunk.healingDeath)
         formatPercentView(healingMinPercentView, dataChunk.healingMinPercent)
         formatPercentView(healingDeathPercentView, dataChunk.healingDeathPercent)
 
-        elimsTotalView.text = dataChunk.elims.toString()
-        elimsMinView.text = dataChunk.elimsMin.toString()
-        elimsDeathView.text = dataChunk.elimsDeath.toString()
+        elimsTotalView.text = "%.0f".format(dataChunk.elims)
+        elimsMinView.text = "%.2f".format(dataChunk.elimsMin)
+        elimsDeathView.text = "%.2f".format(dataChunk.elimsDeath)
         formatPercentView(elimsMinPercentView, dataChunk.elimsMinPercent)
         formatPercentView(elimsDeathPercentView, dataChunk.elimsDeathPercent)
 
-        deathsTotalView.text = dataChunk.deaths.toString()
-        deathsMinView.text = dataChunk.deathsMin.toString()
+        deathsTotalView.text = "%.0f".format(dataChunk.deaths)
+        deathsMinView.text = "%.2f".format(dataChunk.deathsMin)
         formatPercentView(deathsMinPercentView, dataChunk.deathsMinPercent)
 
         val accString = dataChunk.accuracy.toString() + "%"

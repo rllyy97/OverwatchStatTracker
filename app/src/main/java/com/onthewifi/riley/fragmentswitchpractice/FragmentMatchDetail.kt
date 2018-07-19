@@ -1,7 +1,6 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
 import android.annotation.SuppressLint
-import android.opengl.Visibility
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
@@ -15,7 +14,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.firebase.database.DataSnapshot
-import org.jetbrains.anko.find
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -185,6 +183,8 @@ class FragmentMatchDetail: Fragment() {
         deathsTotalView.text = "%.0f".format(dataChunk.deaths)
         deathsMinView.text = "%.2f".format(dataChunk.deathsMin)
         formatPercentView(deathsMinPercentView, dataChunk.deathsMinPercent)
+        if (deathsMinPercentView.text[0] == '+') deathsMinPercentView.setTextColor(ResourcesCompat.getColor(resources, R.color.negative, null))
+        if (deathsMinPercentView.text[0] == '-') deathsMinPercentView.setTextColor(ResourcesCompat.getColor(resources, R.color.positive, null))
 
         val accString = dataChunk.accuracy.toString() + "%"
         accuracyView.text = accString

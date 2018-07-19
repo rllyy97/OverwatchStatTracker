@@ -1,6 +1,7 @@
 package com.onthewifi.riley.fragmentswitchpractice
 
 import android.annotation.SuppressLint
+import android.opengl.Visibility
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
@@ -14,6 +15,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.firebase.database.DataSnapshot
+import org.jetbrains.anko.find
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -39,24 +41,28 @@ class FragmentMatchDetail: Fragment() {
 
     private lateinit var heroContainer: LinearLayout
 
+    private lateinit var damageLayout: ConstraintLayout
     private lateinit var damageTotalView: TextView
     private lateinit var damageMinView: TextView
     private lateinit var damageDeathView: TextView
     private lateinit var damageMinPercentView: TextView
     private lateinit var damageDeathPercentView: TextView
 
+    private lateinit var healingLayout: ConstraintLayout
     private lateinit var healingTotalView: TextView
     private lateinit var healingMinView: TextView
     private lateinit var healingDeathView: TextView
     private lateinit var healingMinPercentView: TextView
     private lateinit var healingDeathPercentView: TextView
 
+    private lateinit var elimsLayout: ConstraintLayout
     private lateinit var elimsTotalView: TextView
     private lateinit var elimsMinView: TextView
     private lateinit var elimsDeathView: TextView
     private lateinit var elimsMinPercentView: TextView
     private lateinit var elimsDeathPercentView: TextView
 
+    private lateinit var deathsLayout: ConstraintLayout
     private lateinit var deathsTotalView: TextView
     private lateinit var deathsMinView: TextView
     private lateinit var deathsMinPercentView: TextView
@@ -80,24 +86,28 @@ class FragmentMatchDetail: Fragment() {
         srDiffView = view.findViewById(R.id.srDiff)
         heroContainer = view.findViewById(R.id.heroContainer)
 
+        damageLayout = view.findViewById(R.id.damageLayout)
         damageTotalView = view.findViewById(R.id.damageTotal)
         damageMinView = view.findViewById(R.id.damagePerMin)
         damageDeathView = view.findViewById(R.id.damagePerDeath)
         damageMinPercentView = view.findViewById(R.id.damagePerMinPercent)
         damageDeathPercentView = view.findViewById(R.id.damagePerDeathPercent)
 
+        healingLayout = view.findViewById(R.id.healingLayout)
         healingTotalView = view.findViewById(R.id.healingTotal)
         healingMinView = view.findViewById(R.id.healingPerMin)
         healingDeathView = view.findViewById(R.id.healingPerDeath)
         healingMinPercentView = view.findViewById(R.id.healingPerMinPercent)
         healingDeathPercentView = view.findViewById(R.id.healingPerDeathPercent)
 
+        elimsLayout = view.findViewById(R.id.elimsLayout)
         elimsTotalView = view.findViewById(R.id.elimsTotal)
         elimsMinView = view.findViewById(R.id.elimsPerMin)
         elimsDeathView = view.findViewById(R.id.elimsPerDeath)
         elimsMinPercentView = view.findViewById(R.id.elimsPerMinPercent)
         elimsDeathPercentView = view.findViewById(R.id.elimsPerDeathPercent)
 
+        deathsLayout = view.findViewById(R.id.elimsLayout)
         deathsTotalView = view.findViewById(R.id.deathsTotal)
         deathsMinView = view.findViewById(R.id.deathsPerMin)
         deathsMinPercentView = view.findViewById(R.id.deathsPerMinPercent)
@@ -123,6 +133,7 @@ class FragmentMatchDetail: Fragment() {
         fragmentManager!!.popBackStack()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun loadUI() {
         @SuppressLint("SimpleDateFormat") // Time zone is set below, warning is irrelevant
         val sdf = SimpleDateFormat("EEEE, MMMM d, yyyy - KK:mm aa")
@@ -155,11 +166,15 @@ class FragmentMatchDetail: Fragment() {
         formatPercentView(damageMinPercentView, dataChunk.damageMinPercent)
         formatPercentView(damageDeathPercentView, dataChunk.damageDeathPercent)
 
-        healingTotalView.text = "%.0f".format(dataChunk.healing)
-        healingMinView.text = "%.0f".format(dataChunk.healingMin)
-        healingDeathView.text = "%.0f".format(dataChunk.healingDeath)
-        formatPercentView(healingMinPercentView, dataChunk.healingMinPercent)
-        formatPercentView(healingDeathPercentView, dataChunk.healingDeathPercent)
+        if (dataChunk.healing == 0f && dataChunk.healingMinPercent.isNaN())
+            healingLayout.visibility = View.GONE
+        else {
+            healingTotalView.text = "%.0f".format(dataChunk.healing)
+            healingMinView.text = "%.0f".format(dataChunk.healingMin)
+            healingDeathView.text = "%.0f".format(dataChunk.healingDeath)
+            formatPercentView(healingMinPercentView, dataChunk.healingMinPercent)
+            formatPercentView(healingDeathPercentView, dataChunk.healingDeathPercent)
+        }
 
         elimsTotalView.text = "%.0f".format(dataChunk.elims)
         elimsMinView.text = "%.2f".format(dataChunk.elimsMin)

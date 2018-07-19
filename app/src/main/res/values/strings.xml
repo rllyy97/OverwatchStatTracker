@@ -89,5 +89,6 @@
     <string name="perDeaths">/ death</string>
     <string name="dot">•</string>
     <string name="accuracyNoPercent">Accuracy</string>
+    <string name="lengthNoMin">Length</string>
 
 </resources>

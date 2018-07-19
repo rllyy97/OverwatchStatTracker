@@ -65,6 +65,10 @@ class FragmentMatchDetail: Fragment() {
     private lateinit var deathsMinView: TextView
     private lateinit var deathsMinPercentView: TextView
 
+    private lateinit var lengthLayout: ConstraintLayout
+    private lateinit var lengthView: TextView
+
+    private lateinit var accuracyLayout: ConstraintLayout
     private lateinit var accuracyView: TextView
     private lateinit var accuracyPercentView: TextView
 
@@ -110,6 +114,10 @@ class FragmentMatchDetail: Fragment() {
         deathsMinView = view.findViewById(R.id.deathsPerMin)
         deathsMinPercentView = view.findViewById(R.id.deathsPerMinPercent)
 
+        lengthLayout = view.findViewById(R.id.lengthLayout)
+        lengthView = view.findViewById(R.id.length)
+
+        accuracyLayout = view.findViewById(R.id.accuracyLayout)
         accuracyView = view.findViewById(R.id.accuracy)
         accuracyPercentView = view.findViewById(R.id.accuracyPercent)
 
@@ -186,8 +194,9 @@ class FragmentMatchDetail: Fragment() {
         if (deathsMinPercentView.text[0] == '+') deathsMinPercentView.setTextColor(ResourcesCompat.getColor(resources, R.color.negative, null))
         if (deathsMinPercentView.text[0] == '-') deathsMinPercentView.setTextColor(ResourcesCompat.getColor(resources, R.color.positive, null))
 
-        val accString = dataChunk.accuracy.toString() + "%"
-        accuracyView.text = accString
+        lengthView.text = "%.0f Minutes".format(dataChunk.length)
+
+        accuracyView.text = "%.0f%%".format(dataChunk.accuracy)
         formatPercentView(accuracyPercentView, dataChunk.accuracyPercent)
 
     }

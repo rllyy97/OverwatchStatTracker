@@ -116,6 +116,124 @@
                 android:background="?android:attr/listDivider" />
 
             <android.support.constraint.ConstraintLayout
+                android:id="@+id/lengthLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/lengthTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/lengthNoMin"
+                    android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/length"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/length"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textView5"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/lengthTitle"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/length"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/accuracyLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/accuracyTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/accuracyNoPercent"
+                    android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/accuracy"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/accuracyDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/accuracy"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/accuracyPercent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/accuracyTitle"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/accuracyPercent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/loading"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/accuracy"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
                 android:id="@+id/damageLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -499,7 +617,7 @@
                     app:layout_constraintTop_toTopOf="@+id/deathsTitle" />
 
                 <TextView
-                    android:id="@+id/accuracy"
+                    android:id="@+id/blankDeathsView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -554,7 +672,7 @@
                     android:textAppearance="@android:style/TextAppearance.Material.Body2"
                     android:textSize="16sp"
                     android:textStyle="bold|italic"
-                    app:layout_constraintEnd_toStartOf="@+id/accuracy"
+                    app:layout_constraintEnd_toStartOf="@+id/blankDeathsView"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/deathsTotal"
                     app:layout_constraintTop_toBottomOf="@+id/deathsTitle" />
@@ -568,34 +686,6 @@
                     android:text="@string/deaths"
                     android:textAppearance="@android:style/TextAppearance.Material.Subhead"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <View
-                    android:id="@+id/divider3"
-                    android:layout_width="1dp"
-                    android:layout_height="0dp"
-                    android:background="?android:attr/listDivider"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/deathsPerMin"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/accuracyPercent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/loading"
-                    android:textAppearance="@android:style/TextAppearance.Material.Body2"
-                    app:layout_constraintStart_toStartOf="@+id/accuracy"
-                    app:layout_constraintTop_toBottomOf="@+id/accuracy" />
-
-                <TextView
-                    android:id="@+id/accuracyTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/accuracyNoPercent"
-                    android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-                    app:layout_constraintStart_toStartOf="@+id/accuracy"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <View

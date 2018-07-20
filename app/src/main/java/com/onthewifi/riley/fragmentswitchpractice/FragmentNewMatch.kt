@@ -315,6 +315,7 @@ class FragmentNewMatch: Fragment(), CharacterSelectorDialog.OnInputListener {
             }
         })
         parent.refreshAverages(heroStringArray)
+//        ((parent.viewPager.adapter as FragmentAdapter).getItem(2) as FragmentTracker).recyclerView.adapter.notifyDataSetChanged()
         clearFields()
         Toast.makeText(context, "Submitted Match", Toast.LENGTH_SHORT).show()
     }

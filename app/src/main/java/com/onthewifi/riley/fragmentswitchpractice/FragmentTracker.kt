@@ -17,7 +17,7 @@ class FragmentTracker: Fragment() {
     private lateinit var parent: MainActivity
 
     private lateinit var view: ConstraintLayout
-    private lateinit var recyclerView: RecyclerView
+    lateinit var recyclerView: RecyclerView
     private lateinit var title: TextView
 
 

@@ -57,7 +57,7 @@ class HeroMatchData(private val gameSnap: DataSnapshot) {
         damageDeathPercent = (damageDeath / averages.avgDamageDeath) - 1f
         healingDeathPercent = (healingDeath / averages.avgHealingDeath) - 1f
         elimsDeathPercent = (elimsDeath / averages.avgEliminationsDeath) - 1f
-        accuracyPercent = (accuracy / averages.avgAccuracy) - 1f
+        accuracyPercent = accuracy - averages.avgAccuracy
         getTotalPercent()
     }
 

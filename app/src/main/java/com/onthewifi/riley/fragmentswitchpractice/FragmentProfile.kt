@@ -213,14 +213,14 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
 
         graph.scrubListener = SparkView.OnScrubListener {
             if (it != null) {
-                when (currentGraphTab) { // SR
+                when (currentGraphTab) {
                     0 -> graphInfo.text = (it as Float).toInt().toString()
-                    1 -> graphInfo.text =  "%.2f".format(it)
+                    1 -> graphInfo.text =  "%.1f".format(it)
                 }
-            } else { // Win Rate
+            } else {
                 when (currentGraphTab) {
                     0 -> graphInfo.text = parent.sr.toString()
-                    1 -> graphInfo.text = "%.2f".format(parent.winRate*100F)
+                    1 -> graphInfo.text = "%.1f".format(parent.winRate*100F)
                 }
             }
         }
@@ -241,14 +241,13 @@ class FragmentProfile: Fragment(), SrInitDialog.OnInputListener {
                 (graph.adapter as GraphAdapter).setBaseLineBoolean(true)
                 selectButton(wrGraphButton, 2)
                 unselectButton(srGraphButton)
-                graphInfo.text = "%.2f".format(parent.winRate*100F)
+                graphInfo.text = "%.1f".format(parent.winRate*100F)
                 graphInfoTail.text = "%"
             }
         }
 
         (graph.adapter as GraphAdapter).initY(floatArray)
         graph.adapter.notifyDataSetChanged()
-        //                valueAnimator.setTarget(color)
         valueAnimator.addUpdateListener {
             color = it.animatedValue as Int
             graph.lineColor = color

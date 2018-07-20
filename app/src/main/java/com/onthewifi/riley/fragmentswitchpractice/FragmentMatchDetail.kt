@@ -124,7 +124,7 @@ class FragmentMatchDetail: Fragment() {
         backButton.setOnClickListener { finish() }
         deleteMatchButton.setOnClickListener{
             // Toast deletion
-            // Fix win count and win rate
+            // Fix win rate and potentially SR
             parent.databaseRef.child("users").child(parent.user!!.uid).child("matches").child(gameID.toString()).removeValue()
             finish()
         }

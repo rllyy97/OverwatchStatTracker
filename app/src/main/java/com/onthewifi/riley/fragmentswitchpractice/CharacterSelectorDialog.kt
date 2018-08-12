@@ -20,6 +20,7 @@ class CharacterSelectorDialog: DialogFragment() {
     private lateinit var reinhardt: ImageButton
     private lateinit var roadhog: ImageButton
     private lateinit var winston: ImageButton
+    private lateinit var wreckingball: ImageButton
     private lateinit var zarya: ImageButton
     private lateinit var bastion: ImageButton
     private lateinit var doomfist: ImageButton
@@ -58,6 +59,8 @@ class CharacterSelectorDialog: DialogFragment() {
         roadhog.tag = "Roadhog"
         winston = view.findViewById(R.id.Winston)
         winston.tag = "Winston"
+        wreckingball = view.findViewById(R.id.WreckingBall)
+        wreckingball.tag = "WreckingBall"
         zarya = view.findViewById(R.id.Zarya)
         zarya.tag = "Zarya"
         bastion = view.findViewById(R.id.Bastion)
@@ -103,7 +106,7 @@ class CharacterSelectorDialog: DialogFragment() {
         zenyatta = view.findViewById(R.id.Zenyatta)
         zenyatta.tag = "Zenyatta"
 
-        buttonArray = arrayOf(dva, orisa, reinhardt, roadhog, winston, zarya, bastion, doomfist,
+        buttonArray = arrayOf(dva, orisa, reinhardt, roadhog, winston, wreckingball, zarya, bastion, doomfist,
                 genji, hanzo, junkrat, mcree, mei, pharah, reaper, soldier76, sombra, symmetra,
                 torbjorn, tracer, widowmaker, ana, brigette, lucio, mercy, moira, zenyatta)
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -20,18 +21,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/damageCategory"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DVa" />
+        app:layout_constraintTop_toBottomOf="@+id/WreckingBall" />
 
     <TextView
         android:id="@+id/supportText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/supportCategory"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,8 +57,9 @@
         android:id="@+id/Zarya"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@color/transparent"
+        android:contentDescription="@string/zarya"
         android:padding="2dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/Winston"
@@ -65,8 +67,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/Winston"
         app:layout_constraintTop_toTopOf="@+id/Winston"
-        app:srcCompat="@drawable/zarya"
-        android:contentDescription="@string/zarya" />
+        app:srcCompat="@drawable/zarya" />
 
     <ImageButton
         android:id="@+id/Roadhog"
@@ -117,24 +118,25 @@
         android:id="@+id/DVa"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="@color/transparent"
+        android:contentDescription="@string/dva"
         android:padding="2dp"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toStartOf="@+id/Orisa"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tankText"
-        app:srcCompat="@drawable/dva"
-        android:contentDescription="@string/dva" />
+        app:srcCompat="@drawable/dva" />
 
     <ImageButton
         android:id="@+id/Mcree"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@color/transparent"
+        android:contentDescription="@string/mcree"
         android:padding="2dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/Junkrat"
@@ -142,8 +144,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/Junkrat"
         app:layout_constraintTop_toTopOf="@+id/Junkrat"
-        app:srcCompat="@drawable/mcree"
-        android:contentDescription="@string/mcree" />
+        app:srcCompat="@drawable/mcree" />
 
     <ImageButton
         android:id="@+id/Junkrat"
@@ -209,8 +210,9 @@
         android:id="@+id/Symmetra"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@color/transparent"
+        android:contentDescription="@string/symmetra"
         android:padding="2dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/Sombra"
@@ -218,8 +220,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/Sombra"
         app:layout_constraintTop_toTopOf="@+id/Sombra"
-        app:srcCompat="@drawable/symmetra"
-        android:contentDescription="@string/symmetra" />
+        app:srcCompat="@drawable/symmetra" />
 
     <ImageButton
         android:id="@+id/Sombra"
@@ -311,8 +312,9 @@
         android:id="@+id/Ana"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:background="@color/transparent"
+        android:contentDescription="@string/ana"
         android:padding="2dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/Brigette"
@@ -320,8 +322,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/Brigette"
-        app:srcCompat="@drawable/ana"
-        android:contentDescription="@string/ana" />
+        app:srcCompat="@drawable/ana" />
 
     <ImageButton
         android:id="@+id/Brigette"
@@ -388,7 +389,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
         android:background="@color/transparent"
         android:contentDescription="@string/zenyatta"
@@ -418,32 +419,44 @@
         android:id="@+id/Mei"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="@color/transparent"
+        android:contentDescription="@string/mei"
         android:padding="2dp"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toStartOf="@+id/Pharah"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Bastion"
-        app:srcCompat="@drawable/mei"
-        android:contentDescription="@string/mei" />
+        app:srcCompat="@drawable/mei" />
 
     <ImageButton
         android:id="@+id/Bastion"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="@color/transparent"
+        android:contentDescription="@string/bastion"
         android:padding="2dp"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toStartOf="@+id/Doomfist"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tankText2"
-        app:srcCompat="@drawable/bastion"
-        android:contentDescription="@string/bastion" />
+        app:srcCompat="@drawable/bastion" />
+
+    <ImageButton
+        android:id="@+id/WreckingBall"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/transparent"
+        android:contentDescription="@string/wreckingball"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="@+id/DVa"
+        app:layout_constraintTop_toBottomOf="@+id/DVa"
+        app:srcCompat="@drawable/wreckingball" />
 
 </android.support.constraint.ConstraintLayout>

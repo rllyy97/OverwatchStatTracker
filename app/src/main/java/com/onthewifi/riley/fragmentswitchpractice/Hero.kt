@@ -27,6 +27,7 @@ enum class Hero(private var friendlyName: String, private var drawable: Int) {
     Tracer("Tracer", R.drawable.tracer),
     Widowmaker("Widowmaker", R.drawable.widowmaker),
     Winston("Winston", R.drawable.winston),
+    WreckingBall("WreckingBall", R.drawable.wreckingball),
     Zarya("Zarya", R.drawable.zarya),
     Zenyatta("Zenyatta", R.drawable.zenyatta);
 
